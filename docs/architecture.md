@@ -169,6 +169,33 @@ Se calculan para tu campeón, si ya lo elegiste, o para tus campeones de confian
 
 Se excluyen los campeones ya elegidos o bloqueados. Cada sugerencia muestra sus motivos y su tipo de evidencia.
 
+## Enfrentamiento por fases y gankeos (`analysis/lane_matchup.py`)
+
+Se muestra en «Draft» para tu campeón (o la opción recomendada) contra tu rival directo. Cada fase vale +1 (ventaja tuya), 0 (parejo) o -1 (ventaja del rival) si su puntuación llega a ±0,5:
+
+| Fase | Qué mira |
+|---|---|
+| Niveles 1-3 | Diferencia de presión temprana (perfil, × 0,5); alcance (oficial: ±0,5 si uno es a distancia y el otro no, ±0,25 si la diferencia es ≥ 100; no cuenta en jungla); duelo de ataques básicos a nivel 1 (oficial: ±0,5 si uno derrota al otro un 15 % más rápido) |
+| Nivel 6 | Presión temprana y escalado (× 0,25 cada uno) e iniciación con presión temprana (±0,5) |
+| Niveles 7-10 | Promedio de presión temprana y escalado |
+| Nivel 11+ | Escalado (× 0,5) y vida base a nivel 16 como dato informativo |
+
+- Estadísticas base de Data Dragon. El crecimiento por nivel usa la fórmula del juego: `base + crecimiento × (n − 1) × (0,7025 + 0,0175 × (n − 1))`.
+- **No se usa el daño de ataque por nivel**: en 16.21.1 Data Dragon lo da como 0 para los 173 campeones.
+- El duelo usa vida × (1 + armadura / 100) y daño × velocidad de ataque: sin habilidades, runas ni objetos.
+- **Historial** (observado): tus partidas contra ese rival directo y la diferencia media de oro al minuto 10, solo con timelines ya guardados.
+- **Posiciones rivales**: se usan las que indicas en las casillas. Las demás se deducen cuando el perfil solo deja una posición libre (`assign_enemy_roles`).
+- **Gankeos** (jungla), para cada línea con rival conocido:
+  - escape: el mayor desenganche de la línea, +1 si es de clase «Assassin»;
+  - fragilidad;
+  - control e iniciación de tu aliado;
+  - presión temprana del rival frente a tu aliado.
+
+  ≥ 0,6 se considera «Buen objetivo»; ≥ 0, «Posible»; si no, «Difícil».
+- **Riesgo de gankeo** (otras posiciones): presión temprana + iniciación + control / 2 del jungla rival, menos tu desenganche.
+
+No hay consejos durante la partida: Riot no permite aplicaciones que dicten decisiones del jugador.
+
 ## Postpartida (`analysis/postgame_analyzer.py`)
 
 - KDA = (asesinatos + asistencias) / max(muertes, 1).

@@ -28,6 +28,7 @@ from pydantic import TypeAdapter, ValidationError
 from draftmind.domain.enums import EvidenceKind
 from draftmind.domain.models import (
     AbilityInfo,
+    BaseStats,
     ChampionCatalog,
     ChampionDetail,
     ChampionInfo,
@@ -44,6 +45,7 @@ from draftmind.domain.schemas import (
     DDragonItemFile,
     DDragonRunePath,
     DDragonSpellFile,
+    DDragonStats,
 )
 from draftmind.utils.text import strip_html
 
@@ -156,6 +158,7 @@ class DataDragonClient:
                 id=c.id, key=c.key, name=c.name, title=c.title, tags=c.tags, image_file=c.image.full,
                 attack=c.info.attack, defense=c.info.defense, magic=c.info.magic,
                 difficulty=c.info.difficulty, attack_range=c.stats.attackrange,
+                base_stats=_base_stats(c.stats),
             )
             for c in parsed.data.values()
         ]
@@ -352,6 +355,18 @@ def _rune_path(path: DDragonRunePath) -> RunePathInfo:
         id=path.id, key=path.key, name=path.name, icon=path.icon,
         keystones=[info(r) for r in path.slots[0].runes] if path.slots else [],
         minor_slots=[[info(r) for r in slot.runes] for slot in path.slots[1:]],
+    )
+
+
+def _base_stats(stats: DDragonStats) -> BaseStats | None:
+    """None si faltan las básicas (vida, ataque): no se compara con datos inventados."""
+    if stats.hp <= 0 or stats.attackdamage <= 0 or stats.attackspeed <= 0:
+        return None
+    return BaseStats(
+        hp=stats.hp, hp_per_level=stats.hpperlevel, armor=stats.armor, armor_per_level=stats.armorperlevel,
+        magic_resist=stats.spellblock, magic_resist_per_level=stats.spellblockperlevel,
+        attack_damage=stats.attackdamage, attack_speed=stats.attackspeed, move_speed=stats.movespeed,
+        attack_range=stats.attackrange,
     )
 
 

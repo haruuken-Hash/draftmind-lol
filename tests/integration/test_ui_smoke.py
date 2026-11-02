@@ -39,6 +39,24 @@ def test_ban_suggestions_appear_in_draft(window):
     assert "Kayle" in view.ban_note.text()
 
 
+def test_matchup_and_gank_sections_in_draft(window):
+    view = window.draft_view
+    tops = [c.id for c in window.ctx.dataset.champions if Role.TOP in c.roles]
+    set_role(view, Role.TOP)
+    assert "Elige tu campeón" in view.matchup_label.text() or "Aún no se sabe" in view.matchup_label.text()
+    view.pick_for_me(tops[0])
+    rival_slot = next(s for s in view.enemy_slots if s.role is Role.TOP)
+    view.activate(rival_slot)
+    view.place_champion(tops[1])
+    text = view.matchup_label.text()
+    assert "Nivel 1-3" in text and "Nivel 11+" in text
+    assert "Riesgo de gankeo" == view.gank_heading.text()
+
+    set_role(view, Role.JUNGLE)
+    assert view.gank_heading.text() == "¿Qué línea gankear?"
+    assert "Superior" in view.gank_label.text()
+
+
 def test_profile_view_with_demo_matches(window):
     view = window.profile_view
     assert "Jugador Demo" in view.hero_title.text()

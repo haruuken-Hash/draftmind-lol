@@ -32,6 +32,7 @@ from draftmind.analysis.ban_analyzer import suggest_bans
 from draftmind.analysis.build_analyzer import build_advice
 from draftmind.analysis.composition_analyzer import analyze_team
 from draftmind.analysis.champion_stats import comfort_pool
+from draftmind.analysis.lane_matchup import analyze_matchup, assign_enemy_roles, gank_danger, gank_options
 from draftmind.app.bootstrap import AppContext
 from draftmind.domain.enums import EvidenceKind, Role
 from draftmind.domain.models import CandidateAnalysis, DraftPick, DraftState, TeamProfile
@@ -43,6 +44,7 @@ from draftmind.ui.components.champion_slot import ChampionSlot
 from draftmind.ui.components.recommendation_card import RecommendationCard
 from draftmind.ui.build_report import build_advice_html
 from draftmind.ui.draft_report import render_report
+from draftmind.ui.matchup_report import danger_html, ganks_html, matchup_html
 from draftmind.ui.portraits import PortraitProvider
 from draftmind.ui.session import AppSession
 from draftmind.ui.widgets import (
@@ -79,6 +81,10 @@ class DraftView(QWidget):
         self._last_live: LiveDraft | None = None
         self._last_live_state: LiveState | None = None
         self._enemy_roles: dict[int, Role | None] = {}  # Roles enemigos que indica el usuario.
+        # Enfrentamiento: consejos oficiales y oro al minuto 10, guardados para no repetir trabajo.
+        self._enemy_tips: dict[str, list[str]] = {}
+        self._tips_loading: set[str] = set()
+        self._gold_at_10: dict[str, int | None] = {}
         self._live_timer = QTimer(self)
         self._live_timer.setInterval(LIVE_POLL_MS)
         self._live_timer.timeout.connect(self._poll_live)
@@ -147,6 +153,22 @@ class DraftView(QWidget):
         analysis_layout.addWidget(self.analysis_heading)
         analysis_layout.addWidget(self.analysis_notes)
         analysis_layout.addLayout(self.cards_layout)
+        self.matchup_heading = section_label("Tu enfrentamiento")
+        self.matchup_label = QLabel()
+        self.matchup_label.setWordWrap(True)
+        self.matchup_label.setTextFormat(Qt.TextFormat.RichText)
+        matchup_box, matchup_box_layout = card()
+        matchup_box_layout.addWidget(self.matchup_label)
+        self.gank_heading = section_label("Gankeos")
+        self.gank_label = QLabel()
+        self.gank_label.setWordWrap(True)
+        self.gank_label.setTextFormat(Qt.TextFormat.RichText)
+        self.gank_box, gank_box_layout = card()
+        gank_box_layout.addWidget(self.gank_label)
+        analysis_layout.addWidget(self.matchup_heading)
+        analysis_layout.addWidget(matchup_box)
+        analysis_layout.addWidget(self.gank_heading)
+        analysis_layout.addWidget(self.gank_box)
         self.build_heading = section_label("Build")
         self.build_label = QLabel()
         self.build_label.setWordWrap(True)
@@ -492,7 +514,9 @@ class DraftView(QWidget):
         self._analyses = [a for a, _, _ in entries]
         self._render_cards(entries)
         self._render_ban_suggestions(draft)
-        self._render_build(draft, mine or (self._analyses[0].champion.id if self._analyses else None), mine is None)
+        focus = mine or (self._analyses[0].champion.id if self._analyses else None)
+        self._render_matchup(draft, focus, mine is None)
+        self._render_build(draft, focus, mine is None)
         allies, enemies = analyzer.compositions(draft)
         self.ally_summary.setText(self._team_html("Tu equipo", allies))
         self.enemy_summary.setText(self._team_html("Equipo enemigo", enemies))
@@ -532,6 +556,85 @@ class DraftView(QWidget):
             ordered = [(pool[0], "Mejor de tu repertorio"), (best, "Mejor puntuación general")]
             ordered += [(a, "Alternativa") for a in suggestions[1:] if a is not pool[0]][:SUGGESTIONS - 2]
         return [(a, caption, can_pick) for a, caption in ordered]
+
+    def _render_matchup(self, draft: DraftState, champion_id: str | None, is_suggestion: bool) -> None:
+        names = self._names()
+        profiles = {p.id: p for p in self.ctx.analyzer.champions}
+        enemy_roles = assign_enemy_roles(draft.enemies, profiles)
+        role = draft.my_role
+
+        # Gankeos: si juegas jungla, qué línea conviene; si no, el peligro del jungla rival.
+        self.gank_heading.setVisible(role is not None)
+        self.gank_box.setVisible(role is not None)
+        if role is Role.JUNGLE:
+            self.gank_heading.setText("¿Qué línea gankear?")
+            allies = {p.role: profiles[p.champion_id] for p in draft.allies
+                      if p.role and p.champion_id in profiles}
+            enemies = {r: profiles[c] for r, (c, _) in enemy_roles.items() if c in profiles}
+            tags = {c.id: c.tags for c in self.ctx.catalog.champions}
+            self.gank_label.setText(ganks_html(gank_options(allies, enemies, tags), names))
+        elif role is not None:
+            self.gank_heading.setText("Riesgo de gankeo")
+            jungler = enemy_roles.get(Role.JUNGLE)
+            if jungler and jungler[0] in profiles:
+                self.gank_label.setText(danger_html(gank_danger(profiles.get(champion_id), profiles[jungler[0]]),
+                                                    names))
+            else:
+                self.gank_label.setText("<i>Aún no se sabe quién es el jungla rival.</i>")
+
+        rival = enemy_roles.get(role) if role else None
+        self.matchup_heading.setText("Tu enfrentamiento" + (" (opción recomendada)" if is_suggestion else ""))
+        if role is None:
+            self.matchup_label.setText("<i>Indica tu posición para ver tu enfrentamiento directo.</i>")
+            return
+        if champion_id is None or champion_id not in profiles:
+            self.matchup_label.setText("<i>Elige tu campeón para ver el enfrentamiento.</i>")
+            return
+        if rival is None or rival[0] not in profiles:
+            self.matchup_label.setText(
+                f"<i>Aún no se sabe quién es tu rival de {role.label}. En el draft en vivo, indica su posición "
+                "en su casilla si la deduces.</i>")
+            return
+        enemy_id, deduced = rival
+        stats = {c.id: c.base_stats for c in self.ctx.catalog.champions if c.base_stats}
+        matchup = analyze_matchup(profiles[champion_id], profiles[enemy_id], role, stats, self.session.matches,
+                                  self.session.matches_are_demo, self._gold_diffs(enemy_id))
+        self.matchup_label.setText(matchup_html(matchup, names, deduced, self._enemy_tips.get(enemy_id)))
+        self._load_tips(enemy_id)
+
+    def _gold_diffs(self, enemy_id: str) -> dict[str, int]:
+        """Diferencia de oro al minuto 10 contra ese rival, solo con timelines ya guardados (sin red)."""
+        out = {}
+        for m in self.session.matches:
+            if m.lane_opponent != enemy_id or m.is_demo:
+                continue
+            if m.match_id not in self._gold_at_10:
+                try:
+                    analysis = self.ctx.matches.lane_analysis(m, download=False)
+                except (KeyError, TypeError, ValueError):  # Timeline guardado con formato inesperado.
+                    analysis = None
+                snapshot = next((s for s in analysis.snapshots if s.minute == 10), None) if analysis else None
+                self._gold_at_10[m.match_id] = snapshot.gold_diff if snapshot else None
+            if self._gold_at_10[m.match_id] is not None:
+                out[m.match_id] = self._gold_at_10[m.match_id]
+        return out
+
+    def _load_tips(self, enemy_id: str) -> None:
+        if enemy_id in self._enemy_tips or enemy_id in self._tips_loading or not self.ctx.catalog.from_data_dragon:
+            return
+        self._tips_loading.add(enemy_id)
+
+        def done(detail) -> None:
+            self._tips_loading.discard(enemy_id)
+            self._enemy_tips[enemy_id] = detail.enemy_tips if detail else []
+            if self._enemy_tips[enemy_id]:
+                self.update_analysis()
+
+        def failed(_error: str) -> None:
+            self._tips_loading.discard(enemy_id)
+            self._enemy_tips[enemy_id] = []
+
+        run_task(lambda: self.ctx.champion_detail(enemy_id), on_done=done, on_error=failed)
 
     def _render_build(self, draft: DraftState, champion_id: str | None, is_suggestion: bool) -> None:
         names = self._names()

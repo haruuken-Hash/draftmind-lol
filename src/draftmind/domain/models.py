@@ -71,6 +71,40 @@ class ChampionInfo(BaseModel):
     magic: int | None = None
     difficulty: int | None = None
     attack_range: float | None = None
+    base_stats: "BaseStats | None" = None
+
+
+class BaseStats(BaseModel):
+    """Estadísticas base oficiales a nivel 1 y su crecimiento por nivel (Data Dragon)."""
+
+    hp: float
+    hp_per_level: float
+    armor: float
+    armor_per_level: float
+    magic_resist: float
+    magic_resist_per_level: float
+    attack_damage: float      # Solo a nivel 1: el crecimiento de Data Dragon no es fiable.
+    attack_speed: float
+    move_speed: float
+    attack_range: float
+
+    @staticmethod
+    def grow(base: float, per_level: float, level: int) -> float:
+        """Fórmula de crecimiento del juego: no es lineal, crece algo más en niveles altos."""
+        n = level - 1
+        return base + per_level * n * (0.7025 + 0.0175 * n)
+
+    def hp_at(self, level: int) -> float:
+        return self.grow(self.hp, self.hp_per_level, level)
+
+    def armor_at(self, level: int) -> float:
+        return self.grow(self.armor, self.armor_per_level, level)
+
+    def magic_resist_at(self, level: int) -> float:
+        return self.grow(self.magic_resist, self.magic_resist_per_level, level)
+
+
+ChampionInfo.model_rebuild()
 
 
 class AbilityInfo(BaseModel):

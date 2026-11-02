@@ -4,7 +4,7 @@ Asistente de escritorio para Windows que ayuda a **estudiar** drafts y partidas 
 
 > Las recomendaciones son ayudas para razonar, no certezas. Cada una indica qué datos usa, de qué tipo son (dato oficial, estadística observada, inferencia estratégica, sugerencia educativa o evidencia insuficiente) y con qué confianza.
 
-## Estado actual (versión 0.7.0)
+## Estado actual (versión 0.8.0)
 
 Inspirada en las funciones de OP.GG e iTero que se pueden ofrecer de forma legítima (ver la tabla de abajo).
 
@@ -38,7 +38,9 @@ Novedades de la 0.6.0, además del rediseño visual:
 | Sugerencias de bloqueo | Sí (personalizadas) | Tus partidas, perfiles y estadísticas importadas |
 | Análisis de la fase de líneas | Sí | Timeline oficial |
 | Tier lists y builds «más populares» globales | No | Hacen falta estadísticas de millones de partidas que no hay de forma legítima; se pueden importar en «Configuración» |
+| Enfrentamiento por fases (nivel 1, 6, objetos, tarde) y gankeos | Sí (en «Draft», antes de la partida) | Datos oficiales, perfiles y tus partidas |
 | Overlays y temporizadores durante la partida | No | Prohibido por la política de Riot |
+| Asistente que da consejos durante la partida | No | Riot no permite apps que dicten las decisiones del jugador; la app se detiene al empezar la partida |
 | Ver a los jugadores en la selección de clasificatorias | No | Prohibido (anonimato) |
 | Aplicar runas automáticamente en el cliente | No | La app solo lee el cliente, nunca escribe |
 
@@ -56,6 +58,14 @@ Con el draft en vivo activado, al empezar una selección de campeones DraftMind 
   - objetos según el equipo rival;
   - lo que tú sueles construir con él y tu runa clave habitual;
   - runas orientativas y hechizos.
+- **Tu enfrentamiento** contra tu rival directo, por fases:
+  - quién tiende a tener ventaja en los niveles 1-3, al 6, con los primeros objetos (7-10) y en la fase tardía (11+);
+  - alcance, duelo de ataques básicos a nivel 1 y aguante base por nivel (datos oficiales);
+  - tu historial contra ese rival y la diferencia de oro al minuto 10;
+  - consejos oficiales de Riot para jugar contra él.
+- **Gankeos**: si juegas jungla, qué línea se presta más a un gankeo; si no, el riesgo de gankeo del jungla rival.
+
+En el draft en vivo el cliente no dice las posiciones rivales: se deducen cuando el perfil solo deja una opción, y si no, puedes indicarlas en su casilla.
 
 **Importante:** las recomendaciones se basan en tus partidas, los datos oficiales de Riot y los perfiles. **No** en estadísticas globales de millones de partidas (como las de iTero u OP.GG), porque esas no están disponibles de forma legítima; cada recomendación indica de dónde sale.
 

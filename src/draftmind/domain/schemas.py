@@ -22,7 +22,19 @@ class DDragonInfo(BaseModel):
 
 
 class DDragonStats(BaseModel):
+    """Estadísticas base. ``attackdamageperlevel`` no se lee: en 16.21.1 vale 0
+    para los 173 campeones, así que ese dato de Data Dragon no es fiable."""
+
     attackrange: float = 0
+    hp: float = 0
+    hpperlevel: float = 0
+    armor: float = 0
+    armorperlevel: float = 0
+    spellblock: float = 0
+    spellblockperlevel: float = 0
+    attackdamage: float = 0
+    attackspeed: float = 0
+    movespeed: float = 0
 
 
 class DDragonChampion(BaseModel):
