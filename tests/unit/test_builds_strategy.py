@@ -36,6 +36,19 @@ def test_physical_enemies_suggest_armor_items(profiles, game_data):
     assert all("Armor" in i.tags for i in armor.items)
 
 
+def test_fighters_prefer_resistance_with_damage(profiles, game_data):
+    from draftmind.domain.models import ItemInfo
+
+    hybrid = ItemInfo(id="6333", name="Danza de la Muerte", total_gold=3300, tags=["Armor", "Damage"])
+    data = game_data.model_copy(update={"items": game_data.items + [hybrid]})
+    enemies = team(profiles, "Zed", "Darius", "Jinx")
+    fighter = profiles["Darius"]  # Primera línea 2: luchador, no tanque puro.
+    armor = next(n for n in item_needs(fighter, enemies, data, Role.TOP) if n.title == "Armadura")
+    assert armor.items[0].name == "Danza de la Muerte"
+    tank = next(n for n in item_needs(profiles["Malphite"], enemies, data, Role.TOP) if n.title == "Armadura")
+    assert "Danza de la Muerte" not in {i.name for i in tank.items}
+
+
 def test_ally_items_only_for_support(profiles, game_data):
     enemies = team(profiles, "Zed", "Darius", "Jinx")
     top = next(n for n in item_needs(profiles["Malphite"], enemies, game_data, Role.TOP) if n.title == "Armadura")

@@ -4,7 +4,7 @@ Asistente de escritorio para Windows que ayuda a **estudiar** drafts y partidas 
 
 > Las recomendaciones son ayudas para razonar, no certezas. Cada una indica qué datos usa, de qué tipo son (dato oficial, estadística observada, inferencia estratégica, sugerencia educativa o evidencia insuficiente) y con qué confianza.
 
-## Estado actual (versión 0.6.0)
+## Estado actual (versión 0.7.0)
 
 Inspirada en las funciones de OP.GG e iTero que se pueden ofrecer de forma legítima (ver la tabla de abajo).
 
@@ -41,6 +41,23 @@ Novedades de la 0.6.0, además del rediseño visual:
 | Overlays y temporizadores durante la partida | No | Prohibido por la política de Riot |
 | Ver a los jugadores en la selección de clasificatorias | No | Prohibido (anonimato) |
 | Aplicar runas automáticamente en el cliente | No | La app solo lee el cliente, nunca escribe |
+
+### Draft automático (en vivo)
+
+Con el draft en vivo activado, al empezar una selección de campeones DraftMind cambia sola a «Draft» y hace parpadear su icono en la barra de tareas, sin robarte el foco. Allí verás:
+
+- **Recomendación principal:**
+  - «Mejor opción para ti» si lo has jugado.
+  - O bien «Mejor de tu repertorio» junto a «Mejor puntuación general».
+
+  Combina la composición de ambos equipos con **tu experiencia real**: partidas, win rate y maestría con cada campeón en esa posición.
+- **Bloqueos sugeridos** para tus campeones de confianza.
+- **Build** del campeón que tengas en hover o confirmado (o de la opción recomendada):
+  - objetos según el equipo rival;
+  - lo que tú sueles construir con él y tu runa clave habitual;
+  - runas orientativas y hechizos.
+
+**Importante:** las recomendaciones se basan en tus partidas, los datos oficiales de Riot y los perfiles. **No** en estadísticas globales de millones de partidas (como las de iTero u OP.GG), porque esas no están disponibles de forma legítima; cada recomendación indica de dónde sale.
 
 ### Draft en vivo
 

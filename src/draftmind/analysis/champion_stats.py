@@ -69,6 +69,17 @@ def comfort_pool(matches: list[MatchSummary], role: Role | None, mastery_ids: li
     return mastery_ids[:limit]
 
 
+def comfort_index(matches: list[MatchSummary]) -> dict[tuple[str, Role | None], tuple[int, int]]:
+    """(campeón, posición) -> (partidas, victorias). La clave (campeón, None) suma todas las posiciones."""
+    index: dict[tuple[str, Role | None], list[int]] = {}
+    for m in valid_matches(matches):
+        for key in ((m.champion_id, m.role), (m.champion_id, None)):
+            games_wins = index.setdefault(key, [0, 0])
+            games_wins[0] += 1
+            games_wins[1] += int(bool(m.win))
+    return {k: (g, w) for k, (g, w) in index.items()}
+
+
 def recent_form(matches: list[MatchSummary], count: int = 20) -> list[bool]:
     """Resultados más recientes primero (True = victoria)."""
     return [bool(m.win) for m in valid_matches(matches)[:count]]

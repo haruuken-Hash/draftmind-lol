@@ -112,6 +112,40 @@ def test_champions_without_profile_are_reported_and_ignored(analyzer):
     assert allies.champion_ids == [] and enemies.champion_ids == []
 
 
+def test_comfort_rewards_real_experience(analyzer):
+    from draftmind.analysis.draft_analyzer import ComfortStats
+
+    stats = {("Garen", Role.TOP): ComfortStats(games=12, wins=8, mastery_level=6, mastery_points=90000)}
+    analyzer.comfort = lambda cid, role: stats.get((cid, role))
+    draft = DraftState(my_role=Role.TOP)
+    garen = analyzer.analyze_candidate(draft, "Garen")
+    darius = analyzer.analyze_candidate(draft, "Darius")
+    f = factor(garen, "comfort")
+    assert f.kind is EvidenceKind.OBSERVED and f.score > 1
+    assert "12 veces" in f.explanation and "67%" in f.explanation and "nivel 6" in f.explanation
+    assert factor(darius, "comfort").kind is EvidenceKind.INSUFFICIENT  # Sin datos no se penaliza.
+    assert garen.score > darius.score
+
+
+def test_low_win_rate_lowers_comfort(analyzer):
+    from draftmind.analysis.draft_analyzer import ComfortStats
+
+    analyzer.comfort = lambda cid, role: ComfortStats(games=10, wins=2) if cid == "Garen" else None
+    f = factor(analyzer.analyze_candidate(DraftState(my_role=Role.TOP), "Garen"), "comfort")
+    assert f.score < 1.0  # 10 partidas (+1) pero 20 % de victorias (-0.6).
+
+
+def test_champion_you_play_in_role_is_suggested(analyzer):
+    from draftmind.analysis.draft_analyzer import ComfortStats
+
+    # Garen no figura como jungla en su perfil, pero tú lo juegas ahí.
+    analyzer.comfort = lambda cid, role: ComfortStats(games=4, wins=3) if (cid, role) == ("Garen", Role.JUNGLE) else None
+    draft = DraftState(my_role=Role.JUNGLE)
+    ids = [a.champion.id for a in analyzer.suggest_candidates(draft, limit=50)]
+    assert "Garen" in ids
+    assert factor(analyzer.analyze_candidate(draft, "Garen"), "role").score > 0
+
+
 def test_unknown_champion_raises(analyzer):
     with pytest.raises(ValueError):
         analyzer.analyze_candidate(DraftState(), "NoExiste")

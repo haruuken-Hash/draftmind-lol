@@ -11,7 +11,7 @@ de campeones del cliente y la refleja aquí; durante la partida se detiene.
 
 from html import escape
 
-from PySide6.QtCore import Qt, QTimer
+from PySide6.QtCore import Qt, QTimer, Signal
 from PySide6.QtGui import QKeySequence, QShortcut
 from PySide6.QtWidgets import (
     QComboBox,
@@ -29,9 +29,11 @@ from PySide6.QtWidgets import (
 )
 
 from draftmind.analysis.ban_analyzer import suggest_bans
+from draftmind.analysis.build_analyzer import build_advice
+from draftmind.analysis.composition_analyzer import analyze_team
 from draftmind.analysis.champion_stats import comfort_pool
 from draftmind.app.bootstrap import AppContext
-from draftmind.domain.enums import Role
+from draftmind.domain.enums import EvidenceKind, Role
 from draftmind.domain.models import CandidateAnalysis, DraftPick, DraftState, TeamProfile
 from draftmind.integrations.champ_select import LiveDraft, LiveSlot
 from draftmind.services.live_draft_service import LiveDraftService, LiveState, LiveStatus
@@ -39,6 +41,7 @@ from draftmind.ui import theme
 from draftmind.ui.components.champion_grid import ChampionGrid
 from draftmind.ui.components.champion_slot import ChampionSlot
 from draftmind.ui.components.recommendation_card import RecommendationCard
+from draftmind.ui.build_report import build_advice_html
 from draftmind.ui.draft_report import render_report
 from draftmind.ui.portraits import PortraitProvider
 from draftmind.ui.session import AppSession
@@ -59,6 +62,8 @@ LIVE_POLL_MS = 2000  # Cada 2 s: como mucho 2 peticiones locales al cliente.
 
 
 class DraftView(QWidget):
+    champ_select_started = Signal()
+
     def __init__(self, ctx: AppContext, session: AppSession, portraits: PortraitProvider,
                  parent: QWidget | None = None):
         super().__init__(parent)
@@ -72,6 +77,7 @@ class DraftView(QWidget):
         self._live_service: LiveDraftService | None = None
         self._live_busy = False
         self._last_live: LiveDraft | None = None
+        self._last_live_state: LiveState | None = None
         self._enemy_roles: dict[int, Role | None] = {}  # Roles enemigos que indica el usuario.
         self._live_timer = QTimer(self)
         self._live_timer.setInterval(LIVE_POLL_MS)
@@ -141,6 +147,14 @@ class DraftView(QWidget):
         analysis_layout.addWidget(self.analysis_heading)
         analysis_layout.addWidget(self.analysis_notes)
         analysis_layout.addLayout(self.cards_layout)
+        self.build_heading = section_label("Build")
+        self.build_label = QLabel()
+        self.build_label.setWordWrap(True)
+        self.build_label.setTextFormat(Qt.TextFormat.RichText)
+        build_box, build_box_layout = card()
+        build_box_layout.addWidget(self.build_label)
+        analysis_layout.addWidget(self.build_heading)
+        analysis_layout.addWidget(build_box)
         analysis_layout.addWidget(section_label("Composiciones"))
         analysis_layout.addLayout(summaries)
         analysis_layout.addStretch()
@@ -342,6 +356,10 @@ class DraftView(QWidget):
         self._live_busy = False
         if self._live_service is None or self.live_toggle.isChecked():
             return  # Desactivado o en pausa mientras llegaba la respuesta.
+        entering = status.state is LiveState.CHAMP_SELECT and self._last_live_state is not LiveState.CHAMP_SELECT
+        self._last_live_state = status.state
+        if entering:
+            self.champ_select_started.emit()  # La ventana principal muestra el Draft.
         text = escape(status.message)
         if not status.certificate_verified:
             text += (f" <span style='color:{theme.MUTED}'>(certificado local no verificado con la CA de "
@@ -458,8 +476,8 @@ class DraftView(QWidget):
             )
             if mine:
                 notes.append(f"{escape(names.get(mine, mine))} no tiene perfil cualitativo: evidencia insuficiente para analizarlo.")
-            suggestions = [a for a in analyzer.suggest_candidates(draft, limit=SUGGESTIONS + 1) if a.champion.id != mine]
-            entries += [(a, None, me is not None) for a in suggestions[:SUGGESTIONS]]
+            suggestions = [a for a in analyzer.suggest_candidates(draft, limit=40) if a.champion.id != mine]
+            entries += self._ranked_entries(suggestions, can_pick=me is not None)
 
         missing = [names.get(i, i) for i in analyzer.missing_profiles(draft) if i != mine]
         if missing:
@@ -474,6 +492,7 @@ class DraftView(QWidget):
         self._analyses = [a for a, _, _ in entries]
         self._render_cards(entries)
         self._render_ban_suggestions(draft)
+        self._render_build(draft, mine or (self._analyses[0].champion.id if self._analyses else None), mine is None)
         allies, enemies = analyzer.compositions(draft)
         self.ally_summary.setText(self._team_html("Tu equipo", allies))
         self.enemy_summary.setText(self._team_html("Equipo enemigo", enemies))
@@ -494,6 +513,46 @@ class DraftView(QWidget):
             card_widget = RecommendationCard(analysis, self.portraits, caption, can_pick)
             card_widget.pick_requested.connect(self.pick_for_me)
             self.cards_layout.addWidget(card_widget, index // CARD_COLUMNS, index % CARD_COLUMNS)
+
+    @staticmethod
+    def _has_experience(analysis: CandidateAnalysis) -> bool:
+        return any(f.key == "comfort" and f.kind is EvidenceKind.OBSERVED for f in analysis.factors)
+
+    def _ranked_entries(self, suggestions: list[CandidateAnalysis], can_pick: bool):
+        """Ordena y etiqueta las sugerencias con honestidad: «para ti» solo si lo juegas."""
+        if not suggestions:
+            return []
+        best = suggestions[0]
+        pool = [a for a in suggestions if self._has_experience(a)]
+        if self._has_experience(best) or not pool:
+            caption = "Mejor opción para ti" if self._has_experience(best) else "Mejor puntuación"
+            ordered = [(best, caption)] + [(a, "Alternativa") for a in suggestions[1:SUGGESTIONS]]
+        else:
+            # El mejor de tu repertorio primero; después, el mejor en general y el resto.
+            ordered = [(pool[0], "Mejor de tu repertorio"), (best, "Mejor puntuación general")]
+            ordered += [(a, "Alternativa") for a in suggestions[1:] if a is not pool[0]][:SUGGESTIONS - 2]
+        return [(a, caption, can_pick) for a, caption in ordered]
+
+    def _render_build(self, draft: DraftState, champion_id: str | None, is_suggestion: bool) -> None:
+        names = self._names()
+        data = self.ctx.game_data
+        if champion_id is None:
+            self.build_heading.setText("Build")
+            self.build_label.setText("<i>Elige tu campeón para ver su build.</i>")
+            return
+        name = names.get(champion_id, champion_id)
+        self.build_heading.setText(f"Build para {name}" + (" (opción recomendada)" if is_suggestion else ""))
+        if data is None:
+            self.build_label.setText("<i>Las builds necesitan los datos de Data Dragon (objetos, runas y hechizos).</i>")
+            return
+        profiles = {p.id: p for p in self.ctx.analyzer.champions}
+        enemies = analyze_team([profiles[p.champion_id] for p in draft.enemies if p.champion_id in profiles])
+        advice = build_advice(champion_id, profiles.get(champion_id), draft.my_role, enemies, data,
+                              self.session.matches)
+        self.build_label.setText(build_advice_html(self.ctx, advice, self.session.matches_are_demo, compact=True)
+                                 + f"<p style='color:{theme.MUTED}'>Más detalle en «Runas y builds». Las builds se "
+                                   "basan en las características oficiales de los objetos, la composición rival y "
+                                   "tus partidas; no en estadísticas globales.</p>")
 
     def _render_ban_suggestions(self, draft: DraftState) -> None:
         while self.ban_row.count():

@@ -6,6 +6,7 @@ from functools import partial
 from PySide6.QtCore import QRectF, QSize, Qt
 from PySide6.QtGui import QColor, QFont, QKeySequence, QLinearGradient, QPainter, QPainterPath, QPixmap, QShortcut
 from PySide6.QtWidgets import (
+    QApplication,
     QFrame,
     QHBoxLayout,
     QLabel,
@@ -19,7 +20,10 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
+from draftmind.analysis.champion_stats import comfort_index
+from draftmind.analysis.draft_analyzer import ComfortStats
 from draftmind.analysis.matchup_analyzer import patch_of
+from draftmind.domain.enums import Role
 from draftmind.app.bootstrap import AppContext
 from draftmind.integrations.data_dragon import DataDragonError
 from draftmind.services.catalog_service import RefreshResult, demo_catalog
@@ -78,6 +82,7 @@ class MainWindow(QMainWindow):
 
         # Las partidas alimentan las estadísticas personales.
         self.session.matches_changed.connect(self._on_matches_changed)
+        self.session.player_profile_changed.connect(self._on_player_profile_changed)
 
         self.dashboard = DashboardView(ctx, self.session, self.portraits)
         self.champions_view = ChampionView(ctx, self.portraits)
@@ -186,6 +191,7 @@ class MainWindow(QMainWindow):
         self.settings_view.matches_cleared.connect(self.history_view.load_demo)
         self.settings_view.live_settings_changed.connect(self.draft_view.configure_live)
         self.champions_view.profiles_changed.connect(self._on_profiles_changed)
+        self.draft_view.champ_select_started.connect(self._on_champ_select_started)
 
         self._on_matches_changed()
         if ctx.settings.ddragon_enabled:
@@ -193,6 +199,12 @@ class MainWindow(QMainWindow):
 
     def go_to(self, view: QWidget) -> None:
         self.nav.setCurrentRow(self.stack.indexOf(view))
+
+    def _on_champ_select_started(self) -> None:
+        """Al empezar la selección de campeones: mostrar el Draft y avisar sin robar el foco."""
+        self.go_to(self.draft_view)
+        QApplication.alert(self)  # Parpadea el icono en la barra de tareas.
+        self.statusBar().showMessage("Selección de campeones detectada: recomendaciones y build en «Draft».", 10000)
 
     # --- Estadísticas personales ------------------------------------------------
 
@@ -203,12 +215,36 @@ class MainWindow(QMainWindow):
             self.account_label.setText(f"{account.riot_id}{demo}" if account else "")
         self.ctx.stats.set_matches(self.session.matches, self.session.matches_are_demo,
                                    account.platform if account else None)
+        self._update_comfort()
         # Las partidas descargadas corrigen las posiciones de los perfiles estimados.
         self.ctx.rebuild_profiles()
         if hasattr(self, "strategy_view"):
             self._on_profiles_changed()
         self._on_stats_changed()
         self._download_item_icons()
+
+    def _update_comfort(self) -> None:
+        """Tu experiencia con cada campeón (partidas reales + maestría) para el análisis del draft."""
+        real = [] if self.session.matches_are_demo else self.session.matches
+        index = comfort_index(real)
+        key_to_id = self.ctx.champion_keys()
+        profile = self.session.player_profile
+        mastery = {key_to_id[m.champion_key]: m for m in profile.masteries
+                   if m.champion_key in key_to_id} if profile else {}
+
+        def comfort(champion_id: str, role: Role | None) -> ComfortStats | None:
+            games, wins = index.get((champion_id, role), (0, 0))
+            m = mastery.get(champion_id)
+            if not games and m is None:
+                return None
+            return ComfortStats(games=games, wins=wins, mastery_level=m.level if m else None,
+                                mastery_points=m.points if m else None)
+
+        self.ctx.analyzer.comfort = comfort
+
+    def _on_player_profile_changed(self) -> None:
+        self._update_comfort()
+        self.draft_view.update_analysis()
 
     def _download_item_icons(self) -> None:
         """Iconos de los objetos de tus partidas que aún no estén en caché (componentes, botas...)."""

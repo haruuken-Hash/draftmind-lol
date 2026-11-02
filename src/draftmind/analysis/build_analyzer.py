@@ -80,7 +80,12 @@ def _items_with(data: GameData, any_tags: set[str], champion: ChampionProfile | 
     """
     offensive_magic = {"SpellDamage"}
     offensive_physical = {"Damage", "CriticalStrike", "AttackSpeed"}
-    tank = champion is not None and champion.frontline >= 2
+    # Tanque puro: primera línea máxima. Los luchadores también quieren daño.
+    tank = champion is not None and champion.frontline >= 3
+    own_offense: set[str] = set()
+    if champion is not None:
+        own_offense = {DamageType.MAGIC: offensive_magic, DamageType.PHYSICAL: offensive_physical}.get(
+            champion.damage_type, offensive_magic | offensive_physical)
     scored = []
     for item in data.items:
         tags = set(item.tags)
@@ -97,7 +102,11 @@ def _items_with(data: GameData, any_tags: set[str], champion: ChampionProfile | 
                 continue
         if tank and tags & (offensive_magic | offensive_physical) and "Health" not in tags:
             continue  # Para un tanque, objetos de daño sin aguante no encajan.
-        relevance = len(tags & any_tags) + (1 if tank and "Health" in tags else 0)
+        relevance = len(tags & any_tags)
+        if tank and "Health" in tags:
+            relevance += 1
+        elif not tank and tags & own_offense:
+            relevance += 1  # Resistencia + el tipo de daño del campeón.
         scored.append((-relevance, item.total_gold, item))
     return [item for *_, item in sorted(scored, key=lambda t: (t[0], t[1]))][:EXAMPLES]
 

@@ -49,6 +49,7 @@ WEIGHTS = {
     "tempo": 0.75,
     "matchup": 0.5,  # Peso bajo: solo hay comparación cualitativa.
     "preferences": 0.75,
+    "comfort": 1.0,
 }
 
 # Peso de los factores cualitativos cuando el candidato tiene un perfil estimado
@@ -63,7 +64,22 @@ LABELS = {
     "tempo": "Ventanas de poder",
     "matchup": "Enfrentamiento directo",
     "preferences": "Preferencias personales",
+    "comfort": "Tu experiencia con el campeón",
 }
+
+
+@dataclass
+class ComfortStats:
+    """Tu historial con un campeón: partidas descargadas en esa posición y maestría."""
+
+    games: int = 0
+    wins: int = 0
+    mastery_level: int | None = None
+    mastery_points: int | None = None
+
+
+COMFORT_MIN_GAMES_FOR_WR = 5
+COMFORT_MIN_GAMES_IN_ROLE = 3
 
 
 @dataclass
@@ -103,6 +119,8 @@ class DraftAnalyzer:
         # Opcional: función que devuelve estadísticas observadas de un enfrentamiento.
         self.matchup_stats: Callable[[str, str, Role | None], list[ChampionStat]] | None = None
         self.current_patch: str | None = None
+        # Opcional: tu historial con un campeón en una posición (partidas y maestría).
+        self.comfort: Callable[[str, Role | None], ComfortStats | None] | None = None
 
     def set_champions(self, champions: list[ChampionProfile]) -> None:
         """Sustituye los perfiles (p. ej. tras descargar Data Dragon o revisar uno)."""
@@ -156,6 +174,7 @@ class DraftAnalyzer:
             self._tempo(c, allies, enemies),
             self._matchup(c, draft),
             self._preferences(c),
+            self._comfort(c, draft.my_role),
         ]
         # Un perfil estimado es menos fiable: sus factores cualitativos pesan menos
         # (las estadísticas observadas, no).
@@ -212,13 +231,17 @@ class DraftAnalyzer:
         taken = {p.champion_id for p in draft.allies + draft.enemies} | set(draft.bans)
         pool = [
             c for c in self._champions.values()
-            if c.id not in taken and (role is None or role in c.roles)
+            if c.id not in taken and (role is None or role in c.roles or self._plays_in_role(c.id, role))
         ]
         analyses = [self.analyze_candidate(draft, c.id) for c in pool]
         analyses.sort(key=lambda a: (-a.score, a.champion.name))
         return analyses[:limit]
 
     # --- Factores ----------------------------------------------------------
+
+    def _plays_in_role(self, champion_id: str, role: Role) -> bool:
+        stats = self.comfort(champion_id, role) if self.comfort else None
+        return bool(stats and stats.games >= COMFORT_MIN_GAMES_IN_ROLE)
 
     def _role_fit(self, c: ChampionProfile, role: Role | None) -> FactorResult:
         f = _Factor("role")
@@ -227,6 +250,8 @@ class DraftAnalyzer:
             return f.result("No has indicado tu posición; no se evalúa el encaje de rol.")
         if role in c.roles:
             f.add(1.0, f"{c.name} figura como {role.label} en los perfiles.")
+        elif self._plays_in_role(c.id, role):
+            f.add(1.0, f"Tú lo juegas como {role.label} en tus partidas.")
         else:
             f.add(-1.5, f"{c.name} no figura como {role.label}; sería una elección poco habitual.")
         return f.result("")
@@ -335,6 +360,30 @@ class DraftAnalyzer:
             f"{stats_note} Comparación cualitativa: presión temprana {c.early}/3 de {c.name} frente a "
             f"{opponent.early}/3 de {opponent.name}. Es una pista, no demuestra el resultado de la línea.",
         )
+        return f.result("")
+
+    def _comfort(self, c: ChampionProfile, role: Role | None) -> FactorResult:
+        """Experiencia real: partidas tuyas con el campeón (en esa posición) y maestría."""
+        f = _Factor("comfort", kind=EvidenceKind.OBSERVED)
+        stats = self.comfort(c.id, role) if self.comfort else None
+        if stats is None or (stats.games == 0 and not stats.mastery_level):
+            f.kind = EvidenceKind.INSUFFICIENT
+            where = f" como {role.label}" if role else ""
+            return f.result(f"Sin partidas tuyas descargadas con {c.name}{where} ni maestría conocida.")
+        if stats.games >= 10:
+            f.add(1.0, f"Lo has jugado {stats.games} veces en esta posición.")
+        elif stats.games >= 3:
+            f.add(0.5, f"Lo has jugado {stats.games} veces en esta posición.")
+        elif stats.games:
+            f.add(0.0, f"Solo {stats.games} partida(s) tuya(s) con él en esta posición.")
+        if stats.games >= COMFORT_MIN_GAMES_FOR_WR:
+            wr = stats.wins / stats.games
+            f.add(max(-0.75, min(0.75, (wr - 0.5) * 2)),
+                  f"Tu win rate con él: {wr:.0%} en {stats.games} partidas"
+                  + (" (muestra pequeña)." if stats.games < 20 else "."))
+        if stats.mastery_level and stats.mastery_level >= 5:
+            points = f" ({stats.mastery_points:,} puntos)".replace(",", ".") if stats.mastery_points else ""
+            f.add(0.25, f"Maestría nivel {stats.mastery_level}{points}.")
         return f.result("")
 
     def _preferences(self, c: ChampionProfile) -> FactorResult:

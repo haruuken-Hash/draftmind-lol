@@ -104,6 +104,11 @@ Seis factores, cada uno de -2 a +2:
 | Ventanas de poder | 0.75 | Presión temprana enemiga y equilibrio temprano/tardío |
 | Enfrentamiento directo | 0.5 | Ver abajo |
 | Preferencias personales | 0.75 | Favoritos y dificultad según el nivel declarado (ajusta, no excluye) |
+| Tu experiencia con el campeón | 1.0 | Observado: partidas reales descargadas con él en esa posición (+0,5 desde 3, +1 desde 10), tu win rate con él si hay ≥ 5 partidas ((wr − 0,5) × 2, limitado a ±0,75) y maestría nivel ≥ 5 (+0,25). Sin datos no penaliza. Las partidas de demostración no cuentan |
+
+Si juegas un campeón en una posición (≥ 3 partidas), el encaje de rol lo reconoce aunque su perfil diga otra cosa, y entra en las sugerencias de esa posición.
+
+En la interfaz, la primera sugerencia solo se llama «Mejor opción para ti» si tienes experiencia con ella. Si no, se muestra primero «Mejor de tu repertorio» (el mejor campeón que sí juegas) y después «Mejor puntuación general».
 
 Factor de enfrentamiento directo:
 - Si un proveedor tiene estadísticas del enfrentamiento con confianza al menos baja (≥ 100 partidas), se usa la **estadística observada**: diferencia respecto al 50 % / 10, limitada a ±1.

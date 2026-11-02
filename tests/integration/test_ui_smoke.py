@@ -237,6 +237,35 @@ def test_live_blind_pick_without_my_position(window):
     view._live_service = None
 
 
+def test_champ_select_start_switches_to_draft(window):
+    from draftmind.integrations.champ_select import LiveDraft, LiveSlot
+    from draftmind.services.live_draft_service import LiveState, LiveStatus
+
+    view = window.draft_view
+    window.go_to(window.dashboard)
+    view._live_service = object()
+    starts = []
+    view.champ_select_started.connect(lambda: starts.append(1))
+    draft = LiveDraft(me=LiveSlot(cell_id=0, role=Role.TOP), enemies=[LiveSlot(cell_id=5)])
+    view.apply_live_status(LiveStatus(LiveState.CLIENT_IDLE, "Cliente abierto."))
+    view.apply_live_status(LiveStatus(LiveState.CHAMP_SELECT, "Selección.", draft))
+    view.apply_live_status(LiveStatus(LiveState.CHAMP_SELECT, "Selección.", draft))  # Sigue: no repite.
+    assert starts == [1]
+    assert window.stack.currentWidget() is view
+    view._live_service = None
+
+
+def test_draft_shows_best_option_and_build(window):
+    view = window.draft_view
+    set_role(view, Role.TOP)
+    assert view.cards_layout.itemAt(0).widget().analysis is view._analyses[0]
+    assert "opción recomendada" in view.build_heading.text()
+    view.pick_for_me("Malphite")
+    assert view.build_heading.text() == "Build para Malphite"
+    # Sin Data Dragon en las pruebas, la build lo explica en lugar de inventar objetos.
+    assert "Data Dragon" in view.build_label.text()
+
+
 def test_riot_disclaimer_is_shown(window):
     from PySide6.QtWidgets import QLabel
 

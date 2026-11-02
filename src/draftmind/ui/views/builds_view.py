@@ -26,6 +26,7 @@ from draftmind.analysis.composition_analyzer import analyze_team
 from draftmind.app.bootstrap import AppContext
 from draftmind.domain.enums import Role
 from draftmind.ui import theme
+from draftmind.ui.build_report import build_advice_html, img_tag, item_img
 from draftmind.ui.portraits import PortraitProvider
 from draftmind.ui.session import AppSession
 from draftmind.ui.widgets import combo_role, notice_label, subtitle_label, title_label
@@ -134,14 +135,10 @@ class BuildsView(QWidget):
     # --- Utilidades ---------------------------------------------------------
 
     def _img(self, relative: str | None, size: int = 26) -> str:
-        path = self.ctx.catalogs.client.cached_image(relative) if relative else None
-        if path is None:
-            return ""
-        return f"<img src='{Path(path).as_posix()}' width='{size}' height='{size}'> "
+        return img_tag(self.ctx, relative, size)
 
     def _item_img(self, item_id: str | int, size: int = 26) -> str:
-        data = self.ctx.game_data
-        return self._img(f"{data.version}/img/item/{item_id}.png", size) if data else ""
+        return item_img(self.ctx, item_id, size)
 
     # --- Contenido ----------------------------------------------------------------
 
@@ -174,58 +171,11 @@ class BuildsView(QWidget):
         advice = build_advice(champion_id, profiles.get(champion_id), combo_role(self.role), enemies, data,
                               self.session.matches)
         names = {c.id: c.name for c in self.ctx.catalog.champions}
-        muted = theme.MUTED
-
-        parts = []
+        header = ""
         if self.use_draft.isChecked():
             listed = ", ".join(names.get(p.champion_id, p.champion_id) for p in draft.enemies) or "ninguno"
-            parts.append(f"<p style='color:{muted}'>Enemigos del draft: {escape(listed)}</p>")
-
-        parts.append("<h3>Recomendaciones estratégicas</h3>")
-        if advice.needs:
-            for need in advice.needs:
-                items = "".join(
-                    f"<div>{self._item_img(i.id)}<b>{escape(i.name)}</b> · {i.total_gold} de oro — "
-                    f"<span style='color:{muted}'>{escape(i.plaintext)}</span></div>"
-                    for i in need.items
-                ) or f"<div style='color:{muted}'>No se encontraron objetos con esas características.</div>"
-                parts.append(f"<p><b>{escape(need.title)}</b> <i>[{need.kind.label}]</i><br>{escape(need.reason)}</p>"
-                             f"{items}<p style='color:{muted}'>Ejemplos según etiquetas oficiales; no son "
-                             "la única opción ni necesariamente la mejor.</p>")
-        else:
-            parts.append(f"<p style='color:{muted}'>Sin necesidades situacionales detectadas con los enemigos indicados.</p>")
-
-        parts.append("<h3>Runas</h3>")
-        for rune in advice.runes:
-            keystones = "".join(
-                f"<div>{self._img('img/' + k.icon, 24)}<b>{escape(k.name)}</b>: "
-                f"<span style='color:{muted}'>{escape(k.short_desc)}</span></div>"
-                for k in rune.path.keystones
-            )
-            parts.append(f"<p>{self._img('img/' + rune.path.icon, 22)}<b>{escape(rune.path.name)}</b> "
-                         f"<i>[{rune.kind.label}]</i><br>{escape(rune.reason)}</p>{keystones}")
-        if not advice.runes:
-            parts.append(f"<p style='color:{muted}'>Sin orientación de runas para este campeón.</p>")
-
-        parts.append("<h3>Hechizos de invocador</h3>")
-        spells = self.ctx.game_data.spells
-        for s in advice.spells:
-            image = next((sp.image_file for sp in spells if sp.id == s.spell_id), None)
-            img = self._img(f"{data.version}/img/spell/{image}", 24) if image else ""
-            parts.append(f"<div>{img}<b>{escape(s.name)}</b>: {escape(s.reason)} <i>[Sugerencia educativa]</i></div>")
-
-        parts.append(f"<h3>Tus configuraciones frecuentes ({advice.personal_games} partidas)</h3>")
-        if advice.frequent_items:
-            demo = " (partidas FICTICIAS de demostración)" if self.session.matches_are_demo else ""
-            parts.append(f"<p style='color:{muted}'>Estadística observada en tus partidas{demo}. "
-                         "Frecuencia de uso, no eficacia.</p>")
-            for f in advice.frequent_items:
-                parts.append(f"<div>{self._item_img(f.item_id)}<b>{escape(f.name)}</b>: en {f.games} partidas "
-                             f"({f.wins} victorias)</div>")
-            for name, games, wins in advice.frequent_keystones:
-                parts.append(f"<div>Runa clave <b>{escape(name)}</b>: {games} partidas ({wins} victorias)</div>")
-        parts.append("".join(f"<p style='color:{muted}'>Nota: {escape(n)}</p>" for n in advice.notes))
-        self.report.setText("".join(parts))
+            header = f"<p style='color:{theme.MUTED}'>Enemigos del draft: {escape(listed)}</p>"
+        self.report.setText(header + build_advice_html(self.ctx, advice, self.session.matches_are_demo))
 
     def _fill_items(self) -> None:
         self.item_list.clear()
