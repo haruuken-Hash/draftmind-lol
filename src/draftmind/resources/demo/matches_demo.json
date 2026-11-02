@@ -1,0 +1,6226 @@
+{
+ "demo": true,
+ "notes": "Partidas ficticias generadas por tools/generate_demo_matches.py. No son datos reales.",
+ "puuid": "DEMO-PUUID-JUGADOR",
+ "game_name": "Jugador Demo",
+ "tag_line": "DEMO",
+ "platform": "LA1",
+ "matches": [
+  {
+   "metadata": {
+    "matchId": "DEMO_9000"
+   },
+   "info": {
+    "gameCreation": 1793131200000,
+    "gameDuration": 1920,
+    "gameEndTimestamp": 1793133120000,
+    "gameVersion": "16.20.700.1234",
+    "queueId": 420,
+    "participants": [
+     {
+      "puuid": "DEMO-PUUID-JUGADOR",
+      "championName": "Darius",
+      "teamId": 100,
+      "teamPosition": "TOP",
+      "win": true,
+      "kills": 1,
+      "deaths": 4,
+      "assists": 10,
+      "totalMinionsKilled": 216,
+      "neutralMinionsKilled": 6,
+      "goldEarned": 13568,
+      "visionScore": 35,
+      "totalDamageDealtToChampions": 26088,
+      "totalDamageTaken": 30747,
+      "item0": 3047,
+      "item1": 3075,
+      "item2": 3065,
+      "item3": 3053,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 12,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8437
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-100-JUNGLE",
+      "championName": "MasterYi",
+      "teamId": 100,
+      "teamPosition": "JUNGLE",
+      "win": true,
+      "kills": 7,
+      "deaths": 4,
+      "assists": 1,
+      "totalMinionsKilled": 38,
+      "neutralMinionsKilled": 137,
+      "goldEarned": 12918,
+      "visionScore": 19,
+      "totalDamageDealtToChampions": 27468,
+      "totalDamageTaken": 24633,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 11,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-100-MIDDLE",
+      "championName": "Zed",
+      "teamId": 100,
+      "teamPosition": "MIDDLE",
+      "win": true,
+      "kills": 5,
+      "deaths": 4,
+      "assists": 7,
+      "totalMinionsKilled": 175,
+      "neutralMinionsKilled": 5,
+      "goldEarned": 13651,
+      "visionScore": 51,
+      "totalDamageDealtToChampions": 22617,
+      "totalDamageTaken": 17465,
+      "item0": 3020,
+      "item1": 3089,
+      "item2": 3157,
+      "item3": 3135,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8112
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-100-BOTTOM",
+      "championName": "Ezreal",
+      "teamId": 100,
+      "teamPosition": "BOTTOM",
+      "win": true,
+      "kills": 1,
+      "deaths": 9,
+      "assists": 9,
+      "totalMinionsKilled": 177,
+      "neutralMinionsKilled": 7,
+      "goldEarned": 11101,
+      "visionScore": 38,
+      "totalDamageDealtToChampions": 25862,
+      "totalDamageTaken": 21932,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-100-UTILITY",
+      "championName": "Janna",
+      "teamId": 100,
+      "teamPosition": "UTILITY",
+      "win": true,
+      "kills": 5,
+      "deaths": 8,
+      "assists": 7,
+      "totalMinionsKilled": 33,
+      "neutralMinionsKilled": 8,
+      "goldEarned": 12474,
+      "visionScore": 20,
+      "totalDamageDealtToChampions": 22501,
+      "totalDamageTaken": 30402,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-TOP",
+      "championName": "Ornn",
+      "teamId": 200,
+      "teamPosition": "TOP",
+      "win": false,
+      "kills": 7,
+      "deaths": 7,
+      "assists": 9,
+      "totalMinionsKilled": 175,
+      "neutralMinionsKilled": 6,
+      "goldEarned": 12725,
+      "visionScore": 50,
+      "totalDamageDealtToChampions": 22607,
+      "totalDamageTaken": 31459,
+      "item0": 3047,
+      "item1": 3075,
+      "item2": 3065,
+      "item3": 3053,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 12,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8437
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-JUNGLE",
+      "championName": "MasterYi",
+      "teamId": 200,
+      "teamPosition": "JUNGLE",
+      "win": false,
+      "kills": 3,
+      "deaths": 3,
+      "assists": 14,
+      "totalMinionsKilled": 38,
+      "neutralMinionsKilled": 137,
+      "goldEarned": 10747,
+      "visionScore": 40,
+      "totalDamageDealtToChampions": 28589,
+      "totalDamageTaken": 17969,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 11,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-MIDDLE",
+      "championName": "Kassadin",
+      "teamId": 200,
+      "teamPosition": "MIDDLE",
+      "win": false,
+      "kills": 6,
+      "deaths": 8,
+      "assists": 3,
+      "totalMinionsKilled": 186,
+      "neutralMinionsKilled": 3,
+      "goldEarned": 13822,
+      "visionScore": 20,
+      "totalDamageDealtToChampions": 25611,
+      "totalDamageTaken": 28946,
+      "item0": 3020,
+      "item1": 3089,
+      "item2": 3157,
+      "item3": 3135,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8112
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-BOTTOM",
+      "championName": "Vayne",
+      "teamId": 200,
+      "teamPosition": "BOTTOM",
+      "win": false,
+      "kills": 4,
+      "deaths": 9,
+      "assists": 7,
+      "totalMinionsKilled": 195,
+      "neutralMinionsKilled": 4,
+      "goldEarned": 12664,
+      "visionScore": 38,
+      "totalDamageDealtToChampions": 25573,
+      "totalDamageTaken": 31453,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-UTILITY",
+      "championName": "Lulu",
+      "teamId": 200,
+      "teamPosition": "UTILITY",
+      "win": false,
+      "kills": 6,
+      "deaths": 4,
+      "assists": 5,
+      "totalMinionsKilled": 40,
+      "neutralMinionsKilled": 0,
+      "goldEarned": 10687,
+      "visionScore": 39,
+      "totalDamageDealtToChampions": 23956,
+      "totalDamageTaken": 24797,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     }
+    ]
+   }
+  },
+  {
+   "metadata": {
+    "matchId": "DEMO_9001"
+   },
+   "info": {
+    "gameCreation": 1792969920000,
+    "gameDuration": 2220,
+    "gameEndTimestamp": 1792972140000,
+    "gameVersion": "16.20.700.1234",
+    "queueId": 420,
+    "participants": [
+     {
+      "puuid": "DEMO-PUUID-JUGADOR",
+      "championName": "Malphite",
+      "teamId": 100,
+      "teamPosition": "TOP",
+      "win": true,
+      "kills": 4,
+      "deaths": 8,
+      "assists": 8,
+      "totalMinionsKilled": 243,
+      "neutralMinionsKilled": 7,
+      "goldEarned": 15797,
+      "visionScore": 41,
+      "totalDamageDealtToChampions": 33434,
+      "totalDamageTaken": 36957,
+      "item0": 3047,
+      "item1": 3075,
+      "item2": 3065,
+      "item3": 3053,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 12,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8437
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-100-JUNGLE",
+      "championName": "JarvanIV",
+      "teamId": 100,
+      "teamPosition": "JUNGLE",
+      "win": true,
+      "kills": 7,
+      "deaths": 2,
+      "assists": 8,
+      "totalMinionsKilled": 44,
+      "neutralMinionsKilled": 159,
+      "goldEarned": 15270,
+      "visionScore": 50,
+      "totalDamageDealtToChampions": 26180,
+      "totalDamageTaken": 28554,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 11,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-100-MIDDLE",
+      "championName": "Orianna",
+      "teamId": 100,
+      "teamPosition": "MIDDLE",
+      "win": true,
+      "kills": 6,
+      "deaths": 8,
+      "assists": 2,
+      "totalMinionsKilled": 224,
+      "neutralMinionsKilled": 7,
+      "goldEarned": 13853,
+      "visionScore": 26,
+      "totalDamageDealtToChampions": 32497,
+      "totalDamageTaken": 21749,
+      "item0": 3020,
+      "item1": 3089,
+      "item2": 3157,
+      "item3": 3135,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8112
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-100-BOTTOM",
+      "championName": "Jinx",
+      "teamId": 100,
+      "teamPosition": "BOTTOM",
+      "win": true,
+      "kills": 1,
+      "deaths": 1,
+      "assists": 8,
+      "totalMinionsKilled": 220,
+      "neutralMinionsKilled": 1,
+      "goldEarned": 14918,
+      "visionScore": 26,
+      "totalDamageDealtToChampions": 18885,
+      "totalDamageTaken": 19491,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-100-UTILITY",
+      "championName": "Nautilus",
+      "teamId": 100,
+      "teamPosition": "UTILITY",
+      "win": true,
+      "kills": 4,
+      "deaths": 6,
+      "assists": 3,
+      "totalMinionsKilled": 37,
+      "neutralMinionsKilled": 7,
+      "goldEarned": 15272,
+      "visionScore": 56,
+      "totalDamageDealtToChampions": 26747,
+      "totalDamageTaken": 29000,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-TOP",
+      "championName": "Garen",
+      "teamId": 200,
+      "teamPosition": "TOP",
+      "win": false,
+      "kills": 9,
+      "deaths": 9,
+      "assists": 5,
+      "totalMinionsKilled": 193,
+      "neutralMinionsKilled": 2,
+      "goldEarned": 16361,
+      "visionScore": 50,
+      "totalDamageDealtToChampions": 33577,
+      "totalDamageTaken": 25293,
+      "item0": 3047,
+      "item1": 3075,
+      "item2": 3065,
+      "item3": 3053,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 12,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8437
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-JUNGLE",
+      "championName": "LeeSin",
+      "teamId": 200,
+      "teamPosition": "JUNGLE",
+      "win": false,
+      "kills": 6,
+      "deaths": 3,
+      "assists": 9,
+      "totalMinionsKilled": 44,
+      "neutralMinionsKilled": 159,
+      "goldEarned": 15792,
+      "visionScore": 33,
+      "totalDamageDealtToChampions": 34388,
+      "totalDamageTaken": 27143,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 11,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-MIDDLE",
+      "championName": "Ahri",
+      "teamId": 200,
+      "teamPosition": "MIDDLE",
+      "win": false,
+      "kills": 0,
+      "deaths": 6,
+      "assists": 11,
+      "totalMinionsKilled": 208,
+      "neutralMinionsKilled": 0,
+      "goldEarned": 12323,
+      "visionScore": 37,
+      "totalDamageDealtToChampions": 29281,
+      "totalDamageTaken": 28493,
+      "item0": 3020,
+      "item1": 3089,
+      "item2": 3157,
+      "item3": 3135,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8112
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-BOTTOM",
+      "championName": "Jinx",
+      "teamId": 200,
+      "teamPosition": "BOTTOM",
+      "win": false,
+      "kills": 7,
+      "deaths": 8,
+      "assists": 10,
+      "totalMinionsKilled": 223,
+      "neutralMinionsKilled": 2,
+      "goldEarned": 12893,
+      "visionScore": 39,
+      "totalDamageDealtToChampions": 24671,
+      "totalDamageTaken": 25968,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-UTILITY",
+      "championName": "Nautilus",
+      "teamId": 200,
+      "teamPosition": "UTILITY",
+      "win": false,
+      "kills": 3,
+      "deaths": 2,
+      "assists": 9,
+      "totalMinionsKilled": 42,
+      "neutralMinionsKilled": 3,
+      "goldEarned": 15083,
+      "visionScore": 25,
+      "totalDamageDealtToChampions": 28642,
+      "totalDamageTaken": 39167,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     }
+    ]
+   }
+  },
+  {
+   "metadata": {
+    "matchId": "DEMO_9002"
+   },
+   "info": {
+    "gameCreation": 1792837440000,
+    "gameDuration": 2160,
+    "gameEndTimestamp": 1792839600000,
+    "gameVersion": "16.20.700.1234",
+    "queueId": 420,
+    "participants": [
+     {
+      "puuid": "DEMO-100-TOP",
+      "championName": "Garen",
+      "teamId": 100,
+      "teamPosition": "TOP",
+      "win": false,
+      "kills": 7,
+      "deaths": 1,
+      "assists": 3,
+      "totalMinionsKilled": 218,
+      "neutralMinionsKilled": 3,
+      "goldEarned": 15272,
+      "visionScore": 38,
+      "totalDamageDealtToChampions": 33418,
+      "totalDamageTaken": 21464,
+      "item0": 3047,
+      "item1": 3075,
+      "item2": 3065,
+      "item3": 3053,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 12,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8437
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-100-JUNGLE",
+      "championName": "Sejuani",
+      "teamId": 100,
+      "teamPosition": "JUNGLE",
+      "win": false,
+      "kills": 6,
+      "deaths": 5,
+      "assists": 7,
+      "totalMinionsKilled": 43,
+      "neutralMinionsKilled": 154,
+      "goldEarned": 14182,
+      "visionScore": 52,
+      "totalDamageDealtToChampions": 23097,
+      "totalDamageTaken": 22043,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 11,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-PUUID-JUGADOR",
+      "championName": "Ahri",
+      "teamId": 100,
+      "teamPosition": "MIDDLE",
+      "win": false,
+      "kills": 4,
+      "deaths": 8,
+      "assists": 8,
+      "totalMinionsKilled": 266,
+      "neutralMinionsKilled": 6,
+      "goldEarned": 13122,
+      "visionScore": 25,
+      "totalDamageDealtToChampions": 25548,
+      "totalDamageTaken": 27602,
+      "item0": 3020,
+      "item1": 3089,
+      "item2": 3157,
+      "item3": 3135,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8112
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-100-BOTTOM",
+      "championName": "Vayne",
+      "teamId": 100,
+      "teamPosition": "BOTTOM",
+      "win": false,
+      "kills": 8,
+      "deaths": 5,
+      "assists": 14,
+      "totalMinionsKilled": 188,
+      "neutralMinionsKilled": 3,
+      "goldEarned": 12879,
+      "visionScore": 55,
+      "totalDamageDealtToChampions": 32015,
+      "totalDamageTaken": 31946,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-100-UTILITY",
+      "championName": "Lulu",
+      "teamId": 100,
+      "teamPosition": "UTILITY",
+      "win": false,
+      "kills": 8,
+      "deaths": 3,
+      "assists": 1,
+      "totalMinionsKilled": 40,
+      "neutralMinionsKilled": 2,
+      "goldEarned": 13399,
+      "visionScore": 45,
+      "totalDamageDealtToChampions": 30452,
+      "totalDamageTaken": 22677,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-TOP",
+      "championName": "Ornn",
+      "teamId": 200,
+      "teamPosition": "TOP",
+      "win": true,
+      "kills": 4,
+      "deaths": 9,
+      "assists": 13,
+      "totalMinionsKilled": 214,
+      "neutralMinionsKilled": 3,
+      "goldEarned": 14341,
+      "visionScore": 40,
+      "totalDamageDealtToChampions": 28265,
+      "totalDamageTaken": 20864,
+      "item0": 3047,
+      "item1": 3075,
+      "item2": 3065,
+      "item3": 3053,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 12,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8437
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-JUNGLE",
+      "championName": "JarvanIV",
+      "teamId": 200,
+      "teamPosition": "JUNGLE",
+      "win": true,
+      "kills": 1,
+      "deaths": 7,
+      "assists": 3,
+      "totalMinionsKilled": 43,
+      "neutralMinionsKilled": 154,
+      "goldEarned": 12338,
+      "visionScore": 20,
+      "totalDamageDealtToChampions": 22612,
+      "totalDamageTaken": 35330,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 11,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-MIDDLE",
+      "championName": "Ahri",
+      "teamId": 200,
+      "teamPosition": "MIDDLE",
+      "win": true,
+      "kills": 8,
+      "deaths": 6,
+      "assists": 5,
+      "totalMinionsKilled": 215,
+      "neutralMinionsKilled": 1,
+      "goldEarned": 13137,
+      "visionScore": 30,
+      "totalDamageDealtToChampions": 20895,
+      "totalDamageTaken": 19358,
+      "item0": 3020,
+      "item1": 3089,
+      "item2": 3157,
+      "item3": 3135,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8112
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-BOTTOM",
+      "championName": "Caitlyn",
+      "teamId": 200,
+      "teamPosition": "BOTTOM",
+      "win": true,
+      "kills": 4,
+      "deaths": 7,
+      "assists": 1,
+      "totalMinionsKilled": 186,
+      "neutralMinionsKilled": 3,
+      "goldEarned": 11979,
+      "visionScore": 22,
+      "totalDamageDealtToChampions": 28544,
+      "totalDamageTaken": 30451,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-UTILITY",
+      "championName": "Janna",
+      "teamId": 200,
+      "teamPosition": "UTILITY",
+      "win": true,
+      "kills": 5,
+      "deaths": 8,
+      "assists": 10,
+      "totalMinionsKilled": 43,
+      "neutralMinionsKilled": 0,
+      "goldEarned": 15874,
+      "visionScore": 30,
+      "totalDamageDealtToChampions": 20081,
+      "totalDamageTaken": 27993,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     }
+    ]
+   }
+  },
+  {
+   "metadata": {
+    "matchId": "DEMO_9003"
+   },
+   "info": {
+    "gameCreation": 1792672560000,
+    "gameDuration": 1500,
+    "gameEndTimestamp": 1792674060000,
+    "gameVersion": "16.20.700.1234",
+    "queueId": 420,
+    "participants": [
+     {
+      "puuid": "DEMO-PUUID-JUGADOR",
+      "championName": "Darius",
+      "teamId": 100,
+      "teamPosition": "TOP",
+      "win": false,
+      "kills": 4,
+      "deaths": 7,
+      "assists": 5,
+      "totalMinionsKilled": 182,
+      "neutralMinionsKilled": 5,
+      "goldEarned": 8422,
+      "visionScore": 32,
+      "totalDamageDealtToChampions": 22230,
+      "totalDamageTaken": 16721,
+      "item0": 3047,
+      "item1": 3075,
+      "item2": 3065,
+      "item3": 3053,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 12,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8437
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-100-JUNGLE",
+      "championName": "JarvanIV",
+      "teamId": 100,
+      "teamPosition": "JUNGLE",
+      "win": false,
+      "kills": 4,
+      "deaths": 2,
+      "assists": 5,
+      "totalMinionsKilled": 30,
+      "neutralMinionsKilled": 107,
+      "goldEarned": 10553,
+      "visionScore": 21,
+      "totalDamageDealtToChampions": 22537,
+      "totalDamageTaken": 20632,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 11,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-100-MIDDLE",
+      "championName": "Lux",
+      "teamId": 100,
+      "teamPosition": "MIDDLE",
+      "win": false,
+      "kills": 3,
+      "deaths": 9,
+      "assists": 1,
+      "totalMinionsKilled": 154,
+      "neutralMinionsKilled": 1,
+      "goldEarned": 8736,
+      "visionScore": 15,
+      "totalDamageDealtToChampions": 11716,
+      "totalDamageTaken": 20338,
+      "item0": 3020,
+      "item1": 3089,
+      "item2": 3157,
+      "item3": 3135,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8112
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-100-BOTTOM",
+      "championName": "Vayne",
+      "teamId": 100,
+      "teamPosition": "BOTTOM",
+      "win": false,
+      "kills": 4,
+      "deaths": 1,
+      "assists": 7,
+      "totalMinionsKilled": 149,
+      "neutralMinionsKilled": 5,
+      "goldEarned": 9495,
+      "visionScore": 22,
+      "totalDamageDealtToChampions": 20957,
+      "totalDamageTaken": 22438,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-100-UTILITY",
+      "championName": "Thresh",
+      "teamId": 100,
+      "teamPosition": "UTILITY",
+      "win": false,
+      "kills": 2,
+      "deaths": 9,
+      "assists": 1,
+      "totalMinionsKilled": 30,
+      "neutralMinionsKilled": 8,
+      "goldEarned": 10301,
+      "visionScore": 23,
+      "totalDamageDealtToChampions": 14437,
+      "totalDamageTaken": 14715,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-TOP",
+      "championName": "Malphite",
+      "teamId": 200,
+      "teamPosition": "TOP",
+      "win": true,
+      "kills": 0,
+      "deaths": 5,
+      "assists": 9,
+      "totalMinionsKilled": 145,
+      "neutralMinionsKilled": 4,
+      "goldEarned": 11125,
+      "visionScore": 16,
+      "totalDamageDealtToChampions": 19084,
+      "totalDamageTaken": 13841,
+      "item0": 3047,
+      "item1": 3075,
+      "item2": 3065,
+      "item3": 3053,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 12,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8437
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-JUNGLE",
+      "championName": "Sejuani",
+      "teamId": 200,
+      "teamPosition": "JUNGLE",
+      "win": true,
+      "kills": 8,
+      "deaths": 1,
+      "assists": 11,
+      "totalMinionsKilled": 30,
+      "neutralMinionsKilled": 107,
+      "goldEarned": 10848,
+      "visionScore": 35,
+      "totalDamageDealtToChampions": 21498,
+      "totalDamageTaken": 17610,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 11,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-MIDDLE",
+      "championName": "Kassadin",
+      "teamId": 200,
+      "teamPosition": "MIDDLE",
+      "win": true,
+      "kills": 5,
+      "deaths": 1,
+      "assists": 11,
+      "totalMinionsKilled": 159,
+      "neutralMinionsKilled": 3,
+      "goldEarned": 9661,
+      "visionScore": 39,
+      "totalDamageDealtToChampions": 19739,
+      "totalDamageTaken": 25431,
+      "item0": 3020,
+      "item1": 3089,
+      "item2": 3157,
+      "item3": 3135,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8112
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-BOTTOM",
+      "championName": "Caitlyn",
+      "teamId": 200,
+      "teamPosition": "BOTTOM",
+      "win": true,
+      "kills": 5,
+      "deaths": 4,
+      "assists": 9,
+      "totalMinionsKilled": 158,
+      "neutralMinionsKilled": 5,
+      "goldEarned": 10833,
+      "visionScore": 22,
+      "totalDamageDealtToChampions": 16990,
+      "totalDamageTaken": 19363,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-UTILITY",
+      "championName": "Lulu",
+      "teamId": 200,
+      "teamPosition": "UTILITY",
+      "win": true,
+      "kills": 9,
+      "deaths": 5,
+      "assists": 4,
+      "totalMinionsKilled": 26,
+      "neutralMinionsKilled": 6,
+      "goldEarned": 8711,
+      "visionScore": 37,
+      "totalDamageDealtToChampions": 23130,
+      "totalDamageTaken": 24706,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     }
+    ]
+   }
+  },
+  {
+   "metadata": {
+    "matchId": "DEMO_9004"
+   },
+   "info": {
+    "gameCreation": 1792529280000,
+    "gameDuration": 2100,
+    "gameEndTimestamp": 1792531380000,
+    "gameVersion": "16.20.700.1234",
+    "queueId": 420,
+    "participants": [
+     {
+      "puuid": "DEMO-100-TOP",
+      "championName": "Garen",
+      "teamId": 100,
+      "teamPosition": "TOP",
+      "win": false,
+      "kills": 1,
+      "deaths": 5,
+      "assists": 6,
+      "totalMinionsKilled": 207,
+      "neutralMinionsKilled": 4,
+      "goldEarned": 12129,
+      "visionScore": 45,
+      "totalDamageDealtToChampions": 33229,
+      "totalDamageTaken": 17885,
+      "item0": 3047,
+      "item1": 3075,
+      "item2": 3065,
+      "item3": 3053,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 12,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8437
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-100-JUNGLE",
+      "championName": "Sejuani",
+      "teamId": 100,
+      "teamPosition": "JUNGLE",
+      "win": false,
+      "kills": 9,
+      "deaths": 5,
+      "assists": 10,
+      "totalMinionsKilled": 42,
+      "neutralMinionsKilled": 150,
+      "goldEarned": 11737,
+      "visionScore": 32,
+      "totalDamageDealtToChampions": 25182,
+      "totalDamageTaken": 37892,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 11,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-PUUID-JUGADOR",
+      "championName": "Lux",
+      "teamId": 100,
+      "teamPosition": "MIDDLE",
+      "win": false,
+      "kills": 2,
+      "deaths": 9,
+      "assists": 2,
+      "totalMinionsKilled": 204,
+      "neutralMinionsKilled": 6,
+      "goldEarned": 12951,
+      "visionScore": 27,
+      "totalDamageDealtToChampions": 16477,
+      "totalDamageTaken": 29947,
+      "item0": 3020,
+      "item1": 3089,
+      "item2": 3157,
+      "item3": 3135,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8112
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-100-BOTTOM",
+      "championName": "Ashe",
+      "teamId": 100,
+      "teamPosition": "BOTTOM",
+      "win": false,
+      "kills": 2,
+      "deaths": 5,
+      "assists": 5,
+      "totalMinionsKilled": 206,
+      "neutralMinionsKilled": 5,
+      "goldEarned": 12112,
+      "visionScore": 32,
+      "totalDamageDealtToChampions": 32832,
+      "totalDamageTaken": 30726,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-100-UTILITY",
+      "championName": "Nautilus",
+      "teamId": 100,
+      "teamPosition": "UTILITY",
+      "win": false,
+      "kills": 7,
+      "deaths": 7,
+      "assists": 6,
+      "totalMinionsKilled": 44,
+      "neutralMinionsKilled": 8,
+      "goldEarned": 12267,
+      "visionScore": 37,
+      "totalDamageDealtToChampions": 18893,
+      "totalDamageTaken": 28821,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-TOP",
+      "championName": "Garen",
+      "teamId": 200,
+      "teamPosition": "TOP",
+      "win": true,
+      "kills": 0,
+      "deaths": 2,
+      "assists": 9,
+      "totalMinionsKilled": 213,
+      "neutralMinionsKilled": 0,
+      "goldEarned": 15086,
+      "visionScore": 19,
+      "totalDamageDealtToChampions": 21046,
+      "totalDamageTaken": 28674,
+      "item0": 3047,
+      "item1": 3075,
+      "item2": 3065,
+      "item3": 3053,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 12,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8437
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-JUNGLE",
+      "championName": "MasterYi",
+      "teamId": 200,
+      "teamPosition": "JUNGLE",
+      "win": true,
+      "kills": 9,
+      "deaths": 4,
+      "assists": 3,
+      "totalMinionsKilled": 42,
+      "neutralMinionsKilled": 150,
+      "goldEarned": 11996,
+      "visionScore": 30,
+      "totalDamageDealtToChampions": 17629,
+      "totalDamageTaken": 35080,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 11,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-MIDDLE",
+      "championName": "Ahri",
+      "teamId": 200,
+      "teamPosition": "MIDDLE",
+      "win": true,
+      "kills": 6,
+      "deaths": 5,
+      "assists": 10,
+      "totalMinionsKilled": 194,
+      "neutralMinionsKilled": 1,
+      "goldEarned": 13010,
+      "visionScore": 52,
+      "totalDamageDealtToChampions": 17866,
+      "totalDamageTaken": 28397,
+      "item0": 3020,
+      "item1": 3089,
+      "item2": 3157,
+      "item3": 3135,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8112
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-BOTTOM",
+      "championName": "Ezreal",
+      "teamId": 200,
+      "teamPosition": "BOTTOM",
+      "win": true,
+      "kills": 7,
+      "deaths": 6,
+      "assists": 2,
+      "totalMinionsKilled": 182,
+      "neutralMinionsKilled": 1,
+      "goldEarned": 14945,
+      "visionScore": 47,
+      "totalDamageDealtToChampions": 20392,
+      "totalDamageTaken": 31404,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-UTILITY",
+      "championName": "Thresh",
+      "teamId": 200,
+      "teamPosition": "UTILITY",
+      "win": true,
+      "kills": 5,
+      "deaths": 7,
+      "assists": 9,
+      "totalMinionsKilled": 41,
+      "neutralMinionsKilled": 5,
+      "goldEarned": 15359,
+      "visionScore": 45,
+      "totalDamageDealtToChampions": 30751,
+      "totalDamageTaken": 25964,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     }
+    ]
+   }
+  },
+  {
+   "metadata": {
+    "matchId": "DEMO_9005"
+   },
+   "info": {
+    "gameCreation": 1792393200000,
+    "gameDuration": 1680,
+    "gameEndTimestamp": 1792394880000,
+    "gameVersion": "16.20.700.1234",
+    "queueId": 420,
+    "participants": [
+     {
+      "puuid": "DEMO-PUUID-JUGADOR",
+      "championName": "Malphite",
+      "teamId": 100,
+      "teamPosition": "TOP",
+      "win": false,
+      "kills": 5,
+      "deaths": 6,
+      "assists": 7,
+      "totalMinionsKilled": 177,
+      "neutralMinionsKilled": 6,
+      "goldEarned": 9955,
+      "visionScore": 27,
+      "totalDamageDealtToChampions": 20531,
+      "totalDamageTaken": 26366,
+      "item0": 3047,
+      "item1": 3075,
+      "item2": 3065,
+      "item3": 3053,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 12,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8437
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-100-JUNGLE",
+      "championName": "LeeSin",
+      "teamId": 100,
+      "teamPosition": "JUNGLE",
+      "win": false,
+      "kills": 4,
+      "deaths": 6,
+      "assists": 14,
+      "totalMinionsKilled": 33,
+      "neutralMinionsKilled": 120,
+      "goldEarned": 9635,
+      "visionScore": 22,
+      "totalDamageDealtToChampions": 24734,
+      "totalDamageTaken": 18428,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 11,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-100-MIDDLE",
+      "championName": "Kassadin",
+      "teamId": 100,
+      "teamPosition": "MIDDLE",
+      "win": false,
+      "kills": 4,
+      "deaths": 4,
+      "assists": 6,
+      "totalMinionsKilled": 183,
+      "neutralMinionsKilled": 8,
+      "goldEarned": 11835,
+      "visionScore": 22,
+      "totalDamageDealtToChampions": 20641,
+      "totalDamageTaken": 24637,
+      "item0": 3020,
+      "item1": 3089,
+      "item2": 3157,
+      "item3": 3135,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8112
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-100-BOTTOM",
+      "championName": "Caitlyn",
+      "teamId": 100,
+      "teamPosition": "BOTTOM",
+      "win": false,
+      "kills": 0,
+      "deaths": 9,
+      "assists": 12,
+      "totalMinionsKilled": 156,
+      "neutralMinionsKilled": 6,
+      "goldEarned": 10371,
+      "visionScore": 34,
+      "totalDamageDealtToChampions": 25520,
+      "totalDamageTaken": 29263,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-100-UTILITY",
+      "championName": "Nautilus",
+      "teamId": 100,
+      "teamPosition": "UTILITY",
+      "win": false,
+      "kills": 8,
+      "deaths": 4,
+      "assists": 7,
+      "totalMinionsKilled": 31,
+      "neutralMinionsKilled": 5,
+      "goldEarned": 9441,
+      "visionScore": 26,
+      "totalDamageDealtToChampions": 15021,
+      "totalDamageTaken": 18486,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-TOP",
+      "championName": "Darius",
+      "teamId": 200,
+      "teamPosition": "TOP",
+      "win": true,
+      "kills": 2,
+      "deaths": 6,
+      "assists": 10,
+      "totalMinionsKilled": 169,
+      "neutralMinionsKilled": 6,
+      "goldEarned": 12038,
+      "visionScore": 38,
+      "totalDamageDealtToChampions": 24518,
+      "totalDamageTaken": 22113,
+      "item0": 3047,
+      "item1": 3075,
+      "item2": 3065,
+      "item3": 3053,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 12,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8437
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-JUNGLE",
+      "championName": "Amumu",
+      "teamId": 200,
+      "teamPosition": "JUNGLE",
+      "win": true,
+      "kills": 0,
+      "deaths": 4,
+      "assists": 11,
+      "totalMinionsKilled": 33,
+      "neutralMinionsKilled": 120,
+      "goldEarned": 9646,
+      "visionScore": 40,
+      "totalDamageDealtToChampions": 16361,
+      "totalDamageTaken": 14298,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 11,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-MIDDLE",
+      "championName": "Orianna",
+      "teamId": 200,
+      "teamPosition": "MIDDLE",
+      "win": true,
+      "kills": 7,
+      "deaths": 9,
+      "assists": 5,
+      "totalMinionsKilled": 168,
+      "neutralMinionsKilled": 5,
+      "goldEarned": 9505,
+      "visionScore": 35,
+      "totalDamageDealtToChampions": 20145,
+      "totalDamageTaken": 14191,
+      "item0": 3020,
+      "item1": 3089,
+      "item2": 3157,
+      "item3": 3135,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8112
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-BOTTOM",
+      "championName": "Jinx",
+      "teamId": 200,
+      "teamPosition": "BOTTOM",
+      "win": true,
+      "kills": 2,
+      "deaths": 6,
+      "assists": 4,
+      "totalMinionsKilled": 182,
+      "neutralMinionsKilled": 3,
+      "goldEarned": 11276,
+      "visionScore": 19,
+      "totalDamageDealtToChampions": 16932,
+      "totalDamageTaken": 23536,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-UTILITY",
+      "championName": "Nautilus",
+      "teamId": 200,
+      "teamPosition": "UTILITY",
+      "win": true,
+      "kills": 9,
+      "deaths": 9,
+      "assists": 3,
+      "totalMinionsKilled": 29,
+      "neutralMinionsKilled": 4,
+      "goldEarned": 12395,
+      "visionScore": 15,
+      "totalDamageDealtToChampions": 20303,
+      "totalDamageTaken": 22625,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     }
+    ]
+   }
+  },
+  {
+   "metadata": {
+    "matchId": "DEMO_9006"
+   },
+   "info": {
+    "gameCreation": 1792246320000,
+    "gameDuration": 2220,
+    "gameEndTimestamp": 1792248540000,
+    "gameVersion": "16.20.700.1234",
+    "queueId": 420,
+    "participants": [
+     {
+      "puuid": "DEMO-PUUID-JUGADOR",
+      "championName": "Garen",
+      "teamId": 100,
+      "teamPosition": "TOP",
+      "win": false,
+      "kills": 5,
+      "deaths": 6,
+      "assists": 6,
+      "totalMinionsKilled": 222,
+      "neutralMinionsKilled": 4,
+      "goldEarned": 14378,
+      "visionScore": 31,
+      "totalDamageDealtToChampions": 21276,
+      "totalDamageTaken": 32787,
+      "item0": 3047,
+      "item1": 3075,
+      "item2": 3065,
+      "item3": 3053,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 12,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8437
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-100-JUNGLE",
+      "championName": "Sejuani",
+      "teamId": 100,
+      "teamPosition": "JUNGLE",
+      "win": false,
+      "kills": 0,
+      "deaths": 8,
+      "assists": 13,
+      "totalMinionsKilled": 44,
+      "neutralMinionsKilled": 159,
+      "goldEarned": 13835,
+      "visionScore": 52,
+      "totalDamageDealtToChampions": 25273,
+      "totalDamageTaken": 26659,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 11,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-100-MIDDLE",
+      "championName": "Kassadin",
+      "teamId": 100,
+      "teamPosition": "MIDDLE",
+      "win": false,
+      "kills": 6,
+      "deaths": 5,
+      "assists": 4,
+      "totalMinionsKilled": 220,
+      "neutralMinionsKilled": 6,
+      "goldEarned": 16041,
+      "visionScore": 48,
+      "totalDamageDealtToChampions": 28590,
+      "totalDamageTaken": 29798,
+      "item0": 3020,
+      "item1": 3089,
+      "item2": 3157,
+      "item3": 3135,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8112
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-100-BOTTOM",
+      "championName": "Vayne",
+      "teamId": 100,
+      "teamPosition": "BOTTOM",
+      "win": false,
+      "kills": 4,
+      "deaths": 8,
+      "assists": 10,
+      "totalMinionsKilled": 193,
+      "neutralMinionsKilled": 8,
+      "goldEarned": 16536,
+      "visionScore": 42,
+      "totalDamageDealtToChampions": 25700,
+      "totalDamageTaken": 33164,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-100-UTILITY",
+      "championName": "Janna",
+      "teamId": 100,
+      "teamPosition": "UTILITY",
+      "win": false,
+      "kills": 2,
+      "deaths": 2,
+      "assists": 9,
+      "totalMinionsKilled": 47,
+      "neutralMinionsKilled": 2,
+      "goldEarned": 15581,
+      "visionScore": 57,
+      "totalDamageDealtToChampions": 34419,
+      "totalDamageTaken": 30221,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-TOP",
+      "championName": "Renekton",
+      "teamId": 200,
+      "teamPosition": "TOP",
+      "win": true,
+      "kills": 1,
+      "deaths": 4,
+      "assists": 1,
+      "totalMinionsKilled": 214,
+      "neutralMinionsKilled": 3,
+      "goldEarned": 14114,
+      "visionScore": 53,
+      "totalDamageDealtToChampions": 18989,
+      "totalDamageTaken": 23190,
+      "item0": 3047,
+      "item1": 3075,
+      "item2": 3065,
+      "item3": 3053,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 12,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8437
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-JUNGLE",
+      "championName": "JarvanIV",
+      "teamId": 200,
+      "teamPosition": "JUNGLE",
+      "win": true,
+      "kills": 7,
+      "deaths": 3,
+      "assists": 9,
+      "totalMinionsKilled": 44,
+      "neutralMinionsKilled": 159,
+      "goldEarned": 15222,
+      "visionScore": 53,
+      "totalDamageDealtToChampions": 23379,
+      "totalDamageTaken": 32949,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 11,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-MIDDLE",
+      "championName": "Kassadin",
+      "teamId": 200,
+      "teamPosition": "MIDDLE",
+      "win": true,
+      "kills": 9,
+      "deaths": 9,
+      "assists": 4,
+      "totalMinionsKilled": 197,
+      "neutralMinionsKilled": 8,
+      "goldEarned": 15339,
+      "visionScore": 24,
+      "totalDamageDealtToChampions": 19313,
+      "totalDamageTaken": 36200,
+      "item0": 3020,
+      "item1": 3089,
+      "item2": 3157,
+      "item3": 3135,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8112
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-BOTTOM",
+      "championName": "Vayne",
+      "teamId": 200,
+      "teamPosition": "BOTTOM",
+      "win": true,
+      "kills": 0,
+      "deaths": 1,
+      "assists": 5,
+      "totalMinionsKilled": 232,
+      "neutralMinionsKilled": 2,
+      "goldEarned": 12827,
+      "visionScore": 57,
+      "totalDamageDealtToChampions": 29469,
+      "totalDamageTaken": 21341,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-UTILITY",
+      "championName": "Thresh",
+      "teamId": 200,
+      "teamPosition": "UTILITY",
+      "win": true,
+      "kills": 2,
+      "deaths": 1,
+      "assists": 13,
+      "totalMinionsKilled": 39,
+      "neutralMinionsKilled": 2,
+      "goldEarned": 14047,
+      "visionScore": 43,
+      "totalDamageDealtToChampions": 33529,
+      "totalDamageTaken": 39755,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     }
+    ]
+   }
+  },
+  {
+   "metadata": {
+    "matchId": "DEMO_9007"
+   },
+   "info": {
+    "gameCreation": 1792095840000,
+    "gameDuration": 1740,
+    "gameEndTimestamp": 1792097580000,
+    "gameVersion": "16.20.700.1234",
+    "queueId": 420,
+    "participants": [
+     {
+      "puuid": "DEMO-100-TOP",
+      "championName": "Ornn",
+      "teamId": 100,
+      "teamPosition": "TOP",
+      "win": true,
+      "kills": 1,
+      "deaths": 8,
+      "assists": 11,
+      "totalMinionsKilled": 180,
+      "neutralMinionsKilled": 2,
+      "goldEarned": 12702,
+      "visionScore": 19,
+      "totalDamageDealtToChampions": 20419,
+      "totalDamageTaken": 22692,
+      "item0": 3047,
+      "item1": 3075,
+      "item2": 3065,
+      "item3": 3053,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 12,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8437
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-100-JUNGLE",
+      "championName": "Amumu",
+      "teamId": 100,
+      "teamPosition": "JUNGLE",
+      "win": true,
+      "kills": 1,
+      "deaths": 6,
+      "assists": 10,
+      "totalMinionsKilled": 34,
+      "neutralMinionsKilled": 124,
+      "goldEarned": 12506,
+      "visionScore": 36,
+      "totalDamageDealtToChampions": 24895,
+      "totalDamageTaken": 20220,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 11,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-PUUID-JUGADOR",
+      "championName": "Ahri",
+      "teamId": 100,
+      "teamPosition": "MIDDLE",
+      "win": true,
+      "kills": 2,
+      "deaths": 9,
+      "assists": 4,
+      "totalMinionsKilled": 185,
+      "neutralMinionsKilled": 1,
+      "goldEarned": 11041,
+      "visionScore": 28,
+      "totalDamageDealtToChampions": 25130,
+      "totalDamageTaken": 17469,
+      "item0": 3020,
+      "item1": 3089,
+      "item2": 3157,
+      "item3": 3135,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8112
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-100-BOTTOM",
+      "championName": "Ashe",
+      "teamId": 100,
+      "teamPosition": "BOTTOM",
+      "win": true,
+      "kills": 7,
+      "deaths": 4,
+      "assists": 6,
+      "totalMinionsKilled": 154,
+      "neutralMinionsKilled": 6,
+      "goldEarned": 12079,
+      "visionScore": 29,
+      "totalDamageDealtToChampions": 18316,
+      "totalDamageTaken": 18139,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-100-UTILITY",
+      "championName": "Janna",
+      "teamId": 100,
+      "teamPosition": "UTILITY",
+      "win": true,
+      "kills": 7,
+      "deaths": 9,
+      "assists": 10,
+      "totalMinionsKilled": 33,
+      "neutralMinionsKilled": 3,
+      "goldEarned": 12141,
+      "visionScore": 18,
+      "totalDamageDealtToChampions": 14192,
+      "totalDamageTaken": 26937,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-TOP",
+      "championName": "Ornn",
+      "teamId": 200,
+      "teamPosition": "TOP",
+      "win": false,
+      "kills": 2,
+      "deaths": 2,
+      "assists": 3,
+      "totalMinionsKilled": 156,
+      "neutralMinionsKilled": 6,
+      "goldEarned": 10228,
+      "visionScore": 44,
+      "totalDamageDealtToChampions": 27304,
+      "totalDamageTaken": 15030,
+      "item0": 3047,
+      "item1": 3075,
+      "item2": 3065,
+      "item3": 3053,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 12,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8437
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-JUNGLE",
+      "championName": "Sejuani",
+      "teamId": 200,
+      "teamPosition": "JUNGLE",
+      "win": false,
+      "kills": 4,
+      "deaths": 5,
+      "assists": 12,
+      "totalMinionsKilled": 34,
+      "neutralMinionsKilled": 124,
+      "goldEarned": 10840,
+      "visionScore": 14,
+      "totalDamageDealtToChampions": 20604,
+      "totalDamageTaken": 29929,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 11,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-MIDDLE",
+      "championName": "Lux",
+      "teamId": 200,
+      "teamPosition": "MIDDLE",
+      "win": false,
+      "kills": 7,
+      "deaths": 3,
+      "assists": 2,
+      "totalMinionsKilled": 182,
+      "neutralMinionsKilled": 8,
+      "goldEarned": 10344,
+      "visionScore": 25,
+      "totalDamageDealtToChampions": 18522,
+      "totalDamageTaken": 25514,
+      "item0": 3020,
+      "item1": 3089,
+      "item2": 3157,
+      "item3": 3135,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8112
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-BOTTOM",
+      "championName": "Jinx",
+      "teamId": 200,
+      "teamPosition": "BOTTOM",
+      "win": false,
+      "kills": 8,
+      "deaths": 6,
+      "assists": 13,
+      "totalMinionsKilled": 158,
+      "neutralMinionsKilled": 1,
+      "goldEarned": 11174,
+      "visionScore": 25,
+      "totalDamageDealtToChampions": 25026,
+      "totalDamageTaken": 23641,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-UTILITY",
+      "championName": "Nautilus",
+      "teamId": 200,
+      "teamPosition": "UTILITY",
+      "win": false,
+      "kills": 1,
+      "deaths": 5,
+      "assists": 5,
+      "totalMinionsKilled": 29,
+      "neutralMinionsKilled": 0,
+      "goldEarned": 9814,
+      "visionScore": 43,
+      "totalDamageDealtToChampions": 21233,
+      "totalDamageTaken": 21220,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     }
+    ]
+   }
+  },
+  {
+   "metadata": {
+    "matchId": "DEMO_9008"
+   },
+   "info": {
+    "gameCreation": 1791938160000,
+    "gameDuration": 2160,
+    "gameEndTimestamp": 1791940320000,
+    "gameVersion": "16.20.700.1234",
+    "queueId": 420,
+    "participants": [
+     {
+      "puuid": "DEMO-PUUID-JUGADOR",
+      "championName": "Darius",
+      "teamId": 100,
+      "teamPosition": "TOP",
+      "win": false,
+      "kills": 0,
+      "deaths": 3,
+      "assists": 6,
+      "totalMinionsKilled": 190,
+      "neutralMinionsKilled": 1,
+      "goldEarned": 13572,
+      "visionScore": 24,
+      "totalDamageDealtToChampions": 31688,
+      "totalDamageTaken": 18393,
+      "item0": 3047,
+      "item1": 3075,
+      "item2": 3065,
+      "item3": 3053,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 12,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8437
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-100-JUNGLE",
+      "championName": "Amumu",
+      "teamId": 100,
+      "teamPosition": "JUNGLE",
+      "win": false,
+      "kills": 1,
+      "deaths": 9,
+      "assists": 2,
+      "totalMinionsKilled": 43,
+      "neutralMinionsKilled": 154,
+      "goldEarned": 15044,
+      "visionScore": 51,
+      "totalDamageDealtToChampions": 22228,
+      "totalDamageTaken": 21309,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 11,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-100-MIDDLE",
+      "championName": "Zed",
+      "teamId": 100,
+      "teamPosition": "MIDDLE",
+      "win": false,
+      "kills": 3,
+      "deaths": 6,
+      "assists": 12,
+      "totalMinionsKilled": 232,
+      "neutralMinionsKilled": 3,
+      "goldEarned": 13608,
+      "visionScore": 38,
+      "totalDamageDealtToChampions": 31471,
+      "totalDamageTaken": 27047,
+      "item0": 3020,
+      "item1": 3089,
+      "item2": 3157,
+      "item3": 3135,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8112
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-100-BOTTOM",
+      "championName": "Caitlyn",
+      "teamId": 100,
+      "teamPosition": "BOTTOM",
+      "win": false,
+      "kills": 3,
+      "deaths": 3,
+      "assists": 8,
+      "totalMinionsKilled": 193,
+      "neutralMinionsKilled": 1,
+      "goldEarned": 14421,
+      "visionScore": 41,
+      "totalDamageDealtToChampions": 24891,
+      "totalDamageTaken": 18353,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-100-UTILITY",
+      "championName": "Thresh",
+      "teamId": 100,
+      "teamPosition": "UTILITY",
+      "win": false,
+      "kills": 6,
+      "deaths": 1,
+      "assists": 9,
+      "totalMinionsKilled": 41,
+      "neutralMinionsKilled": 2,
+      "goldEarned": 13152,
+      "visionScore": 52,
+      "totalDamageDealtToChampions": 21849,
+      "totalDamageTaken": 34566,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-TOP",
+      "championName": "Ornn",
+      "teamId": 200,
+      "teamPosition": "TOP",
+      "win": true,
+      "kills": 0,
+      "deaths": 6,
+      "assists": 10,
+      "totalMinionsKilled": 230,
+      "neutralMinionsKilled": 2,
+      "goldEarned": 15997,
+      "visionScore": 22,
+      "totalDamageDealtToChampions": 22832,
+      "totalDamageTaken": 22682,
+      "item0": 3047,
+      "item1": 3075,
+      "item2": 3065,
+      "item3": 3053,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 12,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8437
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-JUNGLE",
+      "championName": "Amumu",
+      "teamId": 200,
+      "teamPosition": "JUNGLE",
+      "win": true,
+      "kills": 8,
+      "deaths": 3,
+      "assists": 8,
+      "totalMinionsKilled": 43,
+      "neutralMinionsKilled": 154,
+      "goldEarned": 13631,
+      "visionScore": 22,
+      "totalDamageDealtToChampions": 18101,
+      "totalDamageTaken": 39382,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 11,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-MIDDLE",
+      "championName": "Zed",
+      "teamId": 200,
+      "teamPosition": "MIDDLE",
+      "win": true,
+      "kills": 0,
+      "deaths": 4,
+      "assists": 4,
+      "totalMinionsKilled": 186,
+      "neutralMinionsKilled": 2,
+      "goldEarned": 14146,
+      "visionScore": 54,
+      "totalDamageDealtToChampions": 17721,
+      "totalDamageTaken": 21620,
+      "item0": 3020,
+      "item1": 3089,
+      "item2": 3157,
+      "item3": 3135,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8112
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-BOTTOM",
+      "championName": "Jinx",
+      "teamId": 200,
+      "teamPosition": "BOTTOM",
+      "win": true,
+      "kills": 3,
+      "deaths": 9,
+      "assists": 2,
+      "totalMinionsKilled": 232,
+      "neutralMinionsKilled": 8,
+      "goldEarned": 14761,
+      "visionScore": 32,
+      "totalDamageDealtToChampions": 32088,
+      "totalDamageTaken": 38767,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-UTILITY",
+      "championName": "Lulu",
+      "teamId": 200,
+      "teamPosition": "UTILITY",
+      "win": true,
+      "kills": 8,
+      "deaths": 1,
+      "assists": 14,
+      "totalMinionsKilled": 47,
+      "neutralMinionsKilled": 7,
+      "goldEarned": 12083,
+      "visionScore": 21,
+      "totalDamageDealtToChampions": 27933,
+      "totalDamageTaken": 24029,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     }
+    ]
+   }
+  },
+  {
+   "metadata": {
+    "matchId": "DEMO_9009"
+   },
+   "info": {
+    "gameCreation": 1791809280000,
+    "gameDuration": 1860,
+    "gameEndTimestamp": 1791811140000,
+    "gameVersion": "16.20.700.1234",
+    "queueId": 420,
+    "participants": [
+     {
+      "puuid": "DEMO-PUUID-JUGADOR",
+      "championName": "Malphite",
+      "teamId": 100,
+      "teamPosition": "TOP",
+      "win": false,
+      "kills": 7,
+      "deaths": 5,
+      "assists": 2,
+      "totalMinionsKilled": 199,
+      "neutralMinionsKilled": 8,
+      "goldEarned": 10853,
+      "visionScore": 37,
+      "totalDamageDealtToChampions": 22997,
+      "totalDamageTaken": 19926,
+      "item0": 3047,
+      "item1": 3075,
+      "item2": 3065,
+      "item3": 3053,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 12,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8437
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-100-JUNGLE",
+      "championName": "Amumu",
+      "teamId": 100,
+      "teamPosition": "JUNGLE",
+      "win": false,
+      "kills": 8,
+      "deaths": 6,
+      "assists": 4,
+      "totalMinionsKilled": 37,
+      "neutralMinionsKilled": 133,
+      "goldEarned": 12226,
+      "visionScore": 31,
+      "totalDamageDealtToChampions": 17705,
+      "totalDamageTaken": 15781,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 11,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-100-MIDDLE",
+      "championName": "Zed",
+      "teamId": 100,
+      "teamPosition": "MIDDLE",
+      "win": false,
+      "kills": 8,
+      "deaths": 2,
+      "assists": 8,
+      "totalMinionsKilled": 189,
+      "neutralMinionsKilled": 2,
+      "goldEarned": 10868,
+      "visionScore": 21,
+      "totalDamageDealtToChampions": 17040,
+      "totalDamageTaken": 29567,
+      "item0": 3020,
+      "item1": 3089,
+      "item2": 3157,
+      "item3": 3135,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8112
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-100-BOTTOM",
+      "championName": "Caitlyn",
+      "teamId": 100,
+      "teamPosition": "BOTTOM",
+      "win": false,
+      "kills": 4,
+      "deaths": 3,
+      "assists": 8,
+      "totalMinionsKilled": 162,
+      "neutralMinionsKilled": 5,
+      "goldEarned": 10506,
+      "visionScore": 41,
+      "totalDamageDealtToChampions": 29155,
+      "totalDamageTaken": 26044,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-100-UTILITY",
+      "championName": "Nautilus",
+      "teamId": 100,
+      "teamPosition": "UTILITY",
+      "win": false,
+      "kills": 3,
+      "deaths": 8,
+      "assists": 14,
+      "totalMinionsKilled": 38,
+      "neutralMinionsKilled": 5,
+      "goldEarned": 10883,
+      "visionScore": 34,
+      "totalDamageDealtToChampions": 16099,
+      "totalDamageTaken": 30647,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-TOP",
+      "championName": "Malphite",
+      "teamId": 200,
+      "teamPosition": "TOP",
+      "win": true,
+      "kills": 7,
+      "deaths": 7,
+      "assists": 11,
+      "totalMinionsKilled": 184,
+      "neutralMinionsKilled": 8,
+      "goldEarned": 13736,
+      "visionScore": 18,
+      "totalDamageDealtToChampions": 24515,
+      "totalDamageTaken": 15890,
+      "item0": 3047,
+      "item1": 3075,
+      "item2": 3065,
+      "item3": 3053,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 12,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8437
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-JUNGLE",
+      "championName": "JarvanIV",
+      "teamId": 200,
+      "teamPosition": "JUNGLE",
+      "win": true,
+      "kills": 3,
+      "deaths": 2,
+      "assists": 7,
+      "totalMinionsKilled": 37,
+      "neutralMinionsKilled": 133,
+      "goldEarned": 13494,
+      "visionScore": 47,
+      "totalDamageDealtToChampions": 23167,
+      "totalDamageTaken": 26218,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 11,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-MIDDLE",
+      "championName": "Kassadin",
+      "teamId": 200,
+      "teamPosition": "MIDDLE",
+      "win": true,
+      "kills": 2,
+      "deaths": 5,
+      "assists": 12,
+      "totalMinionsKilled": 182,
+      "neutralMinionsKilled": 0,
+      "goldEarned": 11504,
+      "visionScore": 40,
+      "totalDamageDealtToChampions": 25023,
+      "totalDamageTaken": 26472,
+      "item0": 3020,
+      "item1": 3089,
+      "item2": 3157,
+      "item3": 3135,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8112
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-BOTTOM",
+      "championName": "Ashe",
+      "teamId": 200,
+      "teamPosition": "BOTTOM",
+      "win": true,
+      "kills": 7,
+      "deaths": 3,
+      "assists": 10,
+      "totalMinionsKilled": 202,
+      "neutralMinionsKilled": 7,
+      "goldEarned": 10650,
+      "visionScore": 19,
+      "totalDamageDealtToChampions": 23451,
+      "totalDamageTaken": 21286,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-UTILITY",
+      "championName": "Lulu",
+      "teamId": 200,
+      "teamPosition": "UTILITY",
+      "win": true,
+      "kills": 4,
+      "deaths": 1,
+      "assists": 8,
+      "totalMinionsKilled": 37,
+      "neutralMinionsKilled": 2,
+      "goldEarned": 11647,
+      "visionScore": 36,
+      "totalDamageDealtToChampions": 20833,
+      "totalDamageTaken": 17759,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     }
+    ]
+   }
+  },
+  {
+   "metadata": {
+    "matchId": "DEMO_9010"
+   },
+   "info": {
+    "gameCreation": 1791658800000,
+    "gameDuration": 1920,
+    "gameEndTimestamp": 1791660720000,
+    "gameVersion": "16.20.700.1234",
+    "queueId": 420,
+    "participants": [
+     {
+      "puuid": "DEMO-100-TOP",
+      "championName": "Malphite",
+      "teamId": 100,
+      "teamPosition": "TOP",
+      "win": true,
+      "kills": 6,
+      "deaths": 5,
+      "assists": 8,
+      "totalMinionsKilled": 200,
+      "neutralMinionsKilled": 4,
+      "goldEarned": 11523,
+      "visionScore": 42,
+      "totalDamageDealtToChampions": 20967,
+      "totalDamageTaken": 21691,
+      "item0": 3047,
+      "item1": 3075,
+      "item2": 3065,
+      "item3": 3053,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 12,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8437
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-100-JUNGLE",
+      "championName": "JarvanIV",
+      "teamId": 100,
+      "teamPosition": "JUNGLE",
+      "win": true,
+      "kills": 2,
+      "deaths": 2,
+      "assists": 10,
+      "totalMinionsKilled": 38,
+      "neutralMinionsKilled": 137,
+      "goldEarned": 12664,
+      "visionScore": 23,
+      "totalDamageDealtToChampions": 30222,
+      "totalDamageTaken": 21653,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 11,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-PUUID-JUGADOR",
+      "championName": "Orianna",
+      "teamId": 100,
+      "teamPosition": "MIDDLE",
+      "win": true,
+      "kills": 3,
+      "deaths": 6,
+      "assists": 3,
+      "totalMinionsKilled": 201,
+      "neutralMinionsKilled": 3,
+      "goldEarned": 12039,
+      "visionScore": 37,
+      "totalDamageDealtToChampions": 24712,
+      "totalDamageTaken": 23576,
+      "item0": 3020,
+      "item1": 3089,
+      "item2": 3157,
+      "item3": 3135,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8112
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-100-BOTTOM",
+      "championName": "Vayne",
+      "teamId": 100,
+      "teamPosition": "BOTTOM",
+      "win": true,
+      "kills": 8,
+      "deaths": 5,
+      "assists": 9,
+      "totalMinionsKilled": 189,
+      "neutralMinionsKilled": 6,
+      "goldEarned": 13223,
+      "visionScore": 28,
+      "totalDamageDealtToChampions": 29154,
+      "totalDamageTaken": 20657,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-100-UTILITY",
+      "championName": "Nautilus",
+      "teamId": 100,
+      "teamPosition": "UTILITY",
+      "win": true,
+      "kills": 4,
+      "deaths": 1,
+      "assists": 12,
+      "totalMinionsKilled": 38,
+      "neutralMinionsKilled": 3,
+      "goldEarned": 11713,
+      "visionScore": 45,
+      "totalDamageDealtToChampions": 25122,
+      "totalDamageTaken": 18400,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-TOP",
+      "championName": "Renekton",
+      "teamId": 200,
+      "teamPosition": "TOP",
+      "win": false,
+      "kills": 7,
+      "deaths": 1,
+      "assists": 10,
+      "totalMinionsKilled": 177,
+      "neutralMinionsKilled": 0,
+      "goldEarned": 13630,
+      "visionScore": 34,
+      "totalDamageDealtToChampions": 23388,
+      "totalDamageTaken": 32059,
+      "item0": 3047,
+      "item1": 3075,
+      "item2": 3065,
+      "item3": 3053,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 12,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8437
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-JUNGLE",
+      "championName": "Sejuani",
+      "teamId": 200,
+      "teamPosition": "JUNGLE",
+      "win": false,
+      "kills": 8,
+      "deaths": 9,
+      "assists": 5,
+      "totalMinionsKilled": 38,
+      "neutralMinionsKilled": 137,
+      "goldEarned": 13636,
+      "visionScore": 45,
+      "totalDamageDealtToChampions": 24228,
+      "totalDamageTaken": 22723,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 11,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-MIDDLE",
+      "championName": "Lux",
+      "teamId": 200,
+      "teamPosition": "MIDDLE",
+      "win": false,
+      "kills": 6,
+      "deaths": 9,
+      "assists": 4,
+      "totalMinionsKilled": 163,
+      "neutralMinionsKilled": 8,
+      "goldEarned": 12208,
+      "visionScore": 37,
+      "totalDamageDealtToChampions": 28952,
+      "totalDamageTaken": 32399,
+      "item0": 3020,
+      "item1": 3089,
+      "item2": 3157,
+      "item3": 3135,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8112
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-BOTTOM",
+      "championName": "Ashe",
+      "teamId": 200,
+      "teamPosition": "BOTTOM",
+      "win": false,
+      "kills": 8,
+      "deaths": 7,
+      "assists": 6,
+      "totalMinionsKilled": 204,
+      "neutralMinionsKilled": 0,
+      "goldEarned": 10970,
+      "visionScore": 23,
+      "totalDamageDealtToChampions": 22248,
+      "totalDamageTaken": 23557,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-UTILITY",
+      "championName": "Thresh",
+      "teamId": 200,
+      "teamPosition": "UTILITY",
+      "win": false,
+      "kills": 6,
+      "deaths": 9,
+      "assists": 4,
+      "totalMinionsKilled": 36,
+      "neutralMinionsKilled": 8,
+      "goldEarned": 10884,
+      "visionScore": 19,
+      "totalDamageDealtToChampions": 17877,
+      "totalDamageTaken": 18363,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     }
+    ]
+   }
+  },
+  {
+   "metadata": {
+    "matchId": "DEMO_9011"
+   },
+   "info": {
+    "gameCreation": 1791501120000,
+    "gameDuration": 1980,
+    "gameEndTimestamp": 1791503100000,
+    "gameVersion": "16.20.700.1234",
+    "queueId": 420,
+    "participants": [
+     {
+      "puuid": "DEMO-PUUID-JUGADOR",
+      "championName": "Darius",
+      "teamId": 100,
+      "teamPosition": "TOP",
+      "win": false,
+      "kills": 1,
+      "deaths": 7,
+      "assists": 4,
+      "totalMinionsKilled": 184,
+      "neutralMinionsKilled": 0,
+      "goldEarned": 11272,
+      "visionScore": 18,
+      "totalDamageDealtToChampions": 20488,
+      "totalDamageTaken": 19483,
+      "item0": 3047,
+      "item1": 3075,
+      "item2": 3065,
+      "item3": 3053,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 12,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8437
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-100-JUNGLE",
+      "championName": "LeeSin",
+      "teamId": 100,
+      "teamPosition": "JUNGLE",
+      "win": false,
+      "kills": 1,
+      "deaths": 2,
+      "assists": 14,
+      "totalMinionsKilled": 39,
+      "neutralMinionsKilled": 141,
+      "goldEarned": 14130,
+      "visionScore": 48,
+      "totalDamageDealtToChampions": 23998,
+      "totalDamageTaken": 26117,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 11,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-100-MIDDLE",
+      "championName": "Kassadin",
+      "teamId": 100,
+      "teamPosition": "MIDDLE",
+      "win": false,
+      "kills": 2,
+      "deaths": 2,
+      "assists": 2,
+      "totalMinionsKilled": 185,
+      "neutralMinionsKilled": 2,
+      "goldEarned": 12645,
+      "visionScore": 51,
+      "totalDamageDealtToChampions": 29961,
+      "totalDamageTaken": 34679,
+      "item0": 3020,
+      "item1": 3089,
+      "item2": 3157,
+      "item3": 3135,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8112
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-100-BOTTOM",
+      "championName": "Vayne",
+      "teamId": 100,
+      "teamPosition": "BOTTOM",
+      "win": false,
+      "kills": 6,
+      "deaths": 3,
+      "assists": 2,
+      "totalMinionsKilled": 169,
+      "neutralMinionsKilled": 7,
+      "goldEarned": 12565,
+      "visionScore": 52,
+      "totalDamageDealtToChampions": 22139,
+      "totalDamageTaken": 17714,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-100-UTILITY",
+      "championName": "Lulu",
+      "teamId": 100,
+      "teamPosition": "UTILITY",
+      "win": false,
+      "kills": 5,
+      "deaths": 2,
+      "assists": 1,
+      "totalMinionsKilled": 37,
+      "neutralMinionsKilled": 6,
+      "goldEarned": 13425,
+      "visionScore": 25,
+      "totalDamageDealtToChampions": 23842,
+      "totalDamageTaken": 21411,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-TOP",
+      "championName": "Malphite",
+      "teamId": 200,
+      "teamPosition": "TOP",
+      "win": true,
+      "kills": 5,
+      "deaths": 3,
+      "assists": 1,
+      "totalMinionsKilled": 210,
+      "neutralMinionsKilled": 4,
+      "goldEarned": 11912,
+      "visionScore": 45,
+      "totalDamageDealtToChampions": 27817,
+      "totalDamageTaken": 30258,
+      "item0": 3047,
+      "item1": 3075,
+      "item2": 3065,
+      "item3": 3053,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 12,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8437
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-JUNGLE",
+      "championName": "JarvanIV",
+      "teamId": 200,
+      "teamPosition": "JUNGLE",
+      "win": true,
+      "kills": 1,
+      "deaths": 7,
+      "assists": 11,
+      "totalMinionsKilled": 39,
+      "neutralMinionsKilled": 141,
+      "goldEarned": 11217,
+      "visionScore": 44,
+      "totalDamageDealtToChampions": 19209,
+      "totalDamageTaken": 24953,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 11,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-MIDDLE",
+      "championName": "Kassadin",
+      "teamId": 200,
+      "teamPosition": "MIDDLE",
+      "win": true,
+      "kills": 9,
+      "deaths": 5,
+      "assists": 4,
+      "totalMinionsKilled": 205,
+      "neutralMinionsKilled": 8,
+      "goldEarned": 11607,
+      "visionScore": 31,
+      "totalDamageDealtToChampions": 15411,
+      "totalDamageTaken": 28570,
+      "item0": 3020,
+      "item1": 3089,
+      "item2": 3157,
+      "item3": 3135,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8112
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-BOTTOM",
+      "championName": "Vayne",
+      "teamId": 200,
+      "teamPosition": "BOTTOM",
+      "win": true,
+      "kills": 7,
+      "deaths": 5,
+      "assists": 7,
+      "totalMinionsKilled": 204,
+      "neutralMinionsKilled": 4,
+      "goldEarned": 11713,
+      "visionScore": 50,
+      "totalDamageDealtToChampions": 26859,
+      "totalDamageTaken": 25247,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-UTILITY",
+      "championName": "Janna",
+      "teamId": 200,
+      "teamPosition": "UTILITY",
+      "win": true,
+      "kills": 8,
+      "deaths": 5,
+      "assists": 5,
+      "totalMinionsKilled": 36,
+      "neutralMinionsKilled": 3,
+      "goldEarned": 10897,
+      "visionScore": 23,
+      "totalDamageDealtToChampions": 24666,
+      "totalDamageTaken": 30304,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     }
+    ]
+   }
+  },
+  {
+   "metadata": {
+    "matchId": "DEMO_9012"
+   },
+   "info": {
+    "gameCreation": 1791350640000,
+    "gameDuration": 1500,
+    "gameEndTimestamp": 1791352140000,
+    "gameVersion": "16.20.700.1234",
+    "queueId": 420,
+    "participants": [
+     {
+      "puuid": "DEMO-PUUID-JUGADOR",
+      "championName": "Garen",
+      "teamId": 100,
+      "teamPosition": "TOP",
+      "win": false,
+      "kills": 6,
+      "deaths": 8,
+      "assists": 10,
+      "totalMinionsKilled": 141,
+      "neutralMinionsKilled": 1,
+      "goldEarned": 11177,
+      "visionScore": 36,
+      "totalDamageDealtToChampions": 23658,
+      "totalDamageTaken": 23835,
+      "item0": 3047,
+      "item1": 3075,
+      "item2": 3065,
+      "item3": 3053,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 12,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8437
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-100-JUNGLE",
+      "championName": "LeeSin",
+      "teamId": 100,
+      "teamPosition": "JUNGLE",
+      "win": false,
+      "kills": 9,
+      "deaths": 6,
+      "assists": 10,
+      "totalMinionsKilled": 30,
+      "neutralMinionsKilled": 107,
+      "goldEarned": 9382,
+      "visionScore": 12,
+      "totalDamageDealtToChampions": 15702,
+      "totalDamageTaken": 23532,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 11,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-100-MIDDLE",
+      "championName": "Lux",
+      "teamId": 100,
+      "teamPosition": "MIDDLE",
+      "win": false,
+      "kills": 7,
+      "deaths": 1,
+      "assists": 6,
+      "totalMinionsKilled": 143,
+      "neutralMinionsKilled": 0,
+      "goldEarned": 10059,
+      "visionScore": 36,
+      "totalDamageDealtToChampions": 14924,
+      "totalDamageTaken": 27134,
+      "item0": 3020,
+      "item1": 3089,
+      "item2": 3157,
+      "item3": 3135,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8112
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-100-BOTTOM",
+      "championName": "Jinx",
+      "teamId": 100,
+      "teamPosition": "BOTTOM",
+      "win": false,
+      "kills": 1,
+      "deaths": 6,
+      "assists": 7,
+      "totalMinionsKilled": 137,
+      "neutralMinionsKilled": 4,
+      "goldEarned": 10993,
+      "visionScore": 38,
+      "totalDamageDealtToChampions": 14467,
+      "totalDamageTaken": 15593,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-100-UTILITY",
+      "championName": "Leona",
+      "teamId": 100,
+      "teamPosition": "UTILITY",
+      "win": false,
+      "kills": 1,
+      "deaths": 4,
+      "assists": 3,
+      "totalMinionsKilled": 25,
+      "neutralMinionsKilled": 5,
+      "goldEarned": 11055,
+      "visionScore": 38,
+      "totalDamageDealtToChampions": 17996,
+      "totalDamageTaken": 14046,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-TOP",
+      "championName": "Ornn",
+      "teamId": 200,
+      "teamPosition": "TOP",
+      "win": true,
+      "kills": 8,
+      "deaths": 9,
+      "assists": 11,
+      "totalMinionsKilled": 150,
+      "neutralMinionsKilled": 4,
+      "goldEarned": 8630,
+      "visionScore": 36,
+      "totalDamageDealtToChampions": 14117,
+      "totalDamageTaken": 22921,
+      "item0": 3047,
+      "item1": 3075,
+      "item2": 3065,
+      "item3": 3053,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 12,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8437
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-JUNGLE",
+      "championName": "Amumu",
+      "teamId": 200,
+      "teamPosition": "JUNGLE",
+      "win": true,
+      "kills": 1,
+      "deaths": 2,
+      "assists": 10,
+      "totalMinionsKilled": 30,
+      "neutralMinionsKilled": 107,
+      "goldEarned": 10873,
+      "visionScore": 32,
+      "totalDamageDealtToChampions": 11709,
+      "totalDamageTaken": 19112,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 11,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-MIDDLE",
+      "championName": "Kassadin",
+      "teamId": 200,
+      "teamPosition": "MIDDLE",
+      "win": true,
+      "kills": 0,
+      "deaths": 5,
+      "assists": 7,
+      "totalMinionsKilled": 162,
+      "neutralMinionsKilled": 8,
+      "goldEarned": 10279,
+      "visionScore": 34,
+      "totalDamageDealtToChampions": 13627,
+      "totalDamageTaken": 13265,
+      "item0": 3020,
+      "item1": 3089,
+      "item2": 3157,
+      "item3": 3135,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8112
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-BOTTOM",
+      "championName": "Ezreal",
+      "teamId": 200,
+      "teamPosition": "BOTTOM",
+      "win": true,
+      "kills": 2,
+      "deaths": 5,
+      "assists": 11,
+      "totalMinionsKilled": 162,
+      "neutralMinionsKilled": 8,
+      "goldEarned": 8744,
+      "visionScore": 23,
+      "totalDamageDealtToChampions": 11860,
+      "totalDamageTaken": 19300,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-UTILITY",
+      "championName": "Nautilus",
+      "teamId": 200,
+      "teamPosition": "UTILITY",
+      "win": true,
+      "kills": 6,
+      "deaths": 8,
+      "assists": 8,
+      "totalMinionsKilled": 30,
+      "neutralMinionsKilled": 2,
+      "goldEarned": 10603,
+      "visionScore": 20,
+      "totalDamageDealtToChampions": 21011,
+      "totalDamageTaken": 24443,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     }
+    ]
+   }
+  },
+  {
+   "metadata": {
+    "matchId": "DEMO_9013"
+   },
+   "info": {
+    "gameCreation": 1791210960000,
+    "gameDuration": 1680,
+    "gameEndTimestamp": 1791212640000,
+    "gameVersion": "16.20.700.1234",
+    "queueId": 420,
+    "participants": [
+     {
+      "puuid": "DEMO-100-TOP",
+      "championName": "Renekton",
+      "teamId": 100,
+      "teamPosition": "TOP",
+      "win": true,
+      "kills": 8,
+      "deaths": 3,
+      "assists": 4,
+      "totalMinionsKilled": 156,
+      "neutralMinionsKilled": 4,
+      "goldEarned": 9344,
+      "visionScore": 17,
+      "totalDamageDealtToChampions": 19128,
+      "totalDamageTaken": 15294,
+      "item0": 3047,
+      "item1": 3075,
+      "item2": 3065,
+      "item3": 3053,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 12,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8437
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-100-JUNGLE",
+      "championName": "LeeSin",
+      "teamId": 100,
+      "teamPosition": "JUNGLE",
+      "win": true,
+      "kills": 1,
+      "deaths": 1,
+      "assists": 6,
+      "totalMinionsKilled": 33,
+      "neutralMinionsKilled": 120,
+      "goldEarned": 11178,
+      "visionScore": 16,
+      "totalDamageDealtToChampions": 20334,
+      "totalDamageTaken": 17266,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 11,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-PUUID-JUGADOR",
+      "championName": "Orianna",
+      "teamId": 100,
+      "teamPosition": "MIDDLE",
+      "win": true,
+      "kills": 1,
+      "deaths": 5,
+      "assists": 9,
+      "totalMinionsKilled": 166,
+      "neutralMinionsKilled": 8,
+      "goldEarned": 9485,
+      "visionScore": 20,
+      "totalDamageDealtToChampions": 20415,
+      "totalDamageTaken": 27213,
+      "item0": 3020,
+      "item1": 3089,
+      "item2": 3157,
+      "item3": 3135,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8112
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-100-BOTTOM",
+      "championName": "Ashe",
+      "teamId": 100,
+      "teamPosition": "BOTTOM",
+      "win": true,
+      "kills": 2,
+      "deaths": 3,
+      "assists": 4,
+      "totalMinionsKilled": 165,
+      "neutralMinionsKilled": 1,
+      "goldEarned": 10551,
+      "visionScore": 32,
+      "totalDamageDealtToChampions": 19192,
+      "totalDamageTaken": 17209,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-100-UTILITY",
+      "championName": "Thresh",
+      "teamId": 100,
+      "teamPosition": "UTILITY",
+      "win": true,
+      "kills": 5,
+      "deaths": 8,
+      "assists": 2,
+      "totalMinionsKilled": 36,
+      "neutralMinionsKilled": 2,
+      "goldEarned": 11333,
+      "visionScore": 22,
+      "totalDamageDealtToChampions": 26339,
+      "totalDamageTaken": 22977,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-TOP",
+      "championName": "Ornn",
+      "teamId": 200,
+      "teamPosition": "TOP",
+      "win": false,
+      "kills": 5,
+      "deaths": 4,
+      "assists": 12,
+      "totalMinionsKilled": 154,
+      "neutralMinionsKilled": 0,
+      "goldEarned": 12321,
+      "visionScore": 18,
+      "totalDamageDealtToChampions": 18959,
+      "totalDamageTaken": 28942,
+      "item0": 3047,
+      "item1": 3075,
+      "item2": 3065,
+      "item3": 3053,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 12,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8437
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-JUNGLE",
+      "championName": "Amumu",
+      "teamId": 200,
+      "teamPosition": "JUNGLE",
+      "win": false,
+      "kills": 3,
+      "deaths": 5,
+      "assists": 2,
+      "totalMinionsKilled": 33,
+      "neutralMinionsKilled": 120,
+      "goldEarned": 10108,
+      "visionScore": 34,
+      "totalDamageDealtToChampions": 18401,
+      "totalDamageTaken": 22043,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 11,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-MIDDLE",
+      "championName": "Lux",
+      "teamId": 200,
+      "teamPosition": "MIDDLE",
+      "win": false,
+      "kills": 4,
+      "deaths": 3,
+      "assists": 12,
+      "totalMinionsKilled": 181,
+      "neutralMinionsKilled": 0,
+      "goldEarned": 12351,
+      "visionScore": 22,
+      "totalDamageDealtToChampions": 18690,
+      "totalDamageTaken": 28718,
+      "item0": 3020,
+      "item1": 3089,
+      "item2": 3157,
+      "item3": 3135,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8112
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-BOTTOM",
+      "championName": "Ashe",
+      "teamId": 200,
+      "teamPosition": "BOTTOM",
+      "win": false,
+      "kills": 8,
+      "deaths": 1,
+      "assists": 1,
+      "totalMinionsKilled": 184,
+      "neutralMinionsKilled": 3,
+      "goldEarned": 9333,
+      "visionScore": 39,
+      "totalDamageDealtToChampions": 13912,
+      "totalDamageTaken": 22381,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     },
+     {
+      "puuid": "DEMO-200-UTILITY",
+      "championName": "Nautilus",
+      "teamId": 200,
+      "teamPosition": "UTILITY",
+      "win": false,
+      "kills": 6,
+      "deaths": 6,
+      "assists": 9,
+      "totalMinionsKilled": 34,
+      "neutralMinionsKilled": 3,
+      "goldEarned": 9383,
+      "visionScore": 39,
+      "totalDamageDealtToChampions": 20661,
+      "totalDamageTaken": 22270,
+      "item0": 3006,
+      "item1": 3031,
+      "item2": 3072,
+      "item3": 3094,
+      "item4": 0,
+      "item5": 0,
+      "item6": 3340,
+      "summoner1Id": 4,
+      "summoner2Id": 14,
+      "perks": {
+       "styles": [
+        {
+         "description": "primaryStyle",
+         "style": 8400,
+         "selections": [
+          {
+           "perk": 8008
+          }
+         ]
+        },
+        {
+         "description": "subStyle",
+         "style": 8300,
+         "selections": []
+        }
+       ]
+      }
+     }
+    ]
+   }
+  }
+ ]
+}

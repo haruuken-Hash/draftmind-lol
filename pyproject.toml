@@ -1,0 +1,4 @@
+[tool.pytest.ini_options]
+# Permite que las pruebas importen "draftmind" sin instalar el paquete.
+pythonpath = ["src"]
+testpaths = ["tests"]

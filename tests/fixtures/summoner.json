@@ -1,0 +1,9 @@
+{
+  "type": "summoner",
+  "version": "16.21.1",
+  "data": {
+    "SummonerFlash": {"id": "SummonerFlash", "name": "Destello", "description": "Te teletransporta una corta distancia hacia tu cursor.", "cooldown": [300], "key": "4", "summonerLevel": 7, "modes": ["ARAM", "CLASSIC"], "image": {"full": "SummonerFlash.png"}},
+    "SummonerSmite": {"id": "SummonerSmite", "name": "Aplastar", "description": "Inflige daño verdadero a un monstruo.", "cooldown": [15], "key": "11", "summonerLevel": 3, "modes": ["CLASSIC"], "image": {"full": "SummonerSmite.png"}},
+    "SummonerSnowball": {"id": "SummonerSnowball", "name": "Marca", "description": "Lanza una bola de nieve.", "cooldown": [80], "key": "32", "summonerLevel": 6, "modes": ["ARAM"], "image": {"full": "SummonerSnowball.png"}}
+  }
+}

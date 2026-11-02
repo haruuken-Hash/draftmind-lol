@@ -1,0 +1,16 @@
+{
+  "source": {
+    "name": "EJEMPLO DE FORMATO (valores ficticios)",
+    "url": "https://example.org/sustituir-por-la-url-real-de-la-fuente",
+    "retrieved_at": "2026-10-28T12:00:00Z",
+    "notes": "Archivo de ejemplo para ver el formato. Los números son inventados: no lo importes como datos reales."
+  },
+  "patch": "16.21",
+  "region": "LAN",
+  "rank_segment": "Todos los rangos",
+  "rows": [
+    {"champion_id": "Garen", "role": "TOP", "games": 1234},
+    {"champion_id": "Garen", "role": "TOP", "opponent_id": "Darius", "games": 321, "wins": 150},
+    {"champion_id": "Ahri", "role": "MIDDLE", "games": 2000, "win_rate": 0.5, "pick_rate": 0.08}
+  ]
+}

@@ -1,0 +1,11 @@
+[
+  {"id": 8100, "key": "Domination", "icon": "perk-images/Styles/7200_Domination.png", "name": "Dominación",
+   "slots": [
+     {"runes": [{"id": 8112, "key": "Electrocute", "icon": "perk-images/Styles/Domination/Electrocute/Electrocute.png", "name": "Electrocutar", "shortDesc": "Alcanzar a un campeón con 3 ataques o habilidades <b>únicos</b> inflige daño adicional.", "longDesc": "..."}]},
+     {"runes": [{"id": 8126, "key": "CheapShot", "icon": "perk-images/Styles/Domination/CheapShot/CheapShot.png", "name": "Golpe Bajo", "shortDesc": "Daño verdadero adicional.", "longDesc": "..."}]}
+   ]},
+  {"id": 8400, "key": "Resolve", "icon": "perk-images/Styles/7204_Resolve.png", "name": "Valor",
+   "slots": [
+     {"runes": [{"id": 8437, "key": "GraspOfTheUndying", "icon": "perk-images/Styles/Resolve/GraspOfTheUndying/GraspOfTheUndying.png", "name": "Garras del Inmortal", "shortDesc": "Cada 4 s tu siguiente ataque cura.", "longDesc": "..."}]}
+   ]}
+]

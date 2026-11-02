@@ -1,0 +1,26 @@
+{
+  "_nota": "Sesión de ejemplo construida a mano según la estructura que describen proyectos de la comunidad. No es una captura real del cliente.",
+  "localPlayerCellId": 2,
+  "myTeam": [
+    {"cellId": 0, "championId": 54, "championPickIntent": 0, "assignedPosition": "top", "gameName": "NoDebeMostrarse", "summonerId": 111, "puuid": "secreto-0"},
+    {"cellId": 1, "championId": 0, "championPickIntent": 32, "assignedPosition": "jungle", "gameName": "", "summonerId": 0},
+    {"cellId": 2, "championId": 0, "championPickIntent": 103, "assignedPosition": "middle", "gameName": "YoMismo"},
+    {"cellId": 3, "championId": 222, "championPickIntent": 0, "assignedPosition": "bottom"},
+    {"cellId": 4, "championId": 0, "championPickIntent": 0, "assignedPosition": ""}
+  ],
+  "theirTeam": [
+    {"cellId": 5, "championId": 122, "championPickIntent": 0, "assignedPosition": "", "gameName": "Enemigo"},
+    {"cellId": 6, "championId": 0, "championPickIntent": 64, "assignedPosition": ""},
+    {"cellId": 7, "championId": 99999, "championPickIntent": 0}
+  ],
+  "bans": {"myTeamBans": [238], "theirTeamBans": [89]},
+  "actions": [
+    [
+      {"type": "ban", "championId": 238, "completed": true},
+      {"type": "ban", "championId": 103, "completed": false},
+      {"type": "ban", "championId": 157, "completed": true}
+    ],
+    [{"type": "pick", "championId": 54, "completed": true}]
+  ],
+  "timer": {"phase": "BAN_PICK"}
+}

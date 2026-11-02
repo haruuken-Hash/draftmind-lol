@@ -1,0 +1,21 @@
+{
+  "type": "champion",
+  "format": "standAloneComplex",
+  "version": "16.21.1",
+  "data": {
+    "MonkeyKing": {
+      "version": "16.21.1", "id": "MonkeyKing", "key": "62", "name": "Wukong",
+      "title": "el Rey de los Monos", "blurb": "...",
+      "info": {"attack": 8, "defense": 5, "magic": 2, "difficulty": 3},
+      "image": {"full": "MonkeyKing.png", "sprite": "champion2.png", "group": "champion", "x": 240, "y": 96, "w": 48, "h": 48},
+      "tags": ["Fighter", "Tank"], "partype": "Maná", "stats": {}
+    },
+    "Ahri": {
+      "version": "16.21.1", "id": "Ahri", "key": "103", "name": "Ahri",
+      "title": "la Zorra de Nueve Colas", "blurb": "...",
+      "info": {"attack": 3, "defense": 4, "magic": 8, "difficulty": 5},
+      "image": {"full": "Ahri.png", "sprite": "champion0.png", "group": "champion", "x": 48, "y": 0, "w": 48, "h": 48},
+      "tags": ["Mage", "Assassin"], "partype": "Maná", "stats": {}
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "type": "item",
+  "version": "16.21.1",
+  "data": {
+    "1001": {"name": "Botas", "description": "<mainText><stats>25 de Velocidad</stats></mainText>", "plaintext": "Mejora la velocidad", "gold": {"base": 300, "total": 300, "sell": 210, "purchasable": true}, "tags": ["Boots"], "maps": {"11": true}, "into": ["3047"], "image": {"full": "1001.png"}},
+    "1029": {"name": "Armadura de Tela", "description": "", "plaintext": "", "gold": {"base": 300, "total": 300, "sell": 210, "purchasable": true}, "tags": ["Armor"], "maps": {"11": true}, "into": ["3047", "3075"], "image": {"full": "1029.png"}},
+    "3047": {"name": "Punteras de Acero Revestidas", "description": "<mainText><stats><attention>25</attention> de Armadura<br><attention>45</attention> de Velocidad de Movimiento</stats><br><br><passive>Revestimiento</passive><br>Reduce el daño recibido de los ataques en un 10%.</mainText>", "plaintext": "Reduce el daño de ataque recibido.", "gold": {"base": 600, "total": 1200, "sell": 840, "purchasable": true}, "tags": ["Armor", "Boots"], "maps": {"11": true, "12": true}, "into": ["3174"], "from": ["1001", "1029"], "image": {"full": "3047.png"}},
+    "3075": {"name": "Malla de Espinas", "description": "<mainText><stats>Armadura</stats></mainText>", "plaintext": "Refleja daño", "gold": {"base": 800, "total": 2450, "sell": 1715, "purchasable": true}, "tags": ["Armor", "Health"], "maps": {"11": true}, "into": [], "from": ["1029"], "image": {"full": "3075.png"}},
+    "223075": {"name": "Malla de Espinas", "description": "", "plaintext": "", "gold": {"base": 800, "total": 2450, "sell": 1715, "purchasable": true}, "tags": ["Armor"], "maps": {"11": true}, "into": [], "image": {"full": "223075.png"}},
+    "3340": {"name": "Tótem de Vigilancia", "description": "", "plaintext": "", "gold": {"base": 0, "total": 0, "sell": 0, "purchasable": true}, "tags": ["Trinket", "Vision"], "maps": {"11": true}, "into": [], "image": {"full": "3340.png"}},
+    "3111": {"name": "Botas de Mercurio", "description": "", "plaintext": "Tenacidad", "gold": {"base": 350, "total": 1250, "sell": 875, "purchasable": true}, "tags": ["Boots", "SpellBlock", "Tenacity"], "maps": {"11": true}, "into": [], "from": ["1001"], "image": {"full": "3111.png"}},
+    "3190": {"name": "Relicario de los Solari de Hierro", "description": "", "plaintext": "Se activa para proteger a aliados cercanos del daño.", "gold": {"base": 200, "total": 2200, "sell": 880, "purchasable": true}, "tags": ["Health", "SpellBlock", "Armor", "Aura", "Active"], "maps": {"11": true}, "into": [], "image": {"full": "3190.png"}},
+    "663058": {"name": "Escudo de Roca Fundida", "description": "", "plaintext": "", "gold": {"base": 900, "total": 2500, "sell": 1750, "purchasable": true}, "tags": ["Health", "Armor"], "maps": {"11": true, "30": true}, "into": [], "image": {"full": "663058.png"}},
+    "3165": {"name": "Morellonomicón", "description": "", "plaintext": "Heridas graves", "gold": {"base": 950, "total": 2850, "sell": 1995, "purchasable": true}, "tags": ["SpellDamage", "Health"], "maps": {"11": false, "12": true}, "into": [], "image": {"full": "3165.png"}}
+  }
+}

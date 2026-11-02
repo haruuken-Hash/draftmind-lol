@@ -1,0 +1,529 @@
+"""Tablero de draft interactivo con análisis en vivo.
+
+Flujo: haz clic en una casilla (o deja que la aplicación elija la siguiente
+vacía) y después en un campeón de la cuadrícula. Cada cambio recalcula las
+recomendaciones al instante. Clic derecho o Supr vacía una casilla.
+
+El tablero nunca actúa sobre el cliente del juego. Con el draft en vivo
+activado (opcional, en «Fuentes y configuración»), además LEE la selección
+de campeones del cliente y la refleja aquí; durante la partida se detiene.
+"""
+
+from html import escape
+
+from PySide6.QtCore import Qt, QTimer
+from PySide6.QtGui import QKeySequence, QShortcut
+from PySide6.QtWidgets import (
+    QComboBox,
+    QDialog,
+    QGridLayout,
+    QHBoxLayout,
+    QLabel,
+    QPushButton,
+    QScrollArea,
+    QSplitter,
+    QTextBrowser,
+    QVBoxLayout,
+    QWidget,
+)
+
+from draftmind.app.bootstrap import AppContext
+from draftmind.domain.enums import Role
+from draftmind.domain.models import CandidateAnalysis, DraftPick, DraftState, TeamProfile
+from draftmind.integrations.champ_select import LiveDraft, LiveSlot
+from draftmind.services.live_draft_service import LiveDraftService, LiveState, LiveStatus
+from draftmind.ui import theme
+from draftmind.ui.components.champion_grid import ChampionGrid
+from draftmind.ui.components.champion_slot import ChampionSlot
+from draftmind.ui.components.recommendation_card import RecommendationCard
+from draftmind.ui.draft_report import render_report
+from draftmind.ui.portraits import PortraitProvider
+from draftmind.ui.session import AppSession
+from draftmind.ui.widgets import (
+    card,
+    combo_role,
+    notice_label,
+    section_label,
+    subtitle_label,
+    title_label,
+)
+from draftmind.ui.workers import run_task
+
+CARD_COLUMNS = 2
+SUGGESTIONS = 6
+LIVE_POLL_MS = 2000  # Cada 2 s: como mucho 2 peticiones locales al cliente.
+
+
+class DraftView(QWidget):
+    def __init__(self, ctx: AppContext, session: AppSession, portraits: PortraitProvider,
+                 parent: QWidget | None = None):
+        super().__init__(parent)
+        self.ctx = ctx
+        self.session = session
+        self.portraits = portraits
+        self.active_slot: ChampionSlot | None = None
+        self._analyses: list[CandidateAnalysis] = []
+        self.bans: list[str] = []
+        # Draft en vivo.
+        self._live_service: LiveDraftService | None = None
+        self._live_busy = False
+        self._last_live: LiveDraft | None = None
+        self._enemy_roles: dict[int, Role | None] = {}  # Roles enemigos que indica el usuario.
+        self._live_timer = QTimer(self)
+        self._live_timer.setInterval(LIVE_POLL_MS)
+        self._live_timer.timeout.connect(self._poll_live)
+
+        # --- Cabecera ---
+        self.my_role = QComboBox()
+        self.my_role.addItem("Sin indicar", None)
+        for role in Role:
+            self.my_role.addItem(role.label, role)
+        if ctx.analyzer.profile.main_roles:
+            self.my_role.setCurrentIndex(self.my_role.findData(ctx.analyzer.profile.main_roles[0]))
+        report_button = QPushButton("Informe completo")
+        clear_button = QPushButton("Limpiar tablero")
+
+        header = QHBoxLayout()
+        titles = QVBoxLayout()
+        titles.addWidget(title_label("Draft"))
+        titles.addWidget(subtitle_label(
+            "Clic en una casilla y luego en un campeón. Clic derecho o Supr vacía la casilla. "
+            "Esc cancela la selección. Ctrl+F busca."
+        ))
+        header.addLayout(titles, 1)
+        header.addWidget(QLabel("Tu posición:"))
+        header.addWidget(self.my_role)
+        header.addWidget(report_button)
+        header.addWidget(clear_button)
+
+        # --- Equipos ---
+        self.ally_slots = [ChampionSlot(portraits, role, editable_role=False) for role in Role]
+        self.enemy_slots = [ChampionSlot(portraits, role, editable_role=True) for role in Role]
+        allies_col = self._team_column("TU EQUIPO", "teamAlly", self.ally_slots)
+        enemies_col = self._team_column("EQUIPO ENEMIGO", "teamEnemy", self.enemy_slots)
+
+        # --- Centro: cuadrícula + análisis ---
+        self.grid = ChampionGrid(ctx, portraits)
+        self.analysis_heading = section_label("")
+        self.analysis_notes = QLabel()
+        self.analysis_notes.setWordWrap(True)
+        self.analysis_notes.setStyleSheet("color: #8b929c;")
+        self.cards_layout = QGridLayout()
+        self.cards_layout.setSpacing(10)
+        self.ally_summary = QLabel()
+        self.enemy_summary = QLabel()
+        for label in (self.ally_summary, self.enemy_summary):
+            label.setWordWrap(True)
+            label.setTextFormat(Qt.TextFormat.RichText)
+        ally_box, ally_box_layout = card()
+        ally_box_layout.addWidget(self.ally_summary)
+        enemy_box, enemy_box_layout = card()
+        enemy_box_layout.addWidget(self.enemy_summary)
+        summaries = QHBoxLayout()
+        summaries.addWidget(ally_box)
+        summaries.addWidget(enemy_box)
+
+        analysis = QWidget()
+        analysis_layout = QVBoxLayout(analysis)
+        analysis_layout.setContentsMargins(0, 8, 6, 0)
+        analysis_layout.addWidget(self.analysis_heading)
+        analysis_layout.addWidget(self.analysis_notes)
+        analysis_layout.addLayout(self.cards_layout)
+        analysis_layout.addWidget(section_label("Composiciones"))
+        analysis_layout.addLayout(summaries)
+        analysis_layout.addStretch()
+        analysis_scroll = QScrollArea()
+        analysis_scroll.setWidgetResizable(True)
+        analysis_scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        analysis_scroll.setWidget(analysis)
+
+        center = QSplitter(Qt.Orientation.Vertical)
+        center.addWidget(self.grid)
+        center.addWidget(analysis_scroll)
+        center.setSizes([300, 420])
+
+        body = QHBoxLayout()
+        body.setSpacing(14)
+        body.addLayout(allies_col)
+        body.addWidget(center, 1)
+        body.addLayout(enemies_col)
+
+        # --- Barra del draft en vivo (solo si está activado) ---
+        self.live_bar, live_layout = card()
+        live_badge = QLabel("EN VIVO")
+        live_badge.setObjectName("badge")
+        self.live_status = QLabel()
+        self.live_status.setWordWrap(True)
+        self.live_toggle = QPushButton("Pausar seguimiento")
+        self.live_toggle.setCheckable(True)
+        self.live_toggle.setToolTip("Deja de leer el cliente para editar el tablero a mano.")
+        live_row = QHBoxLayout()
+        live_row.addWidget(live_badge)
+        live_row.addWidget(self.live_status, 1)
+        live_row.addWidget(self.live_toggle)
+        self.bans_row = QHBoxLayout()
+        self.bans_row.setSpacing(4)
+        live_layout.addLayout(live_row)
+        live_layout.addLayout(self.bans_row)
+        self.live_bar.hide()
+
+        layout = QVBoxLayout(self)
+        layout.setContentsMargins(20, 16, 20, 16)
+        layout.addLayout(header)
+        layout.addWidget(self.live_bar)
+        layout.addLayout(body, 1)
+
+        # --- Señales ---
+        for slot in self.ally_slots + self.enemy_slots:
+            slot.activated.connect(self.activate)
+            slot.cleared.connect(self.clear_slot)
+            slot.role_changed.connect(self._on_slot_role_changed)
+        self.live_toggle.toggled.connect(self._on_live_toggled)
+        self.grid.champion_chosen.connect(self.place_champion)
+        self.my_role.currentIndexChanged.connect(self._on_my_role_changed)
+        clear_button.clicked.connect(self.clear)
+        report_button.clicked.connect(self.show_report)
+        QShortcut(QKeySequence("Ctrl+F"), self, activated=self.grid.search.setFocus)
+        QShortcut(QKeySequence("Esc"), self, activated=lambda: self.activate(None))
+
+        self._on_my_role_changed()
+        self.configure_live()
+
+    @staticmethod
+    def _team_column(title: str, object_name: str, slots: list[ChampionSlot]) -> QVBoxLayout:
+        column = QVBoxLayout()
+        column.setSpacing(8)
+        label = QLabel(title)
+        label.setObjectName(object_name)
+        column.addWidget(label)
+        for slot in slots:
+            slot.setFixedWidth(220)
+            column.addWidget(slot)
+        column.addStretch()
+        return column
+
+    # --- Estado del tablero --------------------------------------------------
+
+    def _names(self) -> dict[str, str]:
+        return {c.id: c.name for c in self.ctx.catalog.champions}
+
+    def my_slot(self) -> ChampionSlot | None:
+        role = combo_role(self.my_role)
+        return next((s for s in self.ally_slots if s.role is role), None) if role else None
+
+    def current_draft(self) -> DraftState:
+        me = self.my_slot()
+        return DraftState(
+            my_role=combo_role(self.my_role),
+            my_champion_id=me.champion_id if me else None,
+            allies=[
+                DraftPick(champion_id=s.champion_id, role=s.role)
+                for s in self.ally_slots if s.champion_id and s is not me
+            ],
+            enemies=[
+                DraftPick(champion_id=s.champion_id, role=s.role)
+                for s in self.enemy_slots if s.champion_id
+            ],
+            bans=list(self.bans),
+        )
+
+    def _taken(self) -> set[str]:
+        return {s.champion_id for s in self.ally_slots + self.enemy_slots if s.champion_id} | set(self.bans)
+
+    # --- Acciones ----------------------------------------------------------
+
+    def activate(self, slot: ChampionSlot | None) -> None:
+        """Marca la casilla que recibirá el próximo campeón (None = ninguna)."""
+        if self.active_slot is not None:
+            self.active_slot.set_active(False)
+        self.active_slot = slot
+        if slot is not None:
+            slot.set_active(True)
+
+    def _default_target(self) -> ChampionSlot | None:
+        me = self.my_slot()
+        if me is not None and me.champion_id is None:
+            return me
+        return next((s for s in self.ally_slots + self.enemy_slots if s.champion_id is None), None)
+
+    def place_champion(self, champion_id: str) -> None:
+        if champion_id in self._taken():
+            return
+        target = self.active_slot or self._default_target()
+        if target is None:
+            return
+        target.set_champion(champion_id, self._names().get(champion_id, champion_id))
+        # Avanza a la siguiente casilla vacía para encadenar selecciones.
+        self.activate(None)
+        if target is not None:
+            order = self.ally_slots + self.enemy_slots
+            start = order.index(target)
+            following = next((s for s in order[start + 1:] if s.champion_id is None), None)
+            if following is not None:
+                self.activate(following)
+        self._after_change()
+
+    def pick_for_me(self, champion_id: str) -> None:
+        me = self.my_slot()
+        if me is None or champion_id in self._taken():
+            return
+        me.set_champion(champion_id, self._names().get(champion_id, champion_id))
+        self._after_change()
+
+    def clear_slot(self, slot: ChampionSlot) -> None:
+        slot.set_champion(None, None)
+        self._after_change()
+
+    def clear(self) -> None:
+        self.activate(None)
+        for slot in self.ally_slots + self.enemy_slots:
+            slot.set_champion(None, None)
+            slot.cell_id = None
+        self.bans = []
+        self._last_live = None
+        self._enemy_roles.clear()
+        self._render_bans()
+        self._after_change()
+
+    def _on_slot_role_changed(self, slot: ChampionSlot) -> None:
+        if slot.cell_id is not None and slot in self.enemy_slots:
+            self._enemy_roles[slot.cell_id] = slot.role  # Se conserva en las siguientes lecturas.
+        self.update_analysis()
+
+    # --- Draft en vivo -------------------------------------------------------
+
+    def configure_live(self) -> None:
+        """Activa o desactiva el seguimiento según la configuración guardada."""
+        settings = self.ctx.app_settings
+        if settings.live_draft_enabled:
+            self._live_service = LiveDraftService(settings.league_install_dir, self.ctx.champion_keys)
+            self.live_bar.show()
+            self.live_status.setText("Buscando el cliente de LoL…")
+            if not self.live_toggle.isChecked():
+                self._live_timer.start()
+                self._poll_live()
+        else:
+            self._live_service = None
+            self._live_timer.stop()
+            self.live_bar.hide()
+
+    def _on_live_toggled(self, paused: bool) -> None:
+        self.live_toggle.setText("Reanudar seguimiento" if paused else "Pausar seguimiento")
+        if paused:
+            self._live_timer.stop()
+            self.live_status.setText("Seguimiento en pausa: puedes editar el tablero a mano.")
+        elif self._live_service is not None:
+            self._live_timer.start()
+            self._poll_live()
+
+    def _poll_live(self) -> None:
+        if self._live_busy or self._live_service is None:
+            return
+        self._live_busy = True
+        run_task(self._live_service.poll, on_done=self.apply_live_status, on_error=self._on_live_error)
+
+    def _on_live_error(self, error: str) -> None:
+        self._live_busy = False
+        self.live_status.setText(f"Error inesperado al leer el cliente: {escape(error)}")
+
+    def apply_live_status(self, status: LiveStatus) -> None:
+        self._live_busy = False
+        if self._live_service is None or self.live_toggle.isChecked():
+            return  # Desactivado o en pausa mientras llegaba la respuesta.
+        text = escape(status.message)
+        if not status.certificate_verified:
+            text += (f" <span style='color:{theme.MUTED}'>(certificado local no verificado con la CA de "
+                     "Riot; conexión solo a 127.0.0.1)</span>")
+        self.live_status.setText(text)
+        if status.state is LiveState.CHAMP_SELECT and status.draft is not None and status.draft != self._last_live:
+            self.apply_live_draft(status.draft)
+
+    def apply_live_draft(self, draft: LiveDraft) -> None:
+        """Refleja en el tablero lo que muestra el cliente (sin nombres de jugadores)."""
+        self._last_live = draft
+        names = self._names()
+        self.activate(None)
+        for slot in self.ally_slots + self.enemy_slots:
+            slot.set_champion(None, None)
+            slot.cell_id = None
+
+        def put(slot: ChampionSlot, live: LiveSlot) -> None:
+            slot.cell_id = live.cell_id
+            if live.champion_id:
+                slot.set_champion(live.champion_id, names.get(live.champion_id, live.champion_id),
+                                  tentative=live.is_intent)
+
+        # Tu posición: la que asigna el cliente; si no hay, la que tengas elegida.
+        if draft.me is not None and draft.me.role is not None:
+            self.my_role.blockSignals(True)
+            self.my_role.setCurrentIndex(self.my_role.findData(draft.me.role))
+            self.my_role.blockSignals(False)
+        free = list(self.ally_slots)
+        me_slot = self.my_slot()
+        if draft.me is not None:
+            # Sin posición asignada (p. ej. selección a ciegas): no ocupar la de un aliado que sí la tiene.
+            claimed = {a.role for a in draft.allies if a.role is not None}
+            if draft.me.role is None and (me_slot is None or me_slot.role in claimed):
+                me_slot = next((s for s in free if s.role not in claimed), free[0])
+            if me_slot is not self.my_slot():
+                self.my_role.blockSignals(True)
+                self.my_role.setCurrentIndex(self.my_role.findData(me_slot.role))
+                self.my_role.blockSignals(False)
+            put(me_slot, draft.me)
+            free.remove(me_slot)
+        pending = []
+        for ally in draft.allies:
+            slot = next((s for s in free if ally.role is not None and s.role is ally.role), None)
+            if slot is None:
+                pending.append(ally)
+                continue
+            put(slot, ally)
+            free.remove(slot)
+        for ally, slot in zip(pending, free):
+            put(slot, ally)
+
+        for slot in self.enemy_slots:
+            slot.set_role(None)  # El cliente no muestra los roles enemigos.
+        for enemy, slot in zip(draft.enemies, self.enemy_slots):
+            put(slot, enemy)
+            slot.set_role(self._enemy_roles.get(enemy.cell_id))  # Salvo los que indique el usuario.
+
+        self.bans = list(draft.bans)
+        self._render_bans()
+        for slot in self.ally_slots:
+            slot.set_me(slot is self.my_slot())
+        self._after_change()
+
+    def _render_bans(self) -> None:
+        while self.bans_row.count():
+            widget = self.bans_row.takeAt(0).widget()
+            if widget is not None:
+                widget.setParent(None)
+        if not self.bans:
+            return
+        caption = QLabel("Bloqueados:")
+        caption.setStyleSheet(f"color: {theme.MUTED};")
+        self.bans_row.addWidget(caption)
+        names = self._names()
+        for champion_id in self.bans:
+            icon = QLabel()
+            icon.setPixmap(self.portraits.get(champion_id, 26))
+            icon.setToolTip(names.get(champion_id, champion_id))
+            self.bans_row.addWidget(icon)
+        self.bans_row.addStretch()
+
+    def _on_my_role_changed(self) -> None:
+        me = self.my_slot()
+        for slot in self.ally_slots:
+            slot.set_me(slot is me)
+        self.update_analysis()
+
+    def _after_change(self) -> None:
+        self.grid.set_unavailable(self._taken())
+        self.update_analysis()
+
+    # --- Análisis en vivo ----------------------------------------------------
+
+    def update_analysis(self) -> None:
+        analyzer = self.ctx.analyzer
+        draft = self.current_draft()
+        self.session.set_draft(draft)  # «Estrategia» y «Runas y builds» lo leen.
+        me = self.my_slot()
+        mine = draft.my_champion_id
+        names = self._names()
+
+        entries: list[tuple[CandidateAnalysis, str | None, bool]] = []
+        notes: list[str] = []
+        if mine and analyzer.has_profile(mine):
+            self.analysis_heading.setText("Tu elección y alternativas")
+            entries.append((analyzer.analyze_candidate(draft, mine), "Tu elección", False))
+            alternatives = [a for a in analyzer.suggest_candidates(draft, limit=4) if a.champion.id != mine]
+            entries += [(a, "Alternativa", True) for a in alternatives[:3]]
+        else:
+            role = draft.my_role
+            self.analysis_heading.setText(
+                f"Sugerencias para {role.label}" if role else "Sugerencias (indica tu posición para afinarlas)"
+            )
+            if mine:
+                notes.append(f"{escape(names.get(mine, mine))} no tiene perfil cualitativo: evidencia insuficiente para analizarlo.")
+            suggestions = [a for a in analyzer.suggest_candidates(draft, limit=SUGGESTIONS + 1) if a.champion.id != mine]
+            entries += [(a, None, me is not None) for a in suggestions[:SUGGESTIONS]]
+
+        missing = [names.get(i, i) for i in analyzer.missing_profiles(draft) if i != mine]
+        if missing:
+            notes.append("Sin perfil (no cuentan en el análisis): " + escape(", ".join(missing)) + ".")
+        notes.append(
+            "Basado en perfiles cualitativos (editoriales, revisados por ti o estimados automáticamente) y, si "
+            "hay muestra suficiente, en estadísticas observadas del enfrentamiento directo. La puntuación no es "
+            "un win rate."
+        )
+        self.analysis_notes.setText("<br>".join(notes))
+
+        self._analyses = [a for a, _, _ in entries]
+        self._render_cards(entries)
+        allies, enemies = analyzer.compositions(draft)
+        self.ally_summary.setText(self._team_html("Tu equipo", allies))
+        self.enemy_summary.setText(self._team_html("Equipo enemigo", enemies))
+
+    def _render_cards(self, entries: list[tuple[CandidateAnalysis, str | None, bool]]) -> None:
+        while self.cards_layout.count():
+            widget = self.cards_layout.takeAt(0).widget()
+            if widget is not None:
+                # Ocultar y soltar antes de borrar: deleteLater no actúa al instante
+                # y la tarjeta vieja seguiría dibujándose encima de la nueva.
+                widget.hide()
+                widget.setParent(None)
+                widget.deleteLater()
+        if not entries:
+            self.cards_layout.addWidget(notice_label("No hay candidatos con perfil para esta situación."), 0, 0)
+            return
+        for index, (analysis, caption, can_pick) in enumerate(entries):
+            card_widget = RecommendationCard(analysis, self.portraits, caption, can_pick)
+            card_widget.pick_requested.connect(self.pick_for_me)
+            self.cards_layout.addWidget(card_widget, index // CARD_COLUMNS, index % CARD_COLUMNS)
+
+    @staticmethod
+    def _team_html(title: str, team: TeamProfile) -> str:
+        if not team.champion_ids:
+            return f"<b>{title}</b><br><span style='color:#8b929c'>Sin campeones con perfil.</span>"
+        strengths = "".join(f"<div>+ {escape(s)}</div>" for s in team.strengths) or "<div>Ninguna destacada.</div>"
+        weaknesses = "".join(f"<div>− {escape(w)}</div>" for w in team.weaknesses) or "<div>Ninguna destacada.</div>"
+        return (
+            f"<b>{title}</b> <span style='color:#8b929c'>(inferencias)</span><br>"
+            f"Daño: {team.physical_share:.0%} físico / {team.magic_share:.0%} mágico<br>"
+            f"<span style='color:#8b929c'>Iniciación {team.engage} · Desenganche {team.disengage} · "
+            f"Control {team.cc} · Temprano {team.early} · Escalado {team.scaling} · "
+            f"Primera línea {team.frontline}</span>"
+            f"<div style='margin-top:4px'><b>Fortalezas</b></div>{strengths}"
+            f"<div style='margin-top:4px'><b>Debilidades</b></div>{weaknesses}"
+        )
+
+    def show_report(self) -> None:
+        allies, enemies = self.ctx.analyzer.compositions(self.current_draft())
+        sources = [self.ctx.dataset.source]
+        if self.ctx.catalog.from_data_dragon:
+            sources.append(self.ctx.catalog.source)
+        dialog = QDialog(self)
+        dialog.setWindowTitle("Informe completo del draft")
+        dialog.resize(820, 680)
+        browser = QTextBrowser()
+        browser.setHtml(render_report(
+            self._analyses, allies, enemies, sources, self.analysis_heading.text(),
+        ))
+        QVBoxLayout(dialog).addWidget(browser)
+        dialog.exec()
+
+    # --- Notificaciones de la ventana principal ----------------------------
+
+    def on_catalog_changed(self) -> None:
+        names = self._names()
+        for slot in self.ally_slots + self.enemy_slots:
+            if slot.champion_id:
+                slot.set_champion(slot.champion_id, names.get(slot.champion_id, slot.champion_id))
+            else:
+                slot.refresh()
+        self.grid.reload()
+        self.update_analysis()
+
+    def on_profile_changed(self) -> None:
+        self.update_analysis()

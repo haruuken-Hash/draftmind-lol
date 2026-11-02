@@ -1,0 +1,37 @@
+{
+  "source": {
+    "name": "Perfiles cualitativos de demostración (DraftMind)",
+    "kind": "educativo",
+    "url": null,
+    "patch": null,
+    "notes": "Valoraciones editoriales aproximadas (escala 0-3) escritas a mano para probar la aplicación. NO son estadísticas, no representan un parche concreto y pueden no reflejar el estado actual del juego."
+  },
+  "champions": [
+    {"id": "Malphite", "name": "Malphite", "roles": ["TOP", "UTILITY"], "damage_type": "MAGIC", "engage": 3, "disengage": 0, "cc": 3, "early": 1, "scaling": 2, "frontline": 3, "difficulty": 1, "resource_dependence": 1},
+    {"id": "Garen", "name": "Garen", "roles": ["TOP"], "damage_type": "PHYSICAL", "engage": 1, "disengage": 0, "cc": 1, "early": 2, "scaling": 1, "frontline": 2, "difficulty": 1, "resource_dependence": 1},
+    {"id": "Darius", "name": "Darius", "roles": ["TOP"], "damage_type": "PHYSICAL", "engage": 1, "disengage": 0, "cc": 2, "early": 3, "scaling": 1, "frontline": 2, "difficulty": 2, "resource_dependence": 2},
+    {"id": "Renekton", "name": "Renekton", "roles": ["TOP"], "damage_type": "PHYSICAL", "engage": 2, "disengage": 0, "cc": 1, "early": 3, "scaling": 0, "frontline": 2, "difficulty": 2, "resource_dependence": 1},
+    {"id": "Kayle", "name": "Kayle", "roles": ["TOP"], "damage_type": "MIXED", "engage": 0, "disengage": 1, "cc": 1, "early": 0, "scaling": 3, "frontline": 0, "difficulty": 2, "resource_dependence": 3},
+    {"id": "Ornn", "name": "Ornn", "roles": ["TOP"], "damage_type": "MAGIC", "engage": 3, "disengage": 0, "cc": 3, "early": 1, "scaling": 3, "frontline": 3, "difficulty": 2, "resource_dependence": 0},
+    {"id": "LeeSin", "name": "Lee Sin", "roles": ["JUNGLE"], "damage_type": "PHYSICAL", "engage": 2, "disengage": 1, "cc": 1, "early": 3, "scaling": 0, "frontline": 1, "difficulty": 3, "resource_dependence": 2},
+    {"id": "Amumu", "name": "Amumu", "roles": ["JUNGLE", "UTILITY"], "damage_type": "MAGIC", "engage": 3, "disengage": 0, "cc": 3, "early": 1, "scaling": 2, "frontline": 2, "difficulty": 1, "resource_dependence": 1},
+    {"id": "Sejuani", "name": "Sejuani", "roles": ["JUNGLE"], "damage_type": "MAGIC", "engage": 3, "disengage": 0, "cc": 3, "early": 2, "scaling": 1, "frontline": 3, "difficulty": 2, "resource_dependence": 0},
+    {"id": "JarvanIV", "name": "Jarvan IV", "roles": ["JUNGLE"], "damage_type": "PHYSICAL", "engage": 3, "disengage": 0, "cc": 2, "early": 3, "scaling": 1, "frontline": 2, "difficulty": 2, "resource_dependence": 1},
+    {"id": "MasterYi", "name": "Master Yi", "roles": ["JUNGLE"], "damage_type": "PHYSICAL", "engage": 0, "disengage": 0, "cc": 0, "early": 1, "scaling": 3, "frontline": 0, "difficulty": 1, "resource_dependence": 3},
+    {"id": "Ahri", "name": "Ahri", "roles": ["MIDDLE"], "damage_type": "MAGIC", "engage": 1, "disengage": 1, "cc": 2, "early": 2, "scaling": 2, "frontline": 0, "difficulty": 2, "resource_dependence": 2},
+    {"id": "Orianna", "name": "Orianna", "roles": ["MIDDLE"], "damage_type": "MAGIC", "engage": 2, "disengage": 2, "cc": 2, "early": 1, "scaling": 3, "frontline": 0, "difficulty": 3, "resource_dependence": 2},
+    {"id": "Zed", "name": "Zed", "roles": ["MIDDLE"], "damage_type": "PHYSICAL", "engage": 1, "disengage": 0, "cc": 0, "early": 2, "scaling": 1, "frontline": 0, "difficulty": 3, "resource_dependence": 3},
+    {"id": "Kassadin", "name": "Kassadin", "roles": ["MIDDLE"], "damage_type": "MAGIC", "engage": 1, "disengage": 0, "cc": 1, "early": 0, "scaling": 3, "frontline": 0, "difficulty": 2, "resource_dependence": 3},
+    {"id": "Lux", "name": "Lux", "roles": ["MIDDLE", "UTILITY"], "damage_type": "MAGIC", "engage": 0, "disengage": 2, "cc": 2, "early": 1, "scaling": 2, "frontline": 0, "difficulty": 1, "resource_dependence": 1},
+    {"id": "Jinx", "name": "Jinx", "roles": ["BOTTOM"], "damage_type": "PHYSICAL", "engage": 0, "disengage": 1, "cc": 1, "early": 1, "scaling": 3, "frontline": 0, "difficulty": 2, "resource_dependence": 3},
+    {"id": "Ashe", "name": "Ashe", "roles": ["BOTTOM", "UTILITY"], "damage_type": "PHYSICAL", "engage": 2, "disengage": 1, "cc": 3, "early": 1, "scaling": 2, "frontline": 0, "difficulty": 1, "resource_dependence": 2},
+    {"id": "Ezreal", "name": "Ezreal", "roles": ["BOTTOM"], "damage_type": "PHYSICAL", "engage": 0, "disengage": 0, "cc": 0, "early": 2, "scaling": 2, "frontline": 0, "difficulty": 3, "resource_dependence": 2},
+    {"id": "Vayne", "name": "Vayne", "roles": ["BOTTOM", "TOP"], "damage_type": "PHYSICAL", "engage": 0, "disengage": 1, "cc": 1, "early": 0, "scaling": 3, "frontline": 0, "difficulty": 3, "resource_dependence": 3},
+    {"id": "Caitlyn", "name": "Caitlyn", "roles": ["BOTTOM"], "damage_type": "PHYSICAL", "engage": 0, "disengage": 1, "cc": 1, "early": 3, "scaling": 2, "frontline": 0, "difficulty": 2, "resource_dependence": 2},
+    {"id": "Leona", "name": "Leona", "roles": ["UTILITY"], "damage_type": "MAGIC", "engage": 3, "disengage": 0, "cc": 3, "early": 3, "scaling": 1, "frontline": 3, "difficulty": 1, "resource_dependence": 0},
+    {"id": "Thresh", "name": "Thresh", "roles": ["UTILITY"], "damage_type": "MAGIC", "engage": 3, "disengage": 2, "cc": 3, "early": 2, "scaling": 2, "frontline": 2, "difficulty": 3, "resource_dependence": 0},
+    {"id": "Janna", "name": "Janna", "roles": ["UTILITY"], "damage_type": "MAGIC", "engage": 0, "disengage": 3, "cc": 2, "early": 1, "scaling": 2, "frontline": 0, "difficulty": 1, "resource_dependence": 0},
+    {"id": "Lulu", "name": "Lulu", "roles": ["UTILITY"], "damage_type": "MAGIC", "engage": 0, "disengage": 3, "cc": 2, "early": 1, "scaling": 2, "frontline": 0, "difficulty": 1, "resource_dependence": 0},
+    {"id": "Nautilus", "name": "Nautilus", "roles": ["UTILITY"], "damage_type": "MAGIC", "engage": 3, "disengage": 0, "cc": 3, "early": 2, "scaling": 1, "frontline": 3, "difficulty": 1, "resource_dependence": 0}
+  ]
+}

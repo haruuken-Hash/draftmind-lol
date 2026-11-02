@@ -1,0 +1,11 @@
+# Versiones probadas con Python 3.13.14 en Windows 11 (octubre de 2026).
+PySide6==6.12.0
+SQLAlchemy==2.1.6
+pydantic==2.14.1
+httpx==0.28.1
+python-dotenv==1.2.4
+matplotlib==3.11.2
+
+# Desarrollo, pruebas y empaquetado
+pytest==9.2.0
+pyinstaller==6.22.3
