@@ -105,6 +105,11 @@ class RiotRateLimited(RiotApiError):
     pass
 
 
+class RiotBadRequest(RiotApiError):
+    """400. Pasa, por ejemplo, con un PUUID obtenido con la clave de OTRA aplicación:
+    Riot cifra los PUUID de forma distinta para cada aplicación registrada."""
+
+
 class RiotApiClient:
     def __init__(
         self,
@@ -142,6 +147,8 @@ class RiotApiClient:
                     "La Riot API rechazó la clave: no es válida, ha caducado (las de desarrollo duran "
                     "24 horas) o no tiene acceso a este recurso."
                 )
+            if status == 400:
+                raise RiotBadRequest("La Riot API rechazó la petición (código 400).")
             if status == 404:
                 raise RiotNotFound("No se encontró el recurso solicitado (revisa el Riot ID y la región).")
             if status == 429:

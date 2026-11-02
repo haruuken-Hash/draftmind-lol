@@ -174,6 +174,11 @@ class ProfileView(QWidget):
         def done(profile) -> None:
             self.refresh_button.setEnabled(True)
             self.refresh_button.setText("Actualizar rango y maestría")
+            fresh = self.ctx.matches.repository.get_account()
+            if fresh and fresh.puuid != account.puuid:
+                # Cambió la clave a la de otra aplicación: el PUUID y las partidas se actualizaron.
+                self._fetched_for = fresh.puuid
+                self.session.set_matches(fresh, self.ctx.matches.stored_matches(fresh.puuid), demo=False)
             self.session.set_player_profile(profile)
 
         def failed(error: str) -> None:

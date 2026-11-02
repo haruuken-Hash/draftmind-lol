@@ -14,7 +14,7 @@ from pathlib import Path
 from draftmind.analysis.lane_analyzer import LaneAnalysis, analyze_lane, players_from_match
 from draftmind.data.repositories.match_repository import LinkedAccount, MatchRepository
 from draftmind.domain.models import MasteryEntry, MatchSummary, PlayerProfile, RankedEntry
-from draftmind.integrations.riot_api import Platform, RiotApiClient, RiotApiError
+from draftmind.integrations.riot_api import Platform, RiotApiClient, RiotApiError, RiotBadRequest
 from draftmind.integrations.riot_match import summarize_match
 
 log = logging.getLogger(__name__)
@@ -37,6 +37,8 @@ class MatchService:
         if (current and current.platform == platform.value
                 and current.game_name.lower() == game_name.lower()
                 and current.tag_line.lower() == tag_line.lower()):
+            # Misma cuenta: no se repite la petición. Si la clave es de otra aplicación,
+            # la primera consulta dará 400 y _current() actualizará el PUUID.
             return current
         if not self.client:
             raise RuntimeError("Hace falta una API key de Riot para vincular una cuenta.")
@@ -51,12 +53,47 @@ class MatchService:
         self.repository.save_account(account)
         return account
 
+    def refresh_account(self, account: LinkedAccount) -> LinkedAccount:
+        """Vuelve a pedir el PUUID. Riot lo cifra de forma distinta para cada aplicación
+        registrada, así que cambia al pasar, por ejemplo, de la clave de desarrollo a la
+        personal. Si cambió, se guarda el nuevo y se vuelven a descargar las partidas
+        guardadas para que lo contengan (los timelines se conservan: usan otro número)."""
+        platform = Platform(account.platform)
+        data = self.client.account_by_riot_id(platform, account.game_name, account.tag_line)
+        if data["puuid"] == account.puuid:
+            return account
+        log.info("El PUUID cambió (clave de otra aplicación): se actualizan las partidas guardadas.")
+        updated = LinkedAccount(
+            puuid=data["puuid"],
+            game_name=data.get("gameName") or account.game_name,
+            tag_line=data.get("tagLine") or account.tag_line,
+            platform=account.platform,
+            retrieved_at=datetime.now(timezone.utc),
+        )
+        for match_platform, raw in self.repository.all_matches():
+            metadata = raw.get("metadata", {})
+            if updated.puuid not in metadata.get("participants", []) and metadata.get("matchId"):
+                match_id = metadata["matchId"]
+                self.repository.save_match(match_id, match_platform,
+                                           self.client.match(Platform(match_platform), match_id))
+        self.repository.save_account(updated)  # Al final: si algo falla, se reintenta la próxima vez.
+        return updated
+
+    def _current(self, account: LinkedAccount, call):
+        """Ejecuta ``call(cuenta)``; si Riot no reconoce el PUUID (400), lo actualiza y reintenta."""
+        try:
+            return call(account)
+        except RiotBadRequest:
+            return call(self.refresh_account(account))
+
     def fetch_recent(self, account: LinkedAccount, count: int = 20) -> tuple[list[MatchSummary], int]:
-        """Descarga las partidas recientes que falten. Devuelve (partidas, nuevas)."""
+        """Descarga las partidas recientes que falten. Devuelve (partidas, nuevas).
+        Si el PUUID cambió, la cuenta guardada se actualiza: reléela con ``repository.get_account()``."""
         if not self.client:
             raise RuntimeError("Hace falta una API key de Riot para descargar partidas.")
         platform = Platform(account.platform)
-        ids = self.client.match_ids(platform, account.puuid, count=min(count, MAX_MATCHES))
+        ids = self._current(account, lambda a: self.client.match_ids(platform, a.puuid, count=min(count, MAX_MATCHES)))
+        account = self.repository.get_account() or account
         new = 0
         for match_id in ids:
             if not self.repository.has_match(match_id):
@@ -116,7 +153,8 @@ class MatchService:
         if not self.client:
             raise RuntimeError("Hace falta una API key de Riot para consultar el rango y la maestría.")
         platform = Platform(account.platform)
-        entries = self.client.league_entries(platform, account.puuid)
+        entries = self._current(account, lambda a: self.client.league_entries(platform, a.puuid))
+        account = self.repository.get_account() or account
         masteries = self.client.mastery_top(platform, account.puuid, count=10)
         return PlayerProfile(
             ranked=[RankedEntry(

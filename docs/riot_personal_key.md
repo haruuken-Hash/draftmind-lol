@@ -59,6 +59,17 @@ Información comprobada en el portal el 1 de noviembre de 2026 ([docs/portal](ht
 > - The API key is stored in a local .env file and is never included in the code or in the executable.
 > - The app shows Riot's legal disclaimer ("DraftMind LoL isn't endorsed by Riot Games…").
 
+## Al cambiar de clave
+
+Riot cifra el PUUID de forma distinta para cada aplicación registrada. Con la clave personal, el PUUID de tu cuenta no es el mismo que con la de desarrollo; con el viejo, la API responde 400.
+
+DraftMind lo resuelve sola la primera vez que la API responde 400 (`MatchService.refresh_account`):
+1. pide de nuevo tu PUUID;
+2. vuelve a descargar las partidas guardadas, una petición por partida;
+3. conserva los timelines.
+
+Comprobado el 1 de noviembre de 2026: 50 partidas actualizadas en 15 s.
+
 ## Si la rechazan
 
 Riot puede pedir más detalle o rechazar la solicitud. En ese caso, DraftMind sigue funcionando con la clave de desarrollo: tendrás que renovarla cada 24 horas en el portal.

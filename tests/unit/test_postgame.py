@@ -190,6 +190,49 @@ def test_fetch_latest_waits_until_the_new_match_is_published():
     assert [m.match_id for m in matches] == ["LA1_200", "LA1_100"]
 
 
+class KeyChangeRiot(FakeRiot):
+    """Riot cifra el PUUID para cada aplicación: con otra clave cambia y el viejo da 400."""
+
+    def __init__(self):
+        super().__init__()
+        self.puuid = "P"
+
+    def account_by_riot_id(self, platform, name, tag):
+        self.calls.append("account")
+        return {"puuid": self.puuid, "gameName": name, "tagLine": tag}
+
+    def match_ids(self, platform, puuid, count=20, queue=None):
+        from draftmind.integrations.riot_api import RiotBadRequest
+
+        if puuid != self.puuid:
+            raise RiotBadRequest("400")
+        return ["LA1_123"]
+
+    def match(self, platform, match_id):
+        self.calls.append(match_id)
+        raw = raw_match()
+        raw["info"]["participants"][0]["puuid"] = self.puuid
+        raw["metadata"]["participants"] = [self.puuid, "A", "E"]
+        return raw
+
+
+def test_new_application_key_updates_puuid_and_stored_matches():
+    from draftmind.integrations.riot_api import Platform
+
+    repo = MatchRepository(init_database(create_db_engine(None)))
+    riot = KeyChangeRiot()
+    service = MatchService(repo, riot)
+    old = service.link_account(Platform.LA1, "Ana", "LAN")
+    assert len(service.fetch_recent(old)[0]) == 1
+
+    riot.puuid = "P2"                                 # Clave de otra aplicación.
+    matches, new = service.fetch_recent(old)          # La interfaz aún tiene la cuenta vieja.
+    assert repo.get_account().puuid == "P2"
+    assert len(matches) == 1 and new == 0             # Las partidas guardadas siguen siendo tuyas.
+    assert riot.calls.count("LA1_123") == 2           # Se volvió a descargar con el PUUID nuevo.
+    assert service.link_account(Platform.LA1, "Ana", "LAN").puuid == "P2"
+
+
 def test_service_caches_account_and_matches():
     from draftmind.integrations.riot_api import Platform
 

@@ -220,7 +220,8 @@ class MatchHistoryView(QWidget):
                                         "partidas» dentro de unos minutos.")
                 return
             self._auto_fetching = False
-            self.session.set_matches(account, matches, demo=False)
+            # Releer la cuenta: su PUUID cambia si se cambió a la clave de otra aplicación.
+            self.session.set_matches(self.ctx.matches.repository.get_account() or account, matches, demo=False)
             self.status.setText(f"Última partida descargada ({escape(account.riot_id)}).")
             self.latest_match_ready.emit(newest.match_id)
 
