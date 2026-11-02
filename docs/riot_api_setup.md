@@ -5,7 +5,7 @@ La clave solo hace falta para ver **tus partidas reales** en «Historial» y «A
 ## 1. Conseguir una clave
 
 1. Entra en <https://developer.riotgames.com/> con tu cuenta de Riot.
-2. En el panel aparece una **Development API Key**. Caduca cada **24 horas** y hay que regenerarla en el mismo panel.
+2. En el panel aparece una **Development API Key**. Caduca cada **24 horas** y hay que regenerarla en el mismo panel. Para no renovarla cada día, puedes solicitar una **clave personal**: los pasos y el texto de la solicitud están en [riot_personal_key.md](riot_personal_key.md).
 3. Para uso continuado puedes registrar un producto personal y pedir una **Personal API Key**, pensada para proyectos de uso propio o de una comunidad pequeña. Es la que corresponde a esta aplicación.
 
 Límites de las claves personales y de desarrollo (documentación de Riot, 28/10/2026): **20 peticiones por segundo y 100 cada 2 minutos**, por región. La aplicación los respeta: espera lo necesario y, ante un error 429, se detiene los segundos que indique la cabecera `Retry-After`.

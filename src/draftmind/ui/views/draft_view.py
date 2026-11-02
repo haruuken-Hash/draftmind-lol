@@ -65,6 +65,7 @@ LIVE_POLL_MS = 2000  # Cada 2 s: como mucho 2 peticiones locales al cliente.
 
 class DraftView(QWidget):
     champ_select_started = Signal()
+    game_ended = Signal()
 
     def __init__(self, ctx: AppContext, session: AppSession, portraits: PortraitProvider,
                  parent: QWidget | None = None):
@@ -370,6 +371,10 @@ class DraftView(QWidget):
         self._live_busy = True
         run_task(self._live_service.poll, on_done=self.apply_live_status, on_error=self._on_live_error)
 
+    @property
+    def in_champ_select(self) -> bool:
+        return self._last_live_state is LiveState.CHAMP_SELECT
+
     def _on_live_error(self, error: str) -> None:
         self._live_busy = False
         self.live_status.setText(f"Error inesperado al leer el cliente: {escape(error)}")
@@ -379,9 +384,13 @@ class DraftView(QWidget):
         if self._live_service is None or self.live_toggle.isChecked():
             return  # Desactivado o en pausa mientras llegaba la respuesta.
         entering = status.state is LiveState.CHAMP_SELECT and self._last_live_state is not LiveState.CHAMP_SELECT
+        # Fin de partida: de «en partida» a cliente abierto (pantalla de estadísticas o menú).
+        ended = self._last_live_state is LiveState.IN_GAME and status.state is LiveState.CLIENT_IDLE
         self._last_live_state = status.state
         if entering:
             self.champ_select_started.emit()  # La ventana principal muestra el Draft.
+        if ended:
+            self.game_ended.emit()  # La ventana principal descarga la partida y abre su análisis.
         text = escape(status.message)
         if not status.certificate_verified:
             text += (f" <span style='color:{theme.MUTED}'>(certificado local no verificado con la CA de "

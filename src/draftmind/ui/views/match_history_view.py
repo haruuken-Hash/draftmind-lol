@@ -2,7 +2,7 @@
 
 from html import escape
 
-from PySide6.QtCore import QSize, Qt, Signal
+from PySide6.QtCore import QSize, Qt, QTimer, Signal
 from PySide6.QtGui import QBrush, QColor, QIcon, QPainter, QPixmap
 from PySide6.QtWidgets import (
     QAbstractItemView,
@@ -32,6 +32,10 @@ from draftmind.ui.workers import run_task
 COLUMNS = ["Fecha", "Resultado", "Campeón", "Puntuación", "Posición", "Duración", "K / D / A", "KDA",
            "CS (por min)", "Oro", "Visión", "Daño a campeones", "Daño recibido", "Part. asesinatos", "Objetos"]
 ITEM_ICON = 22
+# Tras una partida: hasta 8 intentos cada 45 s (unos 6 min). Cada intento son 1-3
+# peticiones a la Riot API, muy por debajo del límite de una clave de desarrollo.
+AUTO_RETRY_S = 45
+AUTO_ATTEMPTS = 8
 
 
 def fmt(value, pattern: str = "{}", missing: str = "—") -> str:
@@ -51,10 +55,13 @@ class NumericItem(QTableWidgetItem):
 
 class MatchHistoryView(QWidget):
     open_match = Signal(str)
+    latest_match_ready = Signal(str)   # Partida recién terminada ya descargada.
+    auto_fetch_failed = Signal(str)
 
     def __init__(self, ctx: AppContext, session: AppSession, portraits: PortraitProvider,
                  parent: QWidget | None = None):
         super().__init__(parent)
+        self._auto_fetching = False
         self.ctx = ctx
         self.session = session
         self.portraits = portraits
@@ -186,6 +193,44 @@ class MatchHistoryView(QWidget):
     def _on_load_failed(self, error: str) -> None:
         self.load_button.setEnabled(True)
         self.status.setText(f"No se pudieron cargar las partidas: {escape(error)}")
+
+    # --- Descarga automática al terminar una partida ----------------------------
+
+    def fetch_after_game(self, attempt: int = 1) -> bool:
+        """Busca la partida recién terminada. La Riot API tarda unos minutos en
+        publicarla, así que se reintenta cada AUTO_RETRY_S segundos. Devuelve False
+        si no se puede (sin cuenta vinculada o sin API key)."""
+        account = self.ctx.matches.repository.get_account()
+        if account is None or not self.ctx.matches.can_use_api:
+            return False
+        if attempt == 1 and self._auto_fetching:
+            return True  # Ya hay una búsqueda en marcha.
+        self._auto_fetching = True
+        self.status.setText(f"Partida terminada: buscando tu partida en la Riot API (intento {attempt} "
+                            f"de {AUTO_ATTEMPTS})…")
+
+        def done(result) -> None:
+            matches, newest = result
+            if newest is None:
+                if attempt < AUTO_ATTEMPTS:
+                    QTimer.singleShot(AUTO_RETRY_S * 1000, lambda: self.fetch_after_game(attempt + 1))
+                else:
+                    self._auto_fetching = False
+                    self.status.setText("La Riot API todavía no publica tu última partida. Pulsa «Cargar "
+                                        "partidas» dentro de unos minutos.")
+                return
+            self._auto_fetching = False
+            self.session.set_matches(account, matches, demo=False)
+            self.status.setText(f"Última partida descargada ({escape(account.riot_id)}).")
+            self.latest_match_ready.emit(newest.match_id)
+
+        def failed(error: str) -> None:
+            self._auto_fetching = False
+            self.status.setText(f"No se pudo descargar tu última partida: {escape(error)}")
+            self.auto_fetch_failed.emit(error)
+
+        run_task(lambda: self.ctx.matches.fetch_latest(account), on_done=done, on_error=failed)
+        return True
 
     # --- Tabla y filtros -----------------------------------------------------
 

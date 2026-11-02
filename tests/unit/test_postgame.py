@@ -153,6 +153,43 @@ class FakeRiot:
         return raw_match()
 
 
+class LaterRiot(FakeRiot):
+    """La primera consulta solo ve una partida vieja; después aparece la recién terminada."""
+
+    def __init__(self):
+        super().__init__()
+        self.published = ["LA1_100"]
+        self.timeline_error = True
+
+    def match_ids(self, platform, puuid, count=20, queue=None):
+        return list(reversed(self.published))  # La API devuelve primero la más reciente.
+
+    def match(self, platform, match_id):
+        created = 1_790_000_000_000 + int(match_id.split("_")[1]) * 1000
+        raw = raw_match(gameCreation=created)
+        raw["metadata"]["matchId"] = match_id
+        return raw
+
+    def match_timeline(self, platform, match_id):
+        from draftmind.integrations.riot_api import RiotApiError
+
+        raise RiotApiError("timeline no disponible")
+
+
+def test_fetch_latest_waits_until_the_new_match_is_published():
+    from draftmind.integrations.riot_api import Platform
+
+    service = MatchService(MatchRepository(init_database(create_db_engine(None))), LaterRiot())
+    account = service.link_account(Platform.LA1, "Ana", "LAN")
+    service.fetch_recent(account)                     # Ya tenía guardada LA1_100.
+    _, newest = service.fetch_latest(account)
+    assert newest is None                             # Riot aún no publica la nueva.
+    service.client.published.append("LA1_200")
+    matches, newest = service.fetch_latest(account)
+    assert newest.match_id == "LA1_200"               # Un fallo del timeline no impide el análisis.
+    assert [m.match_id for m in matches] == ["LA1_200", "LA1_100"]
+
+
 def test_service_caches_account_and_matches():
     from draftmind.integrations.riot_api import Platform
 

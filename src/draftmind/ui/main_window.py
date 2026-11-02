@@ -192,6 +192,10 @@ class MainWindow(QMainWindow):
         self.settings_view.live_settings_changed.connect(self.draft_view.configure_live)
         self.champions_view.profiles_changed.connect(self._on_profiles_changed)
         self.draft_view.champ_select_started.connect(self._on_champ_select_started)
+        self.draft_view.game_ended.connect(self._on_game_ended)
+        self.history_view.latest_match_ready.connect(self._on_latest_match_ready)
+        self.history_view.auto_fetch_failed.connect(
+            lambda error: self.statusBar().showMessage(f"No se pudo descargar tu última partida: {error}", 15000))
 
         self._on_matches_changed()
         if ctx.settings.ddragon_enabled:
@@ -205,6 +209,24 @@ class MainWindow(QMainWindow):
         self.go_to(self.draft_view)
         QApplication.alert(self)  # Parpadea el icono en la barra de tareas.
         self.statusBar().showMessage("Selección de campeones detectada: recomendaciones y build en «Draft».", 10000)
+
+    def _on_game_ended(self) -> None:
+        """Al terminar una partida: descargarla en segundo plano (la Riot API tarda unos minutos)."""
+        if self.history_view.fetch_after_game():
+            self.statusBar().showMessage("Partida terminada: descargando tu partida para analizarla…", 15000)
+        else:
+            self.statusBar().showMessage("Partida terminada. Vincula tu cuenta en «Historial» (con API key) para "
+                                         "analizarla automáticamente.", 15000)
+
+    def _on_latest_match_ready(self, match_id: str) -> None:
+        self.session.match_selected.emit(match_id)
+        if self.draft_view.in_champ_select:
+            # Ya empezó otra selección: no se le quita el Draft al jugador.
+            self.statusBar().showMessage("Tu última partida ya está en «Análisis postpartida».", 15000)
+            return
+        self.go_to(self.analysis_view)
+        QApplication.alert(self)
+        self.statusBar().showMessage("Análisis de tu última partida listo.", 15000)
 
     # --- Estadísticas personales ------------------------------------------------
 

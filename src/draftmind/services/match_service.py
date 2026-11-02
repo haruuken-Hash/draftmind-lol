@@ -14,7 +14,7 @@ from pathlib import Path
 from draftmind.analysis.lane_analyzer import LaneAnalysis, analyze_lane, players_from_match
 from draftmind.data.repositories.match_repository import LinkedAccount, MatchRepository
 from draftmind.domain.models import MasteryEntry, MatchSummary, PlayerProfile, RankedEntry
-from draftmind.integrations.riot_api import Platform, RiotApiClient
+from draftmind.integrations.riot_api import Platform, RiotApiClient, RiotApiError
 from draftmind.integrations.riot_match import summarize_match
 
 log = logging.getLogger(__name__)
@@ -63,6 +63,19 @@ class MatchService:
                 self.repository.save_match(match_id, platform.value, self.client.match(platform, match_id))
                 new += 1
         return self.stored_matches(account.puuid), new
+
+    def fetch_latest(self, account: LinkedAccount, count: int = 5) -> tuple[list[MatchSummary], MatchSummary | None]:
+        """Tras terminar una partida: descarga las que falten y devuelve la más reciente
+        de las nuevas (None si la Riot API aún no la publica: tarda unos minutos)."""
+        before = {m.match_id for m in self.stored_matches(account.puuid)}
+        matches, _ = self.fetch_recent(account, count)
+        newest = next((m for m in matches if m.match_id not in before), None)  # Ya vienen de más nueva a más vieja.
+        if newest is not None:
+            try:
+                self.lane_analysis(newest)  # Deja guardado el timeline para el análisis.
+            except RiotApiError as exc:
+                log.warning("No se pudo descargar el timeline de %s: %s", newest.match_id, exc)
+        return matches, newest
 
     def stored_matches(self, puuid: str) -> list[MatchSummary]:
         summaries = []

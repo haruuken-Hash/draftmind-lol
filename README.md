@@ -4,7 +4,7 @@ Asistente de escritorio para Windows que ayuda a **estudiar** drafts y partidas 
 
 > Las recomendaciones son ayudas para razonar, no certezas. Cada una indica qué datos usa, de qué tipo son (dato oficial, estadística observada, inferencia estratégica, sugerencia educativa o evidencia insuficiente) y con qué confianza.
 
-## Estado actual (versión 0.8.0)
+## Estado actual (versión 0.9.0)
 
 Inspirada en las funciones de OP.GG e iTero que se pueden ofrecer de forma legítima (ver la tabla de abajo).
 
@@ -65,6 +65,8 @@ Con el draft en vivo activado, al empezar una selección de campeones DraftMind 
   - consejos oficiales de Riot para jugar contra él.
 - **Gankeos**: si juegas jungla, qué línea se presta más a un gankeo; si no, el riesgo de gankeo del jungla rival.
 
+**Al terminar la partida**, si tienes la cuenta vinculada y una API key, DraftMind descarga sola esa partida y su timeline y abre su «Análisis postpartida». La Riot API tarda unos minutos en publicarla, así que lo reintenta cada 45 s durante unos 6 minutos. Si ya empezaste otra selección de campeones, no te cambia de pantalla.
+
 En el draft en vivo el cliente no dice las posiciones rivales: se deducen cuando el perfil solo deja una opción, y si no, puedes indicarlas en su casilla.
 
 **Importante:** las recomendaciones se basan en tus partidas, los datos oficiales de Riot y los perfiles. **No** en estadísticas globales de millones de partidas (como las de iTero u OP.GG), porque esas no están disponibles de forma legítima; cada recomendación indica de dónde sale.
@@ -101,7 +103,7 @@ python -m venv .venv
 .venv\Scripts\python.exe -m pip install -r requirements.txt
 ```
 
-Opcional: copia `.env.example` como `.env`. Sin clave de Riot todo funciona en **modo demostración**. Para usar tus partidas reales, sigue [docs/riot_api_setup.md](docs/riot_api_setup.md).
+Opcional: copia `.env.example` como `.env`. Sin clave de Riot todo funciona en **modo demostración**. Para usar tus partidas reales, sigue [docs/riot_api_setup.md](docs/riot_api_setup.md). Para no renovar la clave cada 24 horas, solicita una clave personal: [docs/riot_personal_key.md](docs/riot_personal_key.md).
 
 ## Ejecución
 

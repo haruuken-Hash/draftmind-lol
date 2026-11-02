@@ -51,6 +51,10 @@ lockfile ──▶ integrations/league_client.py (GET a 2 rutas, 127.0.0.1)
          ui/views/draft_view.py: apply_live_draft() rellena el tablero
 ```
 
+- **Fin de partida:** el paso de «en partida» a «cliente abierto» emite `DraftView.game_ended`.
+  - La ventana principal llama a `MatchHistoryView.fetch_after_game()`, que usa `MatchService.fetch_latest()`: descarga las partidas que falten y el timeline de la nueva.
+  - Si la Riot API aún no la publica, reintenta cada 45 s, hasta 8 veces.
+  - Al encontrarla, se selecciona en «Análisis postpartida». Solo se cambia de pantalla si no hay otra selección de campeones en curso.
 - La activación y la carpeta de instalación se guardan en la tabla `app_setting` (`data/repositories/settings_repository.py`). Por defecto está desactivado.
 - `DraftState.bans` hace que los campeones bloqueados no se sugieran.
 - Los roles enemigos que indica el usuario se guardan por casilla del cliente (`cellId`) y se conservan entre lecturas.

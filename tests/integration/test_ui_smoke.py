@@ -57,6 +57,27 @@ def test_matchup_and_gank_sections_in_draft(window):
     assert "Superior" in view.gank_label.text()
 
 
+def test_game_end_is_detected_only_after_playing(window):
+    from draftmind.services.live_draft_service import LiveState, LiveStatus
+
+    view = window.draft_view
+    view._live_service = object()  # Simula el draft en vivo activado.
+    ended = []
+    view.game_ended.connect(lambda: ended.append(True))
+    view.apply_live_status(LiveStatus(LiveState.CLIENT_IDLE, "menú"))
+    assert not ended                                  # Abrir el cliente no es terminar una partida.
+    view.apply_live_status(LiveStatus(LiveState.IN_GAME, "jugando"))
+    view.apply_live_status(LiveStatus(LiveState.CLIENT_IDLE, "fin de partida"))
+    assert ended == [True]
+    view._live_service = None
+
+
+def test_game_end_without_api_key_only_informs(window):
+    assert window.history_view.fetch_after_game() is False  # Sin clave: no hay nada que descargar.
+    window._on_game_ended()
+    assert "Vincula tu cuenta" in window.statusBar().currentMessage()
+
+
 def test_profile_view_with_demo_matches(window):
     view = window.profile_view
     assert "Jugador Demo" in view.hero_title.text()
