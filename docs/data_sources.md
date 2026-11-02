@@ -59,7 +59,17 @@ Campos de match-v5 usados, con su significado según el esquema oficial:
 
 Cualquier campo ausente queda vacío y su métrica no se calcula. Las partidas de menos de 5 minutos se marcan como posible remake y no cuentan en medias ni tendencias.
 
-No se usa el endpoint `timeline`: la app no reconstruye movimientos ni decisiones.
+Endpoints adicionales, con su estructura comprobada con respuestas reales el 01/11/2026:
+
+- **`/lol/match/v5/matches/{id}/timeline`** (región): `frameInterval` de 60000 ms y `frames[n].participantFrames["1".."10"]` con `totalGold`, `xp`, `level`, `minionsKilled` y `jungleMinionsKilled`. Incluye eventos `CHAMPION_KILL` (`killerId`, `victimId`, `assistingParticipantIds`), `ELITE_MONSTER_KILL` (`killerTeamId`, `monsterType`) y otros. Solo se piden bajo demanda («Fase de líneas») y se guardan. Con una foto por minuto la app **no** reconstruye rutas ni decisiones.
+- **`/lol/league/v4/entries/by-puuid/{puuid}`** (plataforma): `queueType`, `tier`, `rank`, `leaguePoints`, `wins`, `losses` y `hotStreak`.
+- **`/lol/champion-mastery/v4/champion-masteries/by-puuid/{puuid}/top?count=`** (plataforma): `championId`, `championLevel`, `championPoints` y `lastPlayTime`.
+
+En Data Dragon también se usan:
+- **`/cdn/{versión}/data/{idioma}/champion/{id}.json`**: habilidades (con enfriamientos e iconos), pasiva, `allytips` (consejos para jugarlo) y `enemytips` (para jugar contra él).
+- **`/cdn/img/champion/splash/{id}_0.jpg`**: ilustración oficial, que se usa en los banners.
+
+Ambos se descargan bajo demanda y quedan en caché.
 
 Más detalles en [riot_api_setup.md](riot_api_setup.md).
 

@@ -6,6 +6,7 @@ Al guardar una revisión, el análisis de toda la app pasa a usarla.
 """
 
 from html import escape
+from pathlib import Path
 
 from PySide6.QtCore import Qt, Signal
 from PySide6.QtWidgets import (
@@ -19,15 +20,19 @@ from PySide6.QtWidgets import (
     QPushButton,
     QScrollArea,
     QSpinBox,
+    QTabWidget,
+    QTextBrowser,
     QVBoxLayout,
     QWidget,
 )
 
 from draftmind.app.bootstrap import AppContext
 from draftmind.domain.enums import DamageType, ProfileOrigin, Role
-from draftmind.domain.models import ChampionProfile
+from draftmind.domain.models import ChampionDetail, ChampionProfile
 from draftmind.ui import theme
 from draftmind.ui.components.champion_grid import ChampionGrid
+from draftmind.ui.components.visuals import HeroBanner
+from draftmind.ui.workers import run_task
 from draftmind.ui.portraits import PortraitProvider
 from draftmind.ui.widgets import TAG_LABELS, card, page_layout, subtitle_label, title_label
 
@@ -41,6 +46,32 @@ ATTRIBUTES = [
     ("difficulty", "Dificultad", 1),
     ("resource_dependence", "Dependencia de recursos", 0),
 ]
+
+
+def abilities_html(detail: ChampionDetail, ctx: AppContext) -> str:
+    """Habilidades con icono y consejos oficiales de Riot (Data Dragon)."""
+    parts = []
+    for ability in detail.abilities:
+        path = ctx.catalogs.client.cached_image(ability.image_path)
+        img = f"<img src='{Path(path).as_posix()}' width='40' height='40'>" if path else ""
+        cooldown = ""
+        if ability.cooldown:
+            values = "/".join(f"{c:g}" for c in ability.cooldown)
+            cooldown = f"<br><span style='color:{theme.MUTED}'>Enfriamiento: {values} s</span>"
+        key = "Pasiva" if ability.key == "P" else ability.key
+        parts.append(
+            f"<table cellpadding='4'><tr><td valign='top'>{img}</td><td><b>{escape(ability.name)}</b> "
+            f"<span style='color:{theme.ACCENT}'>[{key}]</span>{cooldown}<br>"
+            f"<span style='color:#c9d1db'>{escape(ability.description)}</span></td></tr></table>"
+        )
+    tips = ""
+    if detail.ally_tips:
+        tips += "<h3>Consejos para jugarlo</h3>" + "".join(f"<p>• {escape(t)}</p>" for t in detail.ally_tips)
+    if detail.enemy_tips:
+        tips += "<h3>Consejos para jugar contra él</h3>" + "".join(f"<p>• {escape(t)}</p>" for t in detail.enemy_tips)
+    source = (f"<p style='color:{theme.MUTED}'>Fuente: Data Dragon (dato oficial de Riot). Los consejos son los "
+              "que publica Riot en el juego.</p>")
+    return "<h3>Habilidades</h3>" + "".join(parts) + tips + source
 
 
 class ChampionView(QWidget):
@@ -65,13 +96,21 @@ class ChampionView(QWidget):
         self.subtitle = QLabel()
         self.subtitle.setWordWrap(True)
         self.subtitle.setStyleSheet(f"color: {theme.MUTED};")
+        # Cabecera con la ilustración oficial del campeón.
+        self.hero = HeroBanner(150)
+        self.name.setObjectName("heroTitle")
+        self.name.setStyleSheet("")
+        self.subtitle.setObjectName("heroSub")
+        self.subtitle.setStyleSheet("")
         head = QHBoxLayout()
+        head.setSpacing(14)
         head.addWidget(self.portrait)
         names = QVBoxLayout()
         names.addWidget(self.name)
         names.addWidget(self.subtitle)
         head.addLayout(names, 1)
-        detail_layout.addLayout(head)
+        self.hero.content.addStretch()
+        self.hero.content.addLayout(head)
 
         self.origin_label = QLabel()
         self.origin_label.setWordWrap(True)
@@ -144,11 +183,23 @@ class ChampionView(QWidget):
         detail_scroll.setWidgetResizable(True)
         detail_scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         detail_scroll.setWidget(detail)
-        detail_scroll.setFixedWidth(360)
+
+        self.abilities = QTextBrowser()
+        self.abilities.setOpenExternalLinks(False)
+        self.tabs = QTabWidget()
+        self.tabs.addTab(detail_scroll, "Perfil de análisis")
+        self.tabs.addTab(self.abilities, "Habilidades y consejos")
+        right_panel = QWidget()
+        right_panel.setFixedWidth(430)
+        right = QVBoxLayout(right_panel)
+        right.setContentsMargins(0, 0, 0, 0)
+        right.setSpacing(10)
+        right.addWidget(self.hero)
+        right.addWidget(self.tabs, 1)
 
         body = QHBoxLayout()
         body.addWidget(self.grid, 1)
-        body.addWidget(detail_scroll)
+        body.addWidget(right_panel)
         layout.addLayout(body, 1)
 
         self.grid.champion_selected.connect(self.show_champion)
@@ -185,10 +236,16 @@ class ChampionView(QWidget):
         info = next((c for c in self._ctx.catalog.champions if c.id == champion_id), None)
         if info is None:
             return
+        changed = champion_id != self.current_id or not self.abilities.toPlainText()
         self.current_id = champion_id
         self.set_editing(False)
         self.status.clear()
-        self.portrait.setPixmap(self._portraits.get(champion_id, 72))
+        self.portrait.setPixmap(self._portraits.get(champion_id, 64))
+        if changed:
+            self.hero.set_image(None)
+            self._portraits.load_splash(
+                champion_id, lambda pixmap, cid=champion_id: cid == self.current_id and self.hero.set_image(pixmap))
+            self._load_abilities(champion_id)
         self.name.setText(escape(info.name))
         tags = ", ".join(TAG_LABELS.get(t, t) for t in info.tags)
         self.subtitle.setText(escape(" · ".join(x for x in (info.title, tags) if x)))
@@ -222,6 +279,19 @@ class ChampionView(QWidget):
         self.read_panel.show()
         self.edit_button.setEnabled(True)
         self.reset_button.setVisible(profile.origin is ProfileOrigin.USER)
+
+    def _load_abilities(self, champion_id: str) -> None:
+        if not self._ctx.catalog.from_data_dragon:
+            self.abilities.setHtml("<p><i>Las habilidades se descargan de Data Dragon cuando hay conexión.</i></p>")
+            return
+        self.abilities.setHtml("<p><i>Cargando habilidades…</i></p>")
+
+        def done(detail) -> None:
+            if champion_id == self.current_id and detail is not None:
+                self.abilities.setHtml(abilities_html(detail, self._ctx))
+
+        run_task(lambda: self._ctx.champion_detail(champion_id), on_done=done,
+                 on_error=lambda e: self.abilities.setHtml(f"<p>No se pudieron cargar: {escape(e)}</p>"))
 
     # --- Edición -------------------------------------------------------------
 

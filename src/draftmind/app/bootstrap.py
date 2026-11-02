@@ -19,7 +19,7 @@ from draftmind.data.repositories.match_repository import MatchRepository
 from draftmind.data.repositories.profile_repository import ProfileRepository
 from draftmind.data.repositories.research_repository import ResearchRepository
 from draftmind.data.repositories.settings_repository import SettingsRepository
-from draftmind.domain.models import ChampionCatalog, DemoDataset, GameData
+from draftmind.domain.models import ChampionCatalog, ChampionDetail, DemoDataset, GameData
 from draftmind.integrations.data_dragon import DataDragonClient
 from draftmind.integrations.riot_api import RiotApiClient
 from draftmind.services.catalog_service import CatalogService, demo_catalog
@@ -53,6 +53,12 @@ class AppContext:
         self.analyzer.set_champions(
             build_profiles(self.catalog, self.dataset.champions, self.champion_profiles.all(), positions)
         )
+
+    def champion_detail(self, champion_id: str) -> ChampionDetail | None:
+        """Habilidades y consejos oficiales (Data Dragon). Puede usar la red la primera vez."""
+        if not self.catalog.from_data_dragon:
+            return None
+        return self.catalogs.client.champion_detail(self.catalog.version, self.catalog.language, champion_id)
 
     def champion_keys(self) -> dict[int, str]:
         """Número de campeón (el que usa el cliente) -> identificador de Data Dragon."""

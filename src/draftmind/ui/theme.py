@@ -126,8 +126,7 @@ QHeaderView::section {{
     background: {SURFACE_2}; color: {MUTED}; border: none; padding: 7px 8px; font-weight: 700; font-size: 8.5pt;
 }}
 QTableWidget {{ gridline-color: transparent; alternate-background-color: #141920; border-radius: 12px; }}
-QTableWidget::item {{ padding: 4px; border-bottom: 1px solid #1a2029; }}
-QTableWidget::item:selected {{ background: {ACCENT_SOFT}; color: {TEXT}; }}
+/* Sin regla general para ::item: anularía el color de fondo por fila (victoria/derrota). */
 QTabWidget::pane {{ border: none; top: -1px; }}
 QTabBar::tab {{
     background: transparent; color: {MUTED}; padding: 8px 16px; border: none; border-bottom: 2px solid transparent;

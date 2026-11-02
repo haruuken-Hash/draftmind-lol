@@ -134,6 +134,36 @@ Las inferencias cualitativas se formulan como condiciones («puede inclinarse a 
   - se ordenan por relevancia y luego por precio.
 - **Configuraciones frecuentes**: tus partidas (frecuencia, no eficacia).
 
+## Puntuación de rendimiento (`analysis/performance.py`)
+
+Método propio. No es el «OP Score» de OP.GG, cuyo cálculo no es público.
+
+1. Para cada uno de los 10 jugadores se calculan seis métricas: KDA, participación en asesinatos, cuota del daño a campeones de su equipo, oro/min, CS/min y visión/min.
+2. En cada métrica se le da una posición relativa entre 0 (el peor de la partida) y 1 (el mejor); los empates comparten valor. A los soportes no se les cuenta el CS.
+3. Puntuación = media de esas posiciones × 10.
+4. **MVP** = mejor puntuación del equipo ganador; **ACE** = mejor del perdedor.
+
+Solo compara a los jugadores dentro de esa partida: no mide decisiones ni contexto. Si a algún jugador le falta un dato, no se calcula.
+
+## Fase de líneas (`analysis/lane_analyzer.py`)
+
+Usa el timeline de match-v5 (una foto por minuto, estructura comprobada con una partida real):
+
+- Diferencias de oro, CS y experiencia con el rival directo en los minutos 5, 10 y 15. El rival se identifica por la misma `teamPosition` en el otro equipo.
+- Primera participación en un asesinato (minuto y posición de la víctima), asesinatos y muertes antes del minuto 15, y objetivos de élite por equipo.
+- Tendencia: media de la diferencia de oro y CS en las 10 partidas más recientes (mínimo 3).
+- Los timelines se guardan en SQLite (`timeline_cache`) y solo se piden una vez.
+
+## Bloqueos sugeridos (`analysis/ban_analyzer.py`)
+
+Se calculan para tu campeón, si ya lo elegiste, o para tus campeones de confianza: los 3 más jugados en esa posición o, si no hay partidas, los de más maestría. Cada sugerencia suma:
+
+- **Tus partidas** (observado): rivales directos con más del 50 % de derrotas y al menos 2 partidas. Peso completo a partir de 6 partidas.
+- **Perfiles** (inferencia, × 0,5; × 0,6 si es estimado): rivales de tu posición con más presión temprana, más escalado, iniciación contra campeones sin desenganche, o mucho control contra campeones frágiles.
+- **Estadísticas importadas** (observado): enfrentamientos con win rate por debajo del 48 % y al menos 100 partidas.
+
+Se excluyen los campeones ya elegidos o bloqueados. Cada sugerencia muestra sus motivos y su tipo de evidencia.
+
 ## Postpartida (`analysis/postgame_analyzer.py`)
 
 - KDA = (asesinatos + asistencias) / max(muertes, 1).

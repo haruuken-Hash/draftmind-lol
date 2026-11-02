@@ -45,6 +45,8 @@ class FakeDDragon:
                 return httpx.Response(403)
             if name == "champion.json":
                 return httpx.Response(200, content=FIXTURE.read_bytes())
+            if name == "champion" and parts[6] == "Kayn.json":
+                return httpx.Response(200, content=(FIXTURES / "champion_detail_Kayn.json").read_bytes())
             if name in DATA_FILES:
                 return httpx.Response(200, content=(FIXTURES / name).read_bytes())
         if "/img/" in path:
@@ -179,6 +181,22 @@ def test_game_data_runes_and_spells(client):
 def test_rune_images_use_unversioned_path(client, server):
     client.rune_image("perk-images/Styles/7200_Domination.png")
     assert "/cdn/img/perk-images/Styles/7200_Domination.png" in server.requests
+
+
+def test_champion_detail_abilities_tips_and_icons(client, server):
+    detail = client.champion_detail("16.21.1", "es_MX", "Kayn")
+    assert [a.key for a in detail.abilities] == ["P", "Q", "W", "E", "R"]
+    assert detail.abilities[1].name == "Corte Segador" and detail.abilities[1].cooldown[0] == 7
+    assert "<b>" not in detail.abilities[0].description and "<i>" not in detail.lore
+    assert len(detail.enemy_tips) == 2 and detail.ally_tips
+    assert "/cdn/16.21.1/img/spell/KaynQ.png" in server.requests  # Iconos descargados.
+    client.champion_detail("16.21.1", "es_MX", "Kayn")
+    assert server.requests.count("/cdn/16.21.1/data/es_MX/champion/Kayn.json") == 1  # Caché.
+
+
+def test_splash_art_uses_unversioned_path(client, server):
+    client.splash_art("Kayn")
+    assert "/cdn/img/champion/splash/Kayn_0.jpg" in server.requests
 
 
 def test_clear_cache(client):

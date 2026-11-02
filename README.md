@@ -4,11 +4,14 @@ Asistente de escritorio para Windows que ayuda a **estudiar** drafts y partidas 
 
 > Las recomendaciones son ayudas para razonar, no certezas. Cada una indica qué datos usa, de qué tipo son (dato oficial, estadística observada, inferencia estratégica, sugerencia educativa o evidencia insuficiente) y con qué confianza.
 
-## Estado actual (versión 0.5.0)
+## Estado actual (versión 0.6.0)
+
+Inspirada en las funciones de OP.GG e iTero que se pueden ofrecer de forma legítima (ver la tabla de abajo).
 
 | Sección | Qué hace |
 |---|---|
-| Inicio | Estado de los datos y del perfil; acceso rápido al draft |
+| Inicio | Banner con tu campeón más jugado, forma reciente, cifras principales y accesos rápidos |
+| Mi perfil | Rango y LP (league-v4), maestría (champion-mastery-v4), win rate, KDA, CS/min, puntuación media, MVP/ACE, tabla por campeón y reparto de posiciones |
 | Campeones | Los 173 campeones oficiales con retrato, buscador, filtro por clase y ficha con el perfil de análisis; **editor** para revisar cualquier perfil |
 | Draft | Tablero 5 contra 5 interactivo con análisis en vivo, tarjetas de recomendación e informe completo. Opcionalmente, **sigue la selección de campeones de tu cliente** (solo lectura) |
 | Counters | Tu campeón contra un rival: estadísticas observadas con muestra, diferencia respecto a una referencia, condiciones del enfrentamiento y tus enfrentamientos observados |
@@ -18,6 +21,26 @@ Asistente de escritorio para Windows que ayuda a **estudiar** drafts y partidas 
 | Análisis postpartida | Detalle de una partida, medias, gráficas de evolución y observaciones educativas |
 | Investigación | Registro de fuentes (oficiales u opiniones) con su verificación |
 | Fuentes y configuración | API key (sin mostrarla), Data Dragon, importación de estadísticas, cachés y perfil personal |
+
+Novedades de la 0.6.0, además del rediseño visual:
+
+- **Puntuación de rendimiento** 0-10 por partida, con MVP y ACE, comparada con los 10 jugadores de cada partida. Se muestra en «Historial» y «Análisis postpartida».
+- **Fase de líneas**: oro, CS y experiencia a los 5, 10 y 15 min frente a tu rival directo, primera participación en un asesinato, objetivos tempranos y tendencia de tus últimas 10 partidas (timeline oficial).
+- **Bloqueos sugeridos** en «Draft», según tus derrotas reales como rival directo, los perfiles y las estadísticas importadas.
+- **Habilidades y consejos oficiales de Riot** por campeón («Campeones») y cómo jugar contra tu rival («Counters»).
+
+### Qué hay de OP.GG e iTero y qué no
+
+| Función | ¿Incluida? | Motivo |
+|---|---|---|
+| Perfil con rango, maestría y estadísticas por campeón | Sí | Riot API oficial + tus partidas |
+| Puntuación por partida, MVP/ACE | Sí (método propio y documentado) | El cálculo de OP.GG no es público |
+| Sugerencias de bloqueo | Sí (personalizadas) | Tus partidas, perfiles y estadísticas importadas |
+| Análisis de la fase de líneas | Sí | Timeline oficial |
+| Tier lists y builds «más populares» globales | No | Hacen falta estadísticas de millones de partidas que no hay de forma legítima; se pueden importar en «Configuración» |
+| Overlays y temporizadores durante la partida | No | Prohibido por la política de Riot |
+| Ver a los jugadores en la selección de clasificatorias | No | Prohibido (anonimato) |
+| Aplicar runas automáticamente en el cliente | No | La app solo lee el cliente, nunca escribe |
 
 ### Draft en vivo
 

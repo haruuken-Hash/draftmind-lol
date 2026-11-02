@@ -25,6 +25,7 @@ from draftmind.ui import theme
 from draftmind.ui.portraits import PortraitProvider
 from draftmind.ui.session import AppSession
 from draftmind.ui.widgets import card, combo_role, section_label, subtitle_label, title_label
+from draftmind.ui.workers import run_task
 
 
 class CountersView(QWidget):
@@ -34,6 +35,7 @@ class CountersView(QWidget):
         self.ctx = ctx
         self.session = session
         self.portraits = portraits
+        self._tips_key: tuple[str, str] | None = None
 
         content = QWidget()
         layout = QVBoxLayout(content)
@@ -85,6 +87,14 @@ class CountersView(QWidget):
         in_box, in_layout = card()
         in_layout.addWidget(self.insights)
         layout.addWidget(in_box)
+
+        layout.addWidget(section_label("Consejos oficiales de Riot"))
+        self.tips = QLabel()
+        self.tips.setWordWrap(True)
+        self.tips.setTextFormat(Qt.TextFormat.RichText)
+        tips_box, tips_layout = card()
+        tips_layout.addWidget(self.tips)
+        layout.addWidget(tips_box)
 
         self.history_title = section_label("")
         layout.addWidget(self.history_title)
@@ -173,6 +183,8 @@ class CountersView(QWidget):
             f"<p><b>[{i.kind.label}]</b> {escape(i.text)}</p>" for i in result.insights
         ))
 
+        self._load_tips(mine, rival, names)
+
         rows = [s for p in self.ctx.stats.providers for s in p.opponents(mine, role)]
         self.history_title.setText(f"Enfrentamientos observados de {names.get(mine, mine)} (doble clic para analizar)")
         self.history.setRowCount(len(rows))
@@ -188,6 +200,32 @@ class CountersView(QWidget):
                 QTableWidgetItem(stat.source.name),
             )):
                 self.history.setItem(r, c, item)
+
+    def _load_tips(self, mine: str, rival: str, names: dict[str, str]) -> None:
+        if not self.ctx.catalog.from_data_dragon:
+            self.tips.setText("<i>Disponibles cuando se descarguen los datos de Data Dragon.</i>")
+            return
+        self.tips.setText("<i>Cargando consejos…</i>")
+        key = (mine, rival)
+        self._tips_key = key
+
+        def work():
+            return self.ctx.champion_detail(mine), self.ctx.champion_detail(rival)
+
+        def done(result) -> None:
+            if self._tips_key != key:
+                return  # El usuario ya cambió de enfrentamiento.
+            my_detail, rival_detail = result
+            parts = []
+            if rival_detail and rival_detail.enemy_tips:
+                parts.append(f"<p><b>[Dato oficial] Cómo jugar contra {escape(names.get(rival, rival))}</b></p>"
+                             + "".join(f"<div>• {escape(t)}</div>" for t in rival_detail.enemy_tips))
+            if my_detail and my_detail.ally_tips:
+                parts.append(f"<p><b>[Dato oficial] Consejos para jugar {escape(names.get(mine, mine))}</b></p>"
+                             + "".join(f"<div>• {escape(t)}</div>" for t in my_detail.ally_tips))
+            self.tips.setText("".join(parts) or "<i>Riot no publica consejos para estos campeones.</i>")
+
+        run_task(work, on_done=done, on_error=lambda e: self.tips.setText(f"No se pudieron cargar: {escape(e)}"))
 
     def on_catalog_changed(self) -> None:
         self._fill_champions()

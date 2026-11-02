@@ -53,6 +53,7 @@ from draftmind.ui.widgets import (
 from draftmind.ui.workers import run_task
 
 CARD_COLUMNS = 2
+BAN_COLUMNS = 3
 SUGGESTIONS = 6
 LIVE_POLL_MS = 2000  # Cada 2 s: como mucho 2 peticiones locales al cliente.
 
@@ -133,7 +134,7 @@ class DraftView(QWidget):
         self.ban_note = QLabel()
         self.ban_note.setWordWrap(True)
         self.ban_note.setStyleSheet(f"color: {theme.MUTED};")
-        self.ban_row = QHBoxLayout()
+        self.ban_row = QGridLayout()  # Cuadrícula: no ensancha el panel aunque haya 5 sugerencias.
         self.ban_row.setSpacing(8)
         analysis_layout.addWidget(self.ban_note)
         analysis_layout.addLayout(self.ban_row)
@@ -523,7 +524,7 @@ class DraftView(QWidget):
         if not suggestions:
             self.ban_note.setText(self.ban_note.text() + " No hay suficientes datos para sugerir bloqueos.")
             return
-        for s in suggestions:
+        for index, s in enumerate(suggestions):
             chip = QFrame()
             chip.setObjectName("card")
             chip_layout = QHBoxLayout(chip)
@@ -536,9 +537,9 @@ class DraftView(QWidget):
                           f"<span style='color:{theme.MUTED}; font-size:8pt'>{escape(kinds)}</span>")
             chip_layout.addWidget(portrait)
             chip_layout.addWidget(text)
+            chip_layout.addStretch()
             chip.setToolTip("\n".join(f"• {r}" for r in s.reasons))
-            self.ban_row.addWidget(chip)
-        self.ban_row.addStretch()
+            self.ban_row.addWidget(chip, index // BAN_COLUMNS, index % BAN_COLUMNS)
 
     @staticmethod
     def _team_html(title: str, team: TeamProfile) -> str:

@@ -1,0 +1,19 @@
+{
+  "type": "champion", "format": "standAloneComplex", "version": "16.21.1",
+  "data": {
+    "Kayn": {
+      "id": "Kayn", "key": "141", "name": "Kayn", "title": "el Segador de las Sombras",
+      "lore": "Texto de <i>ejemplo</i>.",
+      "allytips": ["Consejo de ejemplo para jugarlo."],
+      "enemytips": ["Consejo de ejemplo para jugar contra él.", "Otro consejo."],
+      "passive": {"name": "La Guadaña Darkin", "description": "Pasiva de <b>ejemplo</b>.",
+                  "image": {"full": "Kayn_Passive_Primary.png"}},
+      "spells": [
+        {"id": "KaynQ", "name": "Corte Segador", "description": "Q de ejemplo.", "cooldown": [7, 6.5, 6, 5.5, 5], "image": {"full": "KaynQ.png"}},
+        {"id": "KaynW", "name": "Alcance de Cuchilla", "description": "W.", "cooldown": [13, 12, 11, 10, 9], "image": {"full": "KaynW.png"}},
+        {"id": "KaynE", "name": "Paso Sombrío", "description": "E.", "cooldown": [8, 8, 8, 8, 8], "image": {"full": "KaynE.png"}},
+        {"id": "KaynR", "name": "Transgresión de Umbral", "description": "R.", "cooldown": [120, 100, 80], "image": {"full": "KaynR.png"}}
+      ]
+    }
+  }
+}

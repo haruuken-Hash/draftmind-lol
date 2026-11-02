@@ -21,6 +21,7 @@ from PySide6.QtWidgets import (
 
 from draftmind.analysis.matchup_analyzer import patch_of
 from draftmind.app.bootstrap import AppContext
+from draftmind.integrations.data_dragon import DataDragonError
 from draftmind.services.catalog_service import RefreshResult, demo_catalog
 from draftmind.ui.components.visuals import glyph_icon
 from draftmind.ui.portraits import PortraitProvider
@@ -207,6 +208,35 @@ class MainWindow(QMainWindow):
         if hasattr(self, "strategy_view"):
             self._on_profiles_changed()
         self._on_stats_changed()
+        self._download_item_icons()
+
+    def _download_item_icons(self) -> None:
+        """Iconos de los objetos de tus partidas que aún no estén en caché (componentes, botas...)."""
+        data = self.ctx.game_data
+        if data is None or getattr(self, "_icons_busy", False):
+            return
+        client = self.ctx.catalogs.client
+        missing = {i for m in self.session.matches for i in m.items
+                   if client.cached_image(f"{data.version}/img/item/{i}.png") is None}
+        if not missing:
+            return
+        self._icons_busy = True
+
+        def work() -> None:
+            for item_id in missing:
+                try:
+                    client.item_image(data.version, f"{item_id}.png")
+                except DataDragonError:
+                    pass  # Si no existe en esta versión, se sigue mostrando el número.
+
+        def done(_) -> None:
+            self._icons_busy = False
+            self.portraits.invalidate()
+            if hasattr(self, "analysis_view"):
+                self.history_view.apply_filters()
+                self.analysis_view.refresh()
+
+        run_task(work, on_done=done, on_error=lambda _: setattr(self, "_icons_busy", False))
 
     def _on_stats_changed(self) -> None:
         # El Historial carga partidas al construirse, antes de que existan las
@@ -261,6 +291,7 @@ class MainWindow(QMainWindow):
         self.ctx.analyzer.current_patch = patch_of(result.catalog.version)
         self.portraits.invalidate()
         self._notify_catalog_changed()
+        self._download_item_icons()
         message = f"Datos actualizados: Data Dragon {result.catalog.version}."
         if not changed:
             message = f"Data Dragon {result.catalog.version}: ya estaba al día."

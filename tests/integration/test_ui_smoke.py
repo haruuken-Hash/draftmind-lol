@@ -33,8 +33,7 @@ def test_ban_suggestions_appear_in_draft(window):
     view = window.draft_view
     set_role(view, Role.TOP)
     view.pick_for_me("Kayle")
-    chips = [view.ban_row.itemAt(i).widget() for i in range(view.ban_row.count())
-             if view.ban_row.itemAt(i).widget() is not None]
+    chips = [view.ban_row.itemAt(i).widget() for i in range(view.ban_row.count())]
     assert chips, "Debería haber al menos una sugerencia de bloqueo para Kayle"
     assert all(c.toolTip().startswith("•") for c in chips)  # Cada sugerencia explica sus motivos.
     assert "Kayle" in view.ban_note.text()

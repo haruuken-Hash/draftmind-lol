@@ -159,8 +159,9 @@ def _observations(a: LaneAnalysis) -> list[Observation]:
                                text="No participaste en ningún asesinato antes del minuto 15."))
     if a.deaths_before_15:
         out.append(Observation(kind=EvidenceKind.EDUCATIONAL,
-                               text=f"Moriste {a.deaths_before_15} vez/veces antes del minuto 15. En la repetición, "
-                                    "¿tenías visión o información de dónde estaba el jungla rival?"))
+                               text=f"Moriste {a.deaths_before_15} {'vez' if a.deaths_before_15 == 1 else 'veces'} "
+                                    "antes del minuto 15. En la repetición, ¿tenías visión o información de dónde "
+                                    "estaba el jungla rival?"))
     out.append(Observation(kind=EvidenceKind.EDUCATIONAL,
                            text="El timeline tiene una foto por minuto: describe el resultado, no las decisiones. "
                                 "Para entender el porqué, revisa la repetición."))
