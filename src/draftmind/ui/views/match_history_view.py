@@ -3,7 +3,7 @@
 from html import escape
 
 from PySide6.QtCore import QSize, Qt, Signal
-from PySide6.QtGui import QIcon, QPainter, QPixmap
+from PySide6.QtGui import QBrush, QColor, QIcon, QPainter, QPixmap
 from PySide6.QtWidgets import (
     QAbstractItemView,
     QComboBox,
@@ -22,13 +22,14 @@ from draftmind.analysis.postgame_analyzer import MatchFilter, cs_per_min, is_pro
 from draftmind.app.bootstrap import AppContext
 from draftmind.domain.enums import Role
 from draftmind.domain.models import MatchSummary
-from draftmind.integrations.riot_api import Platform, RiotApiError
+from draftmind.integrations.riot_api import Platform
+from draftmind.ui import theme
 from draftmind.ui.portraits import PortraitProvider
 from draftmind.ui.session import AppSession
 from draftmind.ui.widgets import card, combo_role, notice_label, page_layout, subtitle_label, title_label
 from draftmind.ui.workers import run_task
 
-COLUMNS = ["Fecha", "Resultado", "Campeón", "Posición", "Duración", "K / D / A", "KDA",
+COLUMNS = ["Fecha", "Resultado", "Campeón", "Puntuación", "Posición", "Duración", "K / D / A", "KDA",
            "CS (por min)", "Oro", "Visión", "Daño a campeones", "Daño recibido", "Part. asesinatos", "Objetos"]
 ITEM_ICON = 22
 
@@ -121,6 +122,8 @@ class MatchHistoryView(QWidget):
         self.table.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
         self.table.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)
         self.table.verticalHeader().setVisible(False)
+        self.table.verticalHeader().setDefaultSectionSize(38)
+        self.table.setShowGrid(False)
         self.table.setIconSize(QSize(28, 28))
         self.table.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.ResizeToContents)
         self.table.horizontalHeader().setStretchLastSection(True)
@@ -229,11 +232,21 @@ class MatchHistoryView(QWidget):
             cspm = cs_per_min(m)
             kp = kill_participation(m)
             champ = QTableWidgetItem(QIcon(self.portraits.get(m.champion_id, 28)), names.get(m.champion_id, m.champion_id))
+            score_text = "—" if m.performance_score is None else f"{m.performance_score:.1f}"
+            if m.badge:
+                score_text += f"  {m.badge}"
+            score = NumericItem(score_text, m.performance_score)
+            if m.badge:
+                score.setForeground(QBrush(QColor(theme.GOLD if m.badge == "MVP" else theme.ACE)))
+            if m.performance_rank:
+                score.setToolTip(f"Puesto {m.performance_rank} de 10 en esta partida (comparación con los "
+                                 "demás jugadores; método en docs/architecture.md).")
             cells = [
                 NumericItem(m.played_at.astimezone().strftime("%d/%m/%Y %H:%M") if m.played_at else "—",
                             m.played_at.timestamp() if m.played_at else None),
                 QTableWidgetItem(result),
                 champ,
+                score,
                 QTableWidgetItem(m.role.label if m.role else "—"),
                 NumericItem(minutes, m.duration_s),
                 QTableWidgetItem(f"{fmt(m.kills)} / {fmt(m.deaths)} / {fmt(m.assists)}"),
@@ -251,6 +264,12 @@ class MatchHistoryView(QWidget):
             items.setIcon(QIcon(self._items_strip(m.items)))
             items.setToolTip("\n".join(data.item_name(i) for i in m.items) if data else
                              "Descarga los datos de Data Dragon para ver los nombres.")
+            if m.win is not None:
+                # Tinte de fila (el resultado también va escrito en la columna «Resultado»).
+                tint = QBrush(QColor(theme.WIN_BG if m.win else theme.LOSS_BG))
+                cells[1].setForeground(QBrush(QColor(theme.WIN if m.win else theme.LOSS)))
+                for cell in cells:
+                    cell.setBackground(tint)
             for col, cell in enumerate(cells):
                 self.table.setItem(row, col, cell)
         self.table.setIconSize(QSize(ITEM_ICON * 7 + 12, 28))

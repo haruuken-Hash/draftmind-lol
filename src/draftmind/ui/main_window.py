@@ -3,13 +3,14 @@
 import logging
 from functools import partial
 
-from PySide6.QtCore import Qt
-from PySide6.QtGui import QKeySequence, QShortcut
+from PySide6.QtCore import QRectF, QSize, Qt
+from PySide6.QtGui import QColor, QFont, QKeySequence, QLinearGradient, QPainter, QPainterPath, QPixmap, QShortcut
 from PySide6.QtWidgets import (
     QFrame,
     QHBoxLayout,
     QLabel,
     QListWidget,
+    QListWidgetItem,
     QMainWindow,
     QMessageBox,
     QProgressBar,
@@ -21,7 +22,9 @@ from PySide6.QtWidgets import (
 from draftmind.analysis.matchup_analyzer import patch_of
 from draftmind.app.bootstrap import AppContext
 from draftmind.services.catalog_service import RefreshResult, demo_catalog
+from draftmind.ui.components.visuals import glyph_icon
 from draftmind.ui.portraits import PortraitProvider
+from draftmind.ui.views.profile_view import ProfileView
 from draftmind.ui.session import AppSession
 from draftmind.ui.theme import STYLESHEET
 from draftmind.ui.views.builds_view import BuildsView
@@ -39,6 +42,27 @@ from draftmind.ui.workers import run_task
 log = logging.getLogger(__name__)
 
 
+def _logo_pixmap(size: int) -> QPixmap:
+    """Logotipo propio: rombo con degradado y las iniciales «DM»."""
+    pixmap = QPixmap(size, size)
+    pixmap.fill(Qt.GlobalColor.transparent)
+    painter = QPainter(pixmap)
+    painter.setRenderHint(QPainter.RenderHint.Antialiasing)
+    gradient = QLinearGradient(0, 0, size, size)
+    gradient.setColorAt(0, QColor("#2ee6c4"))
+    gradient.setColorAt(1, QColor("#3b82f6"))
+    path = QPainterPath()
+    path.addRoundedRect(QRectF(1, 1, size - 2, size - 2), size * 0.28, size * 0.28)
+    painter.fillPath(path, gradient)
+    font = QFont("Segoe UI", int(size * 0.32))
+    font.setBold(True)
+    painter.setFont(font)
+    painter.setPen(QColor("#04110e"))
+    painter.drawText(QRectF(0, 0, size, size), Qt.AlignmentFlag.AlignCenter, "DM")
+    painter.end()
+    return pixmap
+
+
 class MainWindow(QMainWindow):
     def __init__(self, ctx: AppContext):
         super().__init__()
@@ -54,7 +78,7 @@ class MainWindow(QMainWindow):
         # Las partidas alimentan las estadísticas personales.
         self.session.matches_changed.connect(self._on_matches_changed)
 
-        self.dashboard = DashboardView(ctx)
+        self.dashboard = DashboardView(ctx, self.session, self.portraits)
         self.champions_view = ChampionView(ctx, self.portraits)
         self.draft_view = DraftView(ctx, self.session, self.portraits)
         self.history_view = MatchHistoryView(ctx, self.session, self.portraits)
@@ -64,47 +88,68 @@ class MainWindow(QMainWindow):
         self.analysis_view = MatchAnalysisView(ctx, self.session, self.portraits)
         self.research_view = ResearchView(ctx)
         self.settings_view = SettingsView(ctx)
+        self.profile_view = ProfileView(ctx, self.session, self.portraits)
 
-        sections: list[tuple[str, QWidget]] = [
-            ("Inicio", self.dashboard),
-            ("Campeones", self.champions_view),
-            ("Draft", self.draft_view),
-            ("Counters", self.counters_view),
-            ("Runas y builds", self.builds_view),
-            ("Estrategia", self.strategy_view),
-            ("Historial", self.history_view),
-            ("Análisis postpartida", self.analysis_view),
-            ("Investigación", self.research_view),
-            ("Fuentes y configuración", self.settings_view),
+        sections: list[tuple[str, str, QWidget]] = [
+            ("home", "Inicio", self.dashboard),
+            ("profile", "Mi perfil", self.profile_view),
+            ("champions", "Campeones", self.champions_view),
+            ("draft", "Draft", self.draft_view),
+            ("counters", "Counters", self.counters_view),
+            ("builds", "Runas y builds", self.builds_view),
+            ("strategy", "Estrategia", self.strategy_view),
+            ("history", "Historial", self.history_view),
+            ("analysis", "Análisis postpartida", self.analysis_view),
+            ("research", "Investigación", self.research_view),
+            ("settings", "Configuración", self.settings_view),
         ]
         self._catalog_views = [self.champions_view, self.draft_view, self.history_view, self.counters_view,
-                               self.builds_view, self.strategy_view, self.analysis_view]
+                               self.builds_view, self.strategy_view, self.analysis_view, self.profile_view,
+                               self.dashboard]
 
         # --- Barra lateral ---
         sidebar = QFrame()
         sidebar.setObjectName("sidebar")
-        sidebar.setFixedWidth(230)
+        sidebar.setFixedWidth(236)
+        logo = QLabel()
+        logo.setPixmap(_logo_pixmap(34))
         brand = QLabel("DraftMind")
         brand.setObjectName("brand")
         brand_sub = QLabel("Asistente de estudio para LoL")
         brand_sub.setObjectName("brandSub")
+        brand_texts = QVBoxLayout()
+        brand_texts.setSpacing(0)
+        brand_texts.addWidget(brand)
+        brand_texts.addWidget(brand_sub)
+        brand_row = QHBoxLayout()
+        brand_row.setContentsMargins(18, 20, 12, 16)
+        brand_row.setSpacing(10)
+        brand_row.addWidget(logo)
+        brand_row.addLayout(brand_texts, 1)
         self.nav = QListWidget()
         self.nav.setObjectName("nav")
+        self.nav.setIconSize(QSize(18, 18))
         self.nav.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         side_layout = QVBoxLayout(sidebar)
-        side_layout.setContentsMargins(0, 0, 0, 8)
-        side_layout.addWidget(brand)
-        side_layout.addWidget(brand_sub)
+        side_layout.setContentsMargins(0, 0, 0, 10)
+        side_layout.addLayout(brand_row)
         side_layout.addWidget(self.nav, 1)
+        self.account_label = QLabel()
+        self.account_label.setObjectName("brandSub")
+        self.account_label.setWordWrap(True)
+        self.account_label.setContentsMargins(20, 0, 12, 0)
+        side_layout.addWidget(self.account_label)
 
         self.stack = QStackedWidget()
-        for index, (name, view) in enumerate(sections):
-            self.nav.addItem(name)
+        for index, (icon, name, view) in enumerate(sections):
+            item = QListWidgetItem(glyph_icon(icon), name)
+            self.nav.addItem(item)
             self.stack.addWidget(view)
-            # Ctrl+1 … Ctrl+9 y Ctrl+0 (décima sección) saltan a cada sección.
-            key = f"Ctrl+{(index + 1) % 10}"
-            QShortcut(QKeySequence(key), self, activated=partial(self.nav.setCurrentRow, index))
-            self.nav.item(index).setToolTip(key)
+            # Ctrl+1 … Ctrl+9 y Ctrl+0 saltan a las diez primeras secciones.
+            if index < 10:
+                key = f"Ctrl+{(index + 1) % 10}"
+                QShortcut(QKeySequence(key), self, activated=partial(self.nav.setCurrentRow, index))
+                item.setToolTip(key)
         self.nav.currentRowChanged.connect(self.stack.setCurrentIndex)
         self.nav.setCurrentRow(0)
 
@@ -126,9 +171,11 @@ class MainWindow(QMainWindow):
         self.statusBar().addPermanentWidget(self.status_mode)
 
         # --- Conexiones entre pantallas ---
-        self.dashboard.open_draft.connect(lambda: self.nav.setCurrentRow(2))
-        self.strategy_view.open_draft.connect(lambda: self.nav.setCurrentRow(2))
-        self.history_view.open_match.connect(lambda _: self.nav.setCurrentRow(7))
+        self.dashboard.open_draft.connect(lambda: self.go_to(self.draft_view))
+        self.dashboard.open_profile.connect(lambda: self.go_to(self.profile_view))
+        self.strategy_view.open_draft.connect(lambda: self.go_to(self.draft_view))
+        self.history_view.open_match.connect(lambda _: self.go_to(self.analysis_view))
+        self.profile_view.open_history.connect(lambda: self.go_to(self.history_view))
         self.settings_view.profile_saved.connect(self.dashboard.refresh_profile)
         self.settings_view.profile_saved.connect(self.draft_view.on_profile_changed)
         self.settings_view.profile_saved.connect(self.counters_view.refresh)
@@ -143,10 +190,16 @@ class MainWindow(QMainWindow):
         if ctx.settings.ddragon_enabled:
             self.refresh_data()
 
+    def go_to(self, view: QWidget) -> None:
+        self.nav.setCurrentRow(self.stack.indexOf(view))
+
     # --- Estadísticas personales ------------------------------------------------
 
     def _on_matches_changed(self) -> None:
         account = self.session.account
+        if hasattr(self, "account_label"):
+            demo = " (demostración)" if self.session.matches_are_demo else ""
+            self.account_label.setText(f"{account.riot_id}{demo}" if account else "")
         self.ctx.stats.set_matches(self.session.matches, self.session.matches_are_demo,
                                    account.platform if account else None)
         # Las partidas descargadas corrigen las posiciones de los perfiles estimados.

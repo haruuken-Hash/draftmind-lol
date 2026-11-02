@@ -29,8 +29,28 @@ def set_role(view, role):
     view.my_role.setCurrentIndex(view.my_role.findData(role))
 
 
+def test_ban_suggestions_appear_in_draft(window):
+    view = window.draft_view
+    set_role(view, Role.TOP)
+    view.pick_for_me("Kayle")
+    chips = [view.ban_row.itemAt(i).widget() for i in range(view.ban_row.count())
+             if view.ban_row.itemAt(i).widget() is not None]
+    assert chips, "Debería haber al menos una sugerencia de bloqueo para Kayle"
+    assert all(c.toolTip().startswith("•") for c in chips)  # Cada sugerencia explica sus motivos.
+    assert "Kayle" in view.ban_note.text()
+
+
+def test_profile_view_with_demo_matches(window):
+    view = window.profile_view
+    assert "Jugador Demo" in view.hero_title.text()
+    assert "FICTICIOS" in view.hero_sub.text()
+    assert view.table.rowCount() > 0
+    assert view.tiles["games"].text() != "—"
+    assert not view.refresh_button.isVisibleTo(view)  # Sin API key no se consulta el rango.
+
+
 def test_navigation_switches_every_section(window):
-    assert window.nav.count() == window.stack.count() == 10
+    assert window.nav.count() == window.stack.count() == 11
     for row in range(window.nav.count()):
         window.nav.setCurrentRow(row)
         assert window.stack.currentIndex() == row

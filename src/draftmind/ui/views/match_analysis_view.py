@@ -13,7 +13,19 @@ matplotlib.use("QtAgg")
 from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg  # noqa: E402
 from matplotlib.figure import Figure  # noqa: E402
 from PySide6.QtCore import Qt  # noqa: E402
-from PySide6.QtWidgets import QGridLayout, QHBoxLayout, QLabel, QScrollArea, QVBoxLayout, QWidget  # noqa: E402
+from PySide6.QtWidgets import (  # noqa: E402
+    QGridLayout,
+    QHBoxLayout,
+    QLabel,
+    QPushButton,
+    QScrollArea,
+    QVBoxLayout,
+    QWidget,
+)
+
+from draftmind.analysis.lane_analyzer import lane_trend  # noqa: E402
+from draftmind.ui.components.visuals import badge_label  # noqa: E402
+from draftmind.ui.workers import run_task  # noqa: E402
 
 from draftmind.analysis.postgame_analyzer import (  # noqa: E402
     averages,
@@ -72,6 +84,32 @@ class MatchAnalysisView(QWidget):
         detail_layout.addLayout(top)
         detail_layout.addLayout(self.detail_items)
         layout.addWidget(detail)
+
+        layout.addWidget(section_label("Fase de líneas"))
+        lane_card, lane_layout = card()
+        lane_info = QLabel(
+            "Oro, CS y experiencia a los 5, 10 y 15 minutos frente a tu rival directo, primera participación en "
+            "un asesinato y objetivos tempranos. Usa el timeline oficial (una foto por minuto): no reconstruye "
+            "rutas ni decisiones. Cada partida nueva es una petición a la Riot API."
+        )
+        lane_info.setWordWrap(True)
+        lane_info.setStyleSheet(f"color: {theme.MUTED};")
+        self.lane_button = QPushButton("Analizar esta partida")
+        self.lane_button.setObjectName("primary")
+        self.trend_button = QPushButton("Tendencia de las últimas 10 partidas")
+        lane_buttons = QHBoxLayout()
+        lane_buttons.addWidget(self.lane_button)
+        lane_buttons.addWidget(self.trend_button)
+        lane_buttons.addStretch()
+        self.lane_result = QLabel()
+        self.lane_result.setWordWrap(True)
+        self.lane_result.setTextFormat(Qt.TextFormat.RichText)
+        lane_layout.addWidget(lane_info)
+        lane_layout.addLayout(lane_buttons)
+        lane_layout.addWidget(self.lane_result)
+        layout.addWidget(lane_card)
+        self.lane_button.clicked.connect(self.analyze_lane)
+        self.trend_button.clicked.connect(self.analyze_trend)
 
         layout.addWidget(section_label("Medias de la selección"))
         self.stat_labels: dict[str, QLabel] = {}
@@ -171,13 +209,98 @@ class MatchAnalysisView(QWidget):
             f"CS {m.cs if m.cs is not None else '—'} ({'—' if cspm is None else f'{cspm:.1f}'}/min) · "
             f"Part. asesinatos {'—' if kp is None else f'{kp:.0%}'} · Visión {m.vision_score if m.vision_score is not None else '—'}<br>"
             f"Rival directo: {escape(opponent)} · Runa clave: {escape(keystone)} · Hechizos: {escape(spells)}"
+            + (f"<br>Puntuación de rendimiento: <b>{m.performance_score:.1f}</b>/10 · puesto "
+               f"{m.performance_rank} de 10 {badge_label(m.badge)}" if m.performance_score is not None else "")
         )
+        self.lane_result.setText("")
+        self.lane_button.setEnabled(not m.is_demo)
         for item_id in m.items:
             icon = QLabel()
             icon.setPixmap(self.portraits.item(item_id, 32))
             icon.setToolTip(data.item_name(item_id) if data else f"Objeto #{item_id}")
             self.detail_items.addWidget(icon)
         self.detail_items.addStretch()
+
+    # --- Fase de líneas -----------------------------------------------------------
+
+    def analyze_lane(self) -> None:
+        match = self.selected
+        if match is None:
+            return
+        if match.is_demo or not self.ctx.matches.can_use_api:
+            self.lane_result.setText("Disponible con tus partidas reales descargadas y tu API key.")
+            return
+        self.lane_button.setEnabled(False)
+        self.lane_result.setText("Consultando el timeline…")
+
+        def done(analysis) -> None:
+            self.lane_button.setEnabled(True)
+            if analysis is None:
+                self.lane_result.setText("No se pudo analizar esta partida (faltan datos del timeline).")
+                return
+            self.lane_result.setText(self._lane_html(analysis))
+
+        def failed(error: str) -> None:
+            self.lane_button.setEnabled(True)
+            self.lane_result.setText(f"Error al consultar el timeline: {escape(error)}")
+
+        run_task(lambda: self.ctx.matches.lane_analysis(match), on_done=done, on_error=failed)
+
+    def analyze_trend(self) -> None:
+        matches = [m for m in self.session.filtered if not m.is_demo]
+        if not matches or not self.ctx.matches.can_use_api:
+            self.lane_result.setText("Disponible con tus partidas reales descargadas y tu API key.")
+            return
+        self.trend_button.setEnabled(False)
+        self.lane_result.setText("Consultando hasta 10 timelines (los ya descargados no se repiten)…")
+
+        def done(analyses) -> None:
+            self.trend_button.setEnabled(True)
+            parts = []
+            for minute in (10, 15):
+                trend = lane_trend(analyses, minute)
+                if trend:
+                    parts.append(f"<p><b>[{trend.kind.label}]</b> {escape(trend.text)}</p>")
+            first = [a.first_takedown_minute for a in analyses if a.first_takedown_minute is not None]
+            if len(first) >= 3:
+                parts.append(f"<p><b>[Estadística observada]</b> Tu primera participación en un asesinato llega, "
+                             f"de media, en el minuto {sum(first) / len(first):.1f} ({len(first)} partidas).</p>")
+            deaths = [a.deaths_before_15 for a in analyses]
+            if len(deaths) >= 3:
+                parts.append(f"<p><b>[Estadística observada]</b> Mueres {sum(deaths) / len(deaths):.1f} veces de "
+                             f"media antes del minuto 15 ({len(deaths)} partidas).</p>")
+            self.lane_result.setText("".join(parts) or "Hacen falta al menos 3 partidas con datos completos.")
+
+        def failed(error: str) -> None:
+            self.trend_button.setEnabled(True)
+            self.lane_result.setText(f"Error al consultar los timelines: {escape(error)}")
+
+        run_task(lambda: self.ctx.matches.lane_analyses(matches, limit=10), on_done=done, on_error=failed)
+
+    @staticmethod
+    def _lane_html(a) -> str:
+        def fmt(value, signed=False):
+            if value is None:
+                return "—"
+            return f"{value:+,}".replace(",", ".") if signed else f"{value:,}".replace(",", ".")
+
+        rows = "".join(
+            f"<tr><td><b>Min {s.minute}</b></td>"
+            f"<td>{fmt(s.gold)} / {fmt(s.opponent_gold)}</td><td><b>{fmt(s.gold_diff, True)}</b></td>"
+            f"<td>{s.cs} / {fmt(s.opponent_cs)}</td><td><b>{fmt(s.cs_diff, True)}</b></td>"
+            f"<td>{fmt(s.xp_diff, True)}</td></tr>"
+            for s in a.snapshots
+        )
+        table = ("<table cellspacing='0' cellpadding='6'><tr style='color:#8a94a3'><th align='left'></th>"
+                 "<th align='left'>Oro (tú / rival)</th><th align='left'>Dif.</th><th align='left'>CS (tú / rival)</th>"
+                 f"<th align='left'>Dif.</th><th align='left'>Dif. XP</th></tr>{rows}</table>")
+        objectives = a.objectives_before_15
+        objective_text = " · ".join(
+            f"{side.capitalize()}: " + (", ".join(f"{n} {name}" for name, n in values.items()) or "ninguno")
+            for side, values in objectives.items()
+        )
+        observations = "".join(f"<p><b>[{o.kind.label}]</b> {escape(o.text)}</p>" for o in a.observations)
+        return f"{table}<p>Objetivos antes del minuto 15 — {escape(objective_text)}</p>{observations}"
 
     def _plot(self, matches: list[MatchSummary]) -> None:
         self.figure.clear()

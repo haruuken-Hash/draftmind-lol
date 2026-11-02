@@ -34,6 +34,29 @@ class PortraitProvider:
             self._cache[key] = self._render(QPixmap(str(path)) if path else None, fallback, size)
         return self._cache[key]
 
+    def splash(self, champion_id: str | None) -> QPixmap | None:
+        """Ilustración del campeón si ya está descargada (None si no)."""
+        if not champion_id:
+            return None
+        path = self._ctx.catalogs.client.cached_image(f"img/champion/splash/{champion_id}_0.jpg")
+        return QPixmap(str(path)) if path else None
+
+    def load_splash(self, champion_id: str | None, callback) -> None:
+        """Entrega la ilustración a `callback`, descargándola en segundo plano si hace falta."""
+        if not champion_id:
+            return
+        cached = self.splash(champion_id)
+        if cached is not None:
+            callback(cached)
+            return
+        if not self._ctx.catalog.from_data_dragon:
+            return
+        from draftmind.ui.workers import run_task  # Import local: evita un ciclo de imports.
+
+        run_task(lambda: self._ctx.catalogs.client.splash_art(champion_id),
+                 on_done=lambda _: callback(self.splash(champion_id)),
+                 on_error=lambda _: None)
+
     def item(self, item_id: int, size: int) -> QPixmap:
         data = self._ctx.game_data
         relative = f"{data.version}/img/item/{item_id}.png" if data else None

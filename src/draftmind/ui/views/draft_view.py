@@ -16,6 +16,7 @@ from PySide6.QtGui import QKeySequence, QShortcut
 from PySide6.QtWidgets import (
     QComboBox,
     QDialog,
+    QFrame,
     QGridLayout,
     QHBoxLayout,
     QLabel,
@@ -27,6 +28,8 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
+from draftmind.analysis.ban_analyzer import suggest_bans
+from draftmind.analysis.champion_stats import comfort_pool
 from draftmind.app.bootstrap import AppContext
 from draftmind.domain.enums import Role
 from draftmind.domain.models import CandidateAnalysis, DraftPick, DraftState, TeamProfile
@@ -126,6 +129,14 @@ class DraftView(QWidget):
         analysis = QWidget()
         analysis_layout = QVBoxLayout(analysis)
         analysis_layout.setContentsMargins(0, 8, 6, 0)
+        analysis_layout.addWidget(section_label("Bloqueos sugeridos"))
+        self.ban_note = QLabel()
+        self.ban_note.setWordWrap(True)
+        self.ban_note.setStyleSheet(f"color: {theme.MUTED};")
+        self.ban_row = QHBoxLayout()
+        self.ban_row.setSpacing(8)
+        analysis_layout.addWidget(self.ban_note)
+        analysis_layout.addLayout(self.ban_row)
         analysis_layout.addWidget(self.analysis_heading)
         analysis_layout.addWidget(self.analysis_notes)
         analysis_layout.addLayout(self.cards_layout)
@@ -461,6 +472,7 @@ class DraftView(QWidget):
 
         self._analyses = [a for a, _, _ in entries]
         self._render_cards(entries)
+        self._render_ban_suggestions(draft)
         allies, enemies = analyzer.compositions(draft)
         self.ally_summary.setText(self._team_html("Tu equipo", allies))
         self.enemy_summary.setText(self._team_html("Equipo enemigo", enemies))
@@ -481,6 +493,52 @@ class DraftView(QWidget):
             card_widget = RecommendationCard(analysis, self.portraits, caption, can_pick)
             card_widget.pick_requested.connect(self.pick_for_me)
             self.cards_layout.addWidget(card_widget, index // CARD_COLUMNS, index % CARD_COLUMNS)
+
+    def _render_ban_suggestions(self, draft: DraftState) -> None:
+        while self.ban_row.count():
+            widget = self.ban_row.takeAt(0).widget()
+            if widget is not None:
+                widget.hide()
+                widget.setParent(None)
+                widget.deleteLater()
+        names = self._names()
+        key_to_id = self.ctx.champion_keys()
+        mastery_ids = [key_to_id[k] for k in self.session.mastery_champion_keys() if k in key_to_id]
+        if draft.my_champion_id:
+            pool = [draft.my_champion_id]
+            basis = f"tu campeón ({names.get(draft.my_champion_id, draft.my_champion_id)})"
+        else:
+            pool = comfort_pool(self.session.matches, draft.my_role, mastery_ids)
+            basis = ("tus campeones de confianza (" + ", ".join(names.get(c, c) for c in pool) + ")") if pool else ""
+        taken = self._taken()
+        suggestions = suggest_bans(
+            draft.my_role, pool, self.session.matches, {p.id: p for p in self.ctx.analyzer.champions},
+            imported=self.ctx.stats.imported, exclude=taken, limit=5,
+        )
+        if not pool:
+            self.ban_note.setText("Indica tu campeón o carga tus partidas para personalizar los bloqueos.")
+            return
+        demo = " Tus partidas son FICTICIAS de demostración." if self.session.matches_are_demo else ""
+        self.ban_note.setText(f"Pensados para {escape(basis)}. Pasa el ratón para ver los motivos.{demo}")
+        if not suggestions:
+            self.ban_note.setText(self.ban_note.text() + " No hay suficientes datos para sugerir bloqueos.")
+            return
+        for s in suggestions:
+            chip = QFrame()
+            chip.setObjectName("card")
+            chip_layout = QHBoxLayout(chip)
+            chip_layout.setContentsMargins(8, 6, 10, 6)
+            chip_layout.setSpacing(8)
+            portrait = QLabel()
+            portrait.setPixmap(self.portraits.get(s.champion_id, 34))
+            kinds = " + ".join(dict.fromkeys(k.label for k in s.kinds))
+            text = QLabel(f"<b>{escape(names.get(s.champion_id, s.champion_id))}</b><br>"
+                          f"<span style='color:{theme.MUTED}; font-size:8pt'>{escape(kinds)}</span>")
+            chip_layout.addWidget(portrait)
+            chip_layout.addWidget(text)
+            chip.setToolTip("\n".join(f"• {r}" for r in s.reasons))
+            self.ban_row.addWidget(chip)
+        self.ban_row.addStretch()
 
     @staticmethod
     def _team_html(title: str, team: TeamProfile) -> str:
