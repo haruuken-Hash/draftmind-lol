@@ -40,6 +40,16 @@ class MatchRow(Base):
     retrieved_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
 
 
+class TimelineRow(Base):
+    """Timeline de una partida (match-v5). Tampoco cambia: se pide una sola vez."""
+
+    __tablename__ = "timeline_cache"
+
+    match_id: Mapped[str] = mapped_column(String(40), primary_key=True)
+    raw_json: Mapped[str] = mapped_column(Text)
+    retrieved_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+
+
 class AccountRow(Base):
     """Cuenta de Riot vinculada (Riot ID -> PUUID). Solo se guarda una."""
 

@@ -7,8 +7,11 @@ Comprobado el 28/10/2026 en developer.riotgames.com:
   en AMERICAS, ASIA o EUROPE ("se puede consultar cualquier cuenta en
   cualquier región").
 - match-v5: /lol/match/v5/matches/by-puuid/{puuid}/ids (count 0-100,
-  por defecto 20) y /lol/match/v5/matches/{matchId}, en la región de
-  enrutamiento (AMERICAS, ASIA, EUROPE, SEA).
+  por defecto 20), /lol/match/v5/matches/{matchId} y .../{matchId}/timeline,
+  en la región de enrutamiento (AMERICAS, ASIA, EUROPE, SEA).
+- league-v4 /entries/by-puuid/{puuid} y champion-mastery-v4 .../by-puuid/
+  {puuid}/top, en la plataforma (LA1, EUW1...). Campos comprobados con una
+  respuesta real el 01/11/2026.
 - 429: detener las peticiones los segundos que indique Retry-After.
 - Límites de clave personal: 20 peticiones/s y 100 cada 2 min, por región.
 
@@ -168,6 +171,22 @@ class RiotApiClient:
 
     def match(self, platform: Platform, match_id: str) -> dict:
         return self._get(platform.match_region, f"/lol/match/v5/matches/{quote(match_id, safe='')}")
+
+    def match_timeline(self, platform: Platform, match_id: str) -> dict:
+        """Foto de cada jugador por minuto (frameInterval 60000 ms) y eventos de la partida."""
+        return self._get(platform.match_region, f"/lol/match/v5/matches/{quote(match_id, safe='')}/timeline")
+
+    # Estos endpoints usan el enrutamiento de PLATAFORMA (p. ej. la1.api.riotgames.com).
+
+    def league_entries(self, platform: Platform, puuid: str) -> list[dict]:
+        """league-v4: clasificatorias del jugador (una entrada por cola en la que esté clasificado)."""
+        return self._get(platform.value.lower(), f"/lol/league/v4/entries/by-puuid/{quote(puuid, safe='')}")
+
+    def mastery_top(self, platform: Platform, puuid: str, count: int = 10) -> list[dict]:
+        """champion-mastery-v4: campeones con más puntos de maestría."""
+        return self._get(platform.value.lower(),
+                         f"/lol/champion-mastery/v4/champion-masteries/by-puuid/{quote(puuid, safe='')}/top",
+                         {"count": max(1, min(count, 50))})
 
 
 def _retry_after_seconds(response: httpx.Response) -> float:

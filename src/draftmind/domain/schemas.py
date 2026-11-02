@@ -42,6 +42,31 @@ class DDragonChampionFile(BaseModel):
     data: dict[str, DDragonChampion]
 
 
+# --- champion/{id}.json: detalle de un campeón (comprobado con 16.21.1) ----------
+
+class DDragonAbility(BaseModel):
+    id: str = ""
+    name: str
+    description: str = ""
+    cooldown: list[float] = Field(default_factory=list)
+    image: DDragonImage
+
+
+class DDragonChampionDetail(BaseModel):
+    id: str
+    name: str
+    title: str = ""
+    lore: str = ""
+    allytips: list[str] = Field(default_factory=list)
+    enemytips: list[str] = Field(default_factory=list)
+    passive: DDragonAbility
+    spells: list[DDragonAbility] = Field(default_factory=list)
+
+
+class DDragonChampionDetailFile(BaseModel):
+    data: dict[str, DDragonChampionDetail]
+
+
 # --- item.json (comprobado con 16.21.1) ---------------------------------------
 
 class DDragonGold(BaseModel):

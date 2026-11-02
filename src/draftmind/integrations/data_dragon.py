@@ -27,7 +27,9 @@ from pydantic import TypeAdapter, ValidationError
 
 from draftmind.domain.enums import EvidenceKind
 from draftmind.domain.models import (
+    AbilityInfo,
     ChampionCatalog,
+    ChampionDetail,
     ChampionInfo,
     DataSource,
     GameData,
@@ -37,6 +39,7 @@ from draftmind.domain.models import (
     SpellInfo,
 )
 from draftmind.domain.schemas import (
+    DDragonChampionDetailFile,
     DDragonChampionFile,
     DDragonItemFile,
     DDragonRunePath,
@@ -227,6 +230,40 @@ class DataDragonClient:
                 key=lambda s: s.name,
             ),
         )
+
+    def champion_detail(self, version: str, language: str, champion_id: str) -> ChampionDetail:
+        """Habilidades y consejos oficiales; descarga también sus iconos (una vez)."""
+        path = self.cache_dir / version / language / "champion" / f"{champion_id}.json"
+        if not path.exists():
+            response = self._get(f"/cdn/{version}/data/{language}/champion/{champion_id}.json")
+            _write_atomic(path, response.content)
+        try:
+            parsed = DDragonChampionDetailFile.model_validate_json(path.read_bytes()).data[champion_id]
+        except (ValidationError, KeyError) as exc:
+            path.unlink(missing_ok=True)
+            raise DataDragonError("Los datos del campeón no tienen el formato esperado.") from exc
+
+        abilities = [AbilityInfo(key="P", name=parsed.passive.name,
+                                 description=strip_html(parsed.passive.description),
+                                 image_path=f"{version}/img/passive/{parsed.passive.image.full}")]
+        for key, spell in zip("QWER", parsed.spells):
+            abilities.append(AbilityInfo(key=key, name=spell.name, description=strip_html(spell.description),
+                                         cooldown=spell.cooldown, image_path=f"{version}/img/spell/{spell.image.full}"))
+        for ability in abilities:
+            try:
+                self._image(ability.image_path)
+            except DataDragonError:
+                log.warning("No se pudo descargar el icono de %s.", ability.name)
+        return ChampionDetail(
+            id=parsed.id, name=parsed.name, title=parsed.title, lore=strip_html(parsed.lore),
+            ally_tips=[strip_html(t) for t in parsed.allytips],
+            enemy_tips=[strip_html(t) for t in parsed.enemytips],
+            abilities=abilities,
+        )
+
+    def splash_art(self, champion_id: str) -> Path:
+        """Ilustración oficial del aspecto base (sin versión en la URL, comprobado)."""
+        return self._image(f"img/champion/splash/{champion_id}_0.jpg")
 
     def item_image(self, version: str, image_file: str) -> Path:
         return self._image(f"{version}/img/item/{image_file}")

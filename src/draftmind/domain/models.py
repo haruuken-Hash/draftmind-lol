@@ -73,6 +73,26 @@ class ChampionInfo(BaseModel):
     attack_range: float | None = None
 
 
+class AbilityInfo(BaseModel):
+    key: str                    # "P" (pasiva), "Q", "W", "E" o "R".
+    name: str
+    description: str = ""
+    cooldown: list[float] = Field(default_factory=list)
+    image_path: str             # Ruta relativa en la caché de imágenes de Data Dragon.
+
+
+class ChampionDetail(BaseModel):
+    """Habilidades y consejos oficiales de un campeón (Data Dragon)."""
+
+    id: str
+    name: str
+    title: str = ""
+    lore: str = ""
+    ally_tips: list[str] = Field(default_factory=list)    # Consejos para jugarlo.
+    enemy_tips: list[str] = Field(default_factory=list)   # Consejos para jugar contra él.
+    abilities: list[AbilityInfo] = Field(default_factory=list)
+
+
 class ChampionCatalog(BaseModel):
     """Lista de campeones disponibles y de dónde salen."""
 
@@ -186,6 +206,13 @@ class MatchSummary(BaseModel):
     allies: list[str] = Field(default_factory=list)
     enemies: list[str] = Field(default_factory=list)
     lane_opponent: str | None = None
+    # Para enlazar con el timeline (participantId 1-10 de match-v5).
+    participant_id: int | None = None
+    opponent_participant_id: int | None = None
+    # Puntuación de rendimiento comparada con los 10 jugadores (analysis/performance.py).
+    performance_score: float | None = None
+    performance_rank: int | None = None
+    badge: str | None = None
 
 
 class ChampionStat(BaseModel):
@@ -215,6 +242,49 @@ class ChampionStat(BaseModel):
         if self.wins is not None and self.games:
             return self.wins / self.games
         return None
+
+
+class RankedEntry(BaseModel):
+    """league-v4: una cola clasificatoria del jugador."""
+
+    queue: str           # RANKED_SOLO_5x5, RANKED_FLEX_SR...
+    tier: str            # IRON ... CHALLENGER
+    division: str        # I-IV (vacío en Maestro o superior)
+    lp: int
+    wins: int
+    losses: int
+    hot_streak: bool = False
+
+    @property
+    def queue_label(self) -> str:
+        return {"RANKED_SOLO_5x5": "Clasificatoria Solo/Dúo", "RANKED_FLEX_SR": "Clasificatoria Flexible"}.get(
+            self.queue, self.queue)
+
+    @property
+    def tier_label(self) -> str:
+        names = {"IRON": "Hierro", "BRONZE": "Bronce", "SILVER": "Plata", "GOLD": "Oro", "PLATINUM": "Platino",
+                 "EMERALD": "Esmeralda", "DIAMOND": "Diamante", "MASTER": "Maestro",
+                 "GRANDMASTER": "Gran Maestro", "CHALLENGER": "Retador"}
+        name = names.get(self.tier, self.tier.title())
+        return f"{name} {self.division}" if self.tier not in ("MASTER", "GRANDMASTER", "CHALLENGER") else name
+
+    @property
+    def win_rate(self) -> float | None:
+        total = self.wins + self.losses
+        return self.wins / total if total else None
+
+
+class MasteryEntry(BaseModel):
+    champion_key: int    # Número de campeón (champion.json «key»).
+    level: int
+    points: int
+    last_played: datetime | None = None
+
+
+class PlayerProfile(BaseModel):
+    ranked: list[RankedEntry] = Field(default_factory=list)
+    masteries: list[MasteryEntry] = Field(default_factory=list)
+    retrieved_at: datetime
 
 
 class Observation(BaseModel):

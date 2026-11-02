@@ -7,7 +7,7 @@ from datetime import datetime, timezone
 from sqlalchemy import select
 from sqlalchemy.orm import sessionmaker
 
-from draftmind.data.database import AccountRow, MatchRow
+from draftmind.data.database import AccountRow, MatchRow, TimelineRow
 
 _ACCOUNT_ID = 1
 
@@ -47,6 +47,22 @@ class MatchRepository:
             rows = session.scalars(select(MatchRow)).all()
             return [(r.platform, json.loads(r.raw_json)) for r in rows]
 
+    def get_match(self, match_id: str) -> tuple[str, dict] | None:
+        with self._session_factory() as session:
+            row = session.get(MatchRow, match_id)
+            return (row.platform, json.loads(row.raw_json)) if row else None
+
+    def get_timeline(self, match_id: str) -> dict | None:
+        with self._session_factory() as session:
+            row = session.get(TimelineRow, match_id)
+            return json.loads(row.raw_json) if row else None
+
+    def save_timeline(self, match_id: str, raw: dict) -> None:
+        with self._session_factory() as session:
+            session.merge(TimelineRow(match_id=match_id, raw_json=json.dumps(raw),
+                                      retrieved_at=datetime.now(timezone.utc)))
+            session.commit()
+
     def count(self) -> int:
         with self._session_factory() as session:
             return len(session.scalars(select(MatchRow.match_id)).all())
@@ -54,6 +70,7 @@ class MatchRepository:
     def clear_matches(self) -> None:
         with self._session_factory() as session:
             session.query(MatchRow).delete()
+            session.query(TimelineRow).delete()
             session.commit()
 
     def get_account(self) -> LinkedAccount | None:

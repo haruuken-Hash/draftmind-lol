@@ -11,8 +11,9 @@ import logging
 from datetime import datetime, timezone
 from pathlib import Path
 
+from draftmind.analysis.lane_analyzer import LaneAnalysis, analyze_lane, players_from_match
 from draftmind.data.repositories.match_repository import LinkedAccount, MatchRepository
-from draftmind.domain.models import MatchSummary
+from draftmind.domain.models import MasteryEntry, MatchSummary, PlayerProfile, RankedEntry
 from draftmind.integrations.riot_api import Platform, RiotApiClient
 from draftmind.integrations.riot_match import summarize_match
 
@@ -70,6 +71,54 @@ class MatchService:
             if summary is not None:
                 summaries.append(summary)
         return _newest_first(summaries)
+
+    # --- Fase de líneas (timeline) ---------------------------------------------
+
+    def lane_analysis(self, match: MatchSummary, download: bool = True) -> LaneAnalysis | None:
+        """Analiza la fase de líneas. Pide el timeline a la API solo si no está guardado."""
+        stored = self.repository.get_match(match.match_id)
+        if stored is None:
+            return None
+        _, raw = stored
+        timeline = self.repository.get_timeline(match.match_id)
+        if timeline is None:
+            if not download or not self.client:
+                return None
+            timeline = self.client.match_timeline(Platform(match.platform), match.match_id)
+            self.repository.save_timeline(match.match_id, timeline)
+        return analyze_lane(timeline, match, players_from_match(raw))
+
+    def lane_analyses(self, matches: list[MatchSummary], limit: int = 10) -> list[LaneAnalysis]:
+        """Fase de líneas de las `limit` partidas más recientes (1 petición por timeline nuevo)."""
+        result = []
+        for match in matches[:limit]:
+            analysis = self.lane_analysis(match)
+            if analysis is not None:
+                result.append(analysis)
+        return result
+
+    # --- Perfil de jugador: rango y maestría --------------------------------------
+
+    def player_profile(self, account: LinkedAccount) -> PlayerProfile:
+        if not self.client:
+            raise RuntimeError("Hace falta una API key de Riot para consultar el rango y la maestría.")
+        platform = Platform(account.platform)
+        entries = self.client.league_entries(platform, account.puuid)
+        masteries = self.client.mastery_top(platform, account.puuid, count=10)
+        return PlayerProfile(
+            ranked=[RankedEntry(
+                queue=e.get("queueType", ""), tier=e.get("tier", ""), division=e.get("rank", ""),
+                lp=e.get("leaguePoints", 0), wins=e.get("wins", 0), losses=e.get("losses", 0),
+                hot_streak=bool(e.get("hotStreak")),
+            ) for e in entries if isinstance(e, dict)],
+            masteries=[MasteryEntry(
+                champion_key=m.get("championId", 0), level=m.get("championLevel", 0),
+                points=m.get("championPoints", 0),
+                last_played=datetime.fromtimestamp(m["lastPlayTime"] / 1000, timezone.utc)
+                if isinstance(m.get("lastPlayTime"), int) else None,
+            ) for m in masteries if isinstance(m, dict)],
+            retrieved_at=datetime.now(timezone.utc),
+        )
 
     @staticmethod
     def demo_matches(path: Path = DEMO_MATCHES_FILE) -> tuple[LinkedAccount, list[MatchSummary]]:

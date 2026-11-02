@@ -14,6 +14,7 @@ Significado de los campos según el esquema oficial de match-v5:
 from datetime import datetime, timezone
 from typing import Any
 
+from draftmind.analysis.performance import ParticipantLine, score_match
 from draftmind.domain.enums import Role
 from draftmind.domain.models import MatchSummary
 
@@ -28,6 +29,28 @@ def _role(value: Any) -> Role | None:
         return Role(value)
     except ValueError:
         return None
+
+
+_PERFORMANCE_FIELDS = ("kills", "deaths", "assists", "totalDamageDealtToChampions", "goldEarned",
+                       "totalMinionsKilled", "neutralMinionsKilled", "visionScore")
+
+
+def _performance(participants: list, duration: int | None) -> dict:
+    """Puntuación de los 10 jugadores; vacía si falta algún dato."""
+    if len(participants) != 10 or not duration:
+        return {}
+    lines = []
+    for p in participants:
+        values = [_int(p, k) for k in _PERFORMANCE_FIELDS]
+        if None in values or not isinstance(p.get("win"), bool) or p.get("teamId") is None or not p.get("puuid"):
+            return {}
+        kills, deaths, assists, damage, gold, minions, monsters, vision = values
+        lines.append(ParticipantLine(
+            key=p["puuid"], team_id=p["teamId"], win=p["win"], role=_role(p.get("teamPosition")),
+            kills=kills, deaths=deaths, assists=assists, damage=damage, gold=gold,
+            cs=minions + monsters, vision=vision,
+        ))
+    return score_match(lines, duration / 60)
 
 
 def summarize_match(raw: dict, puuid: str, platform: str, is_demo: bool = False) -> MatchSummary | None:
@@ -67,8 +90,15 @@ def summarize_match(raw: dict, puuid: str, platform: str, is_demo: bool = False)
     if primary and primary.get("selections"):
         keystone = primary["selections"][0].get("perk")
 
+    performance = _performance(participants, duration).get(puuid)
+
     return MatchSummary(
         match_id=match_id,
+        participant_id=_int(me, "participantId"),
+        opponent_participant_id=_int(opponent, "participantId") if opponent else None,
+        performance_score=performance.score if performance else None,
+        performance_rank=performance.rank if performance else None,
+        badge=performance.badge if performance else None,
         platform=platform,
         puuid=puuid,
         is_demo=is_demo,
