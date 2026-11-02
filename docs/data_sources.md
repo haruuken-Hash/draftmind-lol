@@ -124,7 +124,14 @@ Ninguno es una estadística ni pertenece a un parche, así que la confianza del 
 
 Además coincide el tipo de daño en 19/26 y la posición en 21/26.
 
-Límite importante: los datos oficiales **no indican qué campeones van a jungla**, así que la estimación nunca asigna esa posición. Corrígelo a mano en los que conozcas.
+**Posiciones observadas.** Los datos oficiales no indican qué campeones van a jungla, así que la clase sola nunca asigna esa posición. Por eso, en los perfiles **estimados**, las posiciones se corrigen con las partidas reales descargadas con la Riot API (`services/profile_service.observed_positions`):
+
+- Se cuenta la `teamPosition` de los **10 jugadores** de cada partida, sin contar remakes ni partidas de demostración.
+- Una posición se acepta si aparece al menos 2 veces y en al menos el 25 % de las apariciones del campeón.
+- La ficha del campeón indica en cuántas apariciones se basa.
+- Los perfiles editoriales y los revisados por ti no se modifican.
+
+Ejemplo real (01/11/2026, 50 partidas): Kayn, Lillia, Shaco, Nocturne y Briar pasaron de Superior o Medio a Jungla.
 
 ## League Client API (draft en vivo)
 

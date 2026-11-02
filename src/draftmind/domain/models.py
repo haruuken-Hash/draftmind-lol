@@ -40,6 +40,9 @@ class ChampionProfile(BaseModel):
 
     id: str
     origin: ProfileOrigin = ProfileOrigin.EDITORIAL
+    # Si > 0, las posiciones salen de tantas apariciones en partidas reales
+    # descargadas (match-v5), no de la clase del campeón.
+    roles_observed: int = 0
     name: str
     roles: list[Role]
     damage_type: DamageType

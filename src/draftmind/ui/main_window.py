@@ -149,6 +149,10 @@ class MainWindow(QMainWindow):
         account = self.session.account
         self.ctx.stats.set_matches(self.session.matches, self.session.matches_are_demo,
                                    account.platform if account else None)
+        # Las partidas descargadas corrigen las posiciones de los perfiles estimados.
+        self.ctx.rebuild_profiles()
+        if hasattr(self, "strategy_view"):
+            self._on_profiles_changed()
         self._on_stats_changed()
 
     def _on_stats_changed(self) -> None:
@@ -163,6 +167,8 @@ class MainWindow(QMainWindow):
 
     def _on_profiles_changed(self) -> None:
         """Un perfil revisado afecta al draft, counters, builds y estrategia."""
+        if self.champions_view.current_id:
+            self.champions_view.show_champion(self.champions_view.current_id)
         self.draft_view.grid.reload()
         self.draft_view.update_analysis()
         self.counters_view.refresh()

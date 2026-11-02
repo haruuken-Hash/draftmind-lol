@@ -55,6 +55,39 @@ def test_priority_estimated_editorial_user(dataset):
     assert profiles["Jinx"].origin is ProfileOrigin.USER and profiles["Jinx"].frontline == 1
 
 
+def _raw_match(players, duration=1800):
+    return {"info": {"gameDuration": duration, "gameEndTimestamp": 1,
+                     "participants": [{"championName": c, "teamPosition": p} for c, p in players]}}
+
+
+def test_observed_positions_count_all_players_and_skip_remakes():
+    from draftmind.services.profile_service import observed_positions
+
+    matches = [
+        _raw_match([("Yorick", "JUNGLE"), ("Jinx", "BOTTOM"), ("Leona", "")]),
+        _raw_match([("Yorick", "JUNGLE"), ("Jinx", "BOTTOM")]),
+        _raw_match([("Yorick", "TOP")], duration=200),  # Posible remake: no cuenta.
+    ]
+    positions = observed_positions(matches)
+    assert positions["Yorick"] == {Role.JUNGLE: 2}
+    assert "Leona" not in positions  # Posición vacía.
+
+
+def test_observed_positions_replace_estimated_roles_only(dataset):
+    from collections import Counter
+
+    editorial_leona = next(p for p in dataset.champions if p.id == "Leona")
+    positions = {
+        "Yorick": Counter({Role.JUNGLE: 6, Role.TOP: 3, Role.MIDDLE: 1}),  # Medio: 10 %, no llega.
+        "Jinx": Counter({Role.UTILITY: 1}),                                # Una sola vez: no basta.
+        "Leona": Counter({Role.MIDDLE: 9}),                                # Editorial: no se toca.
+    }
+    profiles = {p.id: p for p in build_profiles(catalog(YORICK, JINX, LEONA), [editorial_leona], [], positions)}
+    assert profiles["Yorick"].roles == [Role.JUNGLE, Role.TOP] and profiles["Yorick"].roles_observed == 10
+    assert profiles["Jinx"].roles == [Role.BOTTOM] and profiles["Jinx"].roles_observed == 0
+    assert profiles["Leona"].roles == editorial_leona.roles
+
+
 def test_user_overrides_persist():
     repo = ChampionProfileRepository(init_database(create_db_engine(None)))
     saved = repo.save(estimate_profile(YORICK).model_copy(update={"engage": 2}))

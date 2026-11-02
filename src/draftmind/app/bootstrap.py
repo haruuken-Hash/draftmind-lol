@@ -24,7 +24,7 @@ from draftmind.integrations.data_dragon import DataDragonClient
 from draftmind.integrations.riot_api import RiotApiClient
 from draftmind.services.catalog_service import CatalogService, demo_catalog
 from draftmind.services.match_service import MatchService
-from draftmind.services.profile_service import build_profiles
+from draftmind.services.profile_service import build_profiles, observed_positions
 from draftmind.services.stats_service import StatsService
 from draftmind.utils.logging_config import configure_logging
 
@@ -47,9 +47,11 @@ class AppContext:
     champion_profiles: ChampionProfileRepository
 
     def rebuild_profiles(self) -> None:
-        """Recalcula los perfiles: estimados + editoriales + revisados por el usuario."""
+        """Recalcula los perfiles: estimados (con posiciones observadas en tus partidas
+        descargadas) + editoriales + revisados por el usuario."""
+        positions = observed_positions(raw for _, raw in self.matches.repository.all_matches())
         self.analyzer.set_champions(
-            build_profiles(self.catalog, self.dataset.champions, self.champion_profiles.all())
+            build_profiles(self.catalog, self.dataset.champions, self.champion_profiles.all(), positions)
         )
 
     def champion_keys(self) -> dict[int, str]:

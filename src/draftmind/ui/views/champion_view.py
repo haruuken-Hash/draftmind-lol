@@ -206,12 +206,15 @@ class ChampionView(QWidget):
             self.reset_button.setVisible(False)
             return
         roles = ", ".join(r.label for r in profile.roles) or "sin posiciones estimadas"
+        if profile.roles_observed:
+            roles += (f" <span style='color:{theme.MUTED}'>(observadas en {profile.roles_observed} "
+                      "apariciones en tus partidas descargadas)</span>")
         warning = ""
         if profile.origin is ProfileOrigin.ESTIMATED:
             warning = (f"<br><span style='color:{theme.WARNING}'>Calculado con reglas a partir de la clase y la "
                        "valoración oficial. Revísalo si conoces al campeón.</span>")
         self.origin_label.setText(
-            f"<b>{profile.origin.label}</b>{warning}<br><b>Posiciones:</b> {escape(roles)} · "
+            f"<b>{profile.origin.label}</b>{warning}<br><b>Posiciones:</b> {roles} · "
             f"<b>Daño:</b> {profile.damage_type.label}{official}"
         )
         for attr, bar in self.bars.items():
