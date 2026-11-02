@@ -4,7 +4,7 @@ Asistente de escritorio para Windows que ayuda a **estudiar** drafts y partidas 
 
 > Las recomendaciones son ayudas para razonar, no certezas. Cada una indica qué datos usa, de qué tipo son (dato oficial, estadística observada, inferencia estratégica, sugerencia educativa o evidencia insuficiente) y con qué confianza.
 
-## Estado actual (versión 0.10.0)
+## Estado actual (versión 0.10.1)
 
 Inspirada en las funciones de OP.GG e iTero que se pueden ofrecer de forma legítima (ver la tabla de abajo).
 

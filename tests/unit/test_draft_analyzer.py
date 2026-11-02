@@ -1,6 +1,6 @@
 import pytest
 
-from draftmind.analysis.draft_analyzer import DraftAnalyzer
+from draftmind.analysis.draft_analyzer import ComfortStats, DraftAnalyzer
 from draftmind.domain.enums import ConfidenceLevel, EvidenceKind, ExperienceLevel, Role
 from draftmind.domain.models import DraftPick, DraftState, UserProfile
 
@@ -150,3 +150,16 @@ def test_champion_you_play_in_role_is_suggested(analyzer):
 def test_unknown_champion_raises(analyzer):
     with pytest.raises(ValueError):
         analyzer.analyze_candidate(DraftState(), "NoExiste")
+
+
+def test_tied_suggestions_are_not_alphabetical(analyzer):
+    # Draft vacío: todas las junglas empatan en puntuación.
+    draft = DraftState(my_role=Role.JUNGLE)
+    tied = [a for a in analyzer.suggest_candidates(draft, limit=200) if a.score == 60]
+    assert len(tied) > 10
+    keys = [(Role.JUNGLE not in a.champion.roles[:1], a.champion.difficulty) for a in tied]
+    assert keys == sorted(keys)  # Primero los de jungla principal y los más sencillos.
+
+    # Dos partidas no cambian la puntuación, pero desempatan a tu favor.
+    analyzer.comfort = lambda cid, role: ComfortStats(games=2, wins=1) if cid == "Taliyah" else None
+    assert analyzer.suggest_candidates(draft, limit=1)[0].champion.id == "Taliyah"

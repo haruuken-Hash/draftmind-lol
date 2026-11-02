@@ -226,6 +226,11 @@ class DraftAnalyzer:
 
         No es una clasificación por win rate: solo refleja los criterios
         de este módulo y debe leerse junto con sus explicaciones.
+
+        Con pocos campeones en el draft muchos candidatos empatan. Entre
+        puntuaciones iguales va primero el que más has jugado en esa posición
+        (y después el de más maestría), luego el que tiene esa posición como
+        principal en su perfil y, por último, el más sencillo de jugar.
         """
         role = role or draft.my_role
         taken = {p.champion_id for p in draft.allies + draft.enemies} | set(draft.bans)
@@ -234,8 +239,16 @@ class DraftAnalyzer:
             if c.id not in taken and (role is None or role in c.roles or self._plays_in_role(c.id, role))
         ]
         analyses = [self.analyze_candidate(draft, c.id) for c in pool]
-        analyses.sort(key=lambda a: (-a.score, a.champion.name))
+        analyses.sort(key=lambda a: (-a.score, *self._tiebreak(a.champion, role)))
         return analyses[:limit]
+
+    def _tiebreak(self, c: ChampionProfile, role: Role | None) -> tuple:
+        """Clave secundaria de orden (menor = antes) para candidatos empatados."""
+        stats = self.comfort(c.id, role) if self.comfort else None
+        games = stats.games if stats else 0
+        points = (stats.mastery_points or 0) if stats else 0
+        main_role = role is not None and c.roles[:1] == [role]
+        return -games, -points, not main_role, c.difficulty, c.name
 
     # --- Factores ----------------------------------------------------------
 
