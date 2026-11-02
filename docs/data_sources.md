@@ -113,13 +113,18 @@ Cuando se comparan datos de parches, regiones o segmentos distintos, la app lo a
 
 Cada campeón tiene un perfil de valoraciones 0-3 con uno de tres orígenes. Para un mismo campeón, cada uno sustituye al anterior:
 
-1. **Estimación automática** (`analysis/profile_estimator.py`): reglas a partir de datos oficiales de Data Dragon (`tags`, `info` 0-10 y `stats.attackrange`). Cubre todos los campeones. Su peso en el análisis se reduce al 60 % y se marca en la interfaz.
-2. **Editorial de demostración**: 26 perfiles escritos a mano.
+1. **Estimación automática** (`analysis/profile_estimator.py`): reglas a partir de datos oficiales de Data Dragon (`tags`, `info` 0-10 y `stats.attackrange`).
+   - Desde la versión 0.10.0 solo se usa para campeones que aún no tienen perfil editorial, por ejemplo uno publicado en un parche nuevo.
+   - Su peso en el análisis se reduce al 60 % y se marca en la interfaz.
+2. **Editorial** (`resources/demo/champions_demo.json`): los **173 campeones** de Data Dragon 16.21.1, escritos a mano.
+   - Los 26 primeros se escribieron con la versión 0.1; los otros 147 se añadieron el 1 de noviembre de 2026.
+   - Se basan en el conocimiento general del juego. Para los campeones más recientes (Locke, Yunara, Zaahen) se usaron las descripciones oficiales de sus habilidades.
+   - Se contrastaron con las posiciones observadas en 50 partidas reales; se corrigieron Cho'Gath (también jungla), Teemo (también medio) y la primera línea de Yorick.
 3. **Revisado por ti**: editado en «Campeones» y guardado en SQLite (tabla `champion_profile_override`).
 
 Ninguno es una estadística ni pertenece a un parche, así que la confianza del análisis que se basa en ellos nunca supera «baja».
 
-**Fiabilidad de la estimación**, medida frente a los 26 perfiles editoriales (que también son criterio propio, no una verdad absoluta), con Data Dragon 16.21.1:
+**Fiabilidad de la estimación** (medida cuando solo había 26 perfiles editoriales; sirve para valorar los campeones nuevos que todavía dependan de ella). Se midió frente a los 26 perfiles editoriales (que también son criterio propio, no una verdad absoluta), con Data Dragon 16.21.1:
 
 | Atributo | Error medio | Valor exacto | A ±1 |
 |---|---|---|---|

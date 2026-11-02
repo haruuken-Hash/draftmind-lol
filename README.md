@@ -4,7 +4,7 @@ Asistente de escritorio para Windows que ayuda a **estudiar** drafts y partidas 
 
 > Las recomendaciones son ayudas para razonar, no certezas. Cada una indica qué datos usa, de qué tipo son (dato oficial, estadística observada, inferencia estratégica, sugerencia educativa o evidencia insuficiente) y con qué confianza.
 
-## Estado actual (versión 0.9.0)
+## Estado actual (versión 0.10.0)
 
 Inspirada en las funciones de OP.GG e iTero que se pueden ofrecer de forma legítima (ver la tabla de abajo).
 
@@ -133,7 +133,7 @@ El script ejecuta las pruebas y, si pasan, genera `dist\DraftMindLoL\DraftMindLo
 
 ## Datos de demostración
 
-- `src/draftmind/resources/demo/champions_demo.json`: 26 perfiles cualitativos escritos a mano (0-3). **No son estadísticas.**
+- `src/draftmind/resources/demo/champions_demo.json`: perfiles cualitativos escritos a mano (0-3) de los 173 campeones. **No son estadísticas.**
 - `src/draftmind/resources/demo/matches_demo.json`: 14 partidas **ficticias** generadas por `tools/generate_demo_matches.py`. Se marcan como tales en toda la interfaz.
 - `docs/examples/stats_import_example.json`: ejemplo del formato de importación con valores ficticios.
 
@@ -170,7 +170,7 @@ docs/            architecture.md, data_sources.md, riot_api_setup.md, learning_g
 ## Limitaciones conocidas
 
 - **Estadísticas:** no hay fuente pública de estadísticas agregadas conectada. Las tuyas tienen muestras pequeñas y casi siempre dan «evidencia insuficiente» para conclusiones estadísticas; la app lo indica en lugar de inventar cifras.
-- **Perfiles cualitativos:** 26 son editoriales y el resto se **estiman automáticamente** a partir de datos oficiales. Las estimaciones pesan menos, y sus posiciones se corrigen con las observadas en tus partidas descargadas (así aparecen los junglas). Puedes revisar cualquier perfil en «Campeones» → «Revisar perfil»; tu revisión tiene prioridad. Fiabilidad medida en [docs/data_sources.md](docs/data_sources.md).
+- **Perfiles cualitativos:** los 173 campeones tienen un perfil **editorial** escrito a mano: es criterio propio, no una estadística, y puede no reflejar el parche actual. Los campeones que salgan después se **estiman automáticamente** a partir de datos oficiales hasta tener perfil editorial. Las estimaciones pesan menos, y sus posiciones se corrigen con las observadas en tus partidas descargadas. Puedes revisar cualquier perfil en «Campeones» → «Revisar perfil»; tu revisión tiene prioridad. Fiabilidad medida en [docs/data_sources.md](docs/data_sources.md).
 - **Builds:** las sugerencias de objetos se basan en etiquetas oficiales y reglas sencillas; son ejemplos, no la build óptima. No se evalúan la curación ni los escudos enemigos.
 - **Postpartida:** usa estadísticas finales; no analiza movimientos ni decisiones (no se usa el timeline).
 - **Enrutamiento:** la correspondencia entre plataformas y regiones de la Riot API es la convención habitual, no una tabla de la documentación.

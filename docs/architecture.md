@@ -63,7 +63,7 @@ lockfile ──▶ integrations/league_client.py (GET a 2 rutas, 127.0.0.1)
 
 ```
 Data Dragon (tags, info, alcance) ──▶ analysis/profile_estimator.py ──┐
-resources/demo/champions_demo.json (26 editoriales) ──────────────────┼──▶ services/profile_service.build_profiles()
+resources/demo/champions_demo.json (173 editoriales) ─────────────────┼──▶ services/profile_service.build_profiles()
 tabla champion_profile_override (revisados por el usuario) ──────────┘            │
                                                                                    ▼
                                                      AppContext.rebuild_profiles() → DraftAnalyzer.set_champions()

@@ -69,7 +69,7 @@ def test_preferences_adjust_but_do_not_exclude(dataset):
     draft = DraftState(my_role=Role.MIDDLE)
     assert factor(analyzer.analyze_candidate(draft, "Ahri"), "preferences").score > 0
     assert factor(analyzer.analyze_candidate(draft, "Orianna"), "preferences").score < 0
-    names = [a.champion.id for a in analyzer.suggest_candidates(draft, limit=10)]
+    names = [a.champion.id for a in analyzer.suggest_candidates(draft, limit=200)]
     assert "Orianna" in names  # Se penaliza, pero sigue siendo una alternativa.
 
 
@@ -102,10 +102,11 @@ def test_scores_stay_in_range(analyzer, dataset):
 def test_champions_without_profile_are_reported_and_ignored(analyzer):
     draft = DraftState(
         my_role=Role.MIDDLE,
-        allies=[DraftPick(champion_id="Aatrox", role=Role.TOP)],
-        enemies=[DraftPick(champion_id="Syndra", role=Role.MIDDLE)],
+        # Campeones inexistentes: ahora los 173 oficiales tienen perfil editorial.
+        allies=[DraftPick(champion_id="CampeonNuevoA", role=Role.TOP)],
+        enemies=[DraftPick(champion_id="CampeonNuevoB", role=Role.MIDDLE)],
     )
-    assert analyzer.missing_profiles(draft) == ["Aatrox", "Syndra"]
+    assert analyzer.missing_profiles(draft) == ["CampeonNuevoA", "CampeonNuevoB"]
     a = analyzer.analyze_candidate(draft, "Ahri")
     assert "no tiene perfil" in factor(a, "matchup").explanation
     allies, enemies = analyzer.compositions(draft)

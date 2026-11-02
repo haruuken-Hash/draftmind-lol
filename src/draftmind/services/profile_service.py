@@ -1,10 +1,11 @@
 """Combina las fuentes de perfiles cualitativos.
 
 Prioridad (la siguiente sustituye a la anterior para el mismo campeón):
-1. Estimación automática a partir de Data Dragon (todos los campeones).
+1. Estimación automática a partir de Data Dragon (todos los campeones; en la
+   práctica, solo cuenta para los que salgan después del perfil editorial).
    Sus POSICIONES se corrigen con las observadas en partidas reales
    descargadas, si hay datos suficientes.
-2. Perfil editorial de demostración (26 campeones escritos a mano).
+2. Perfil editorial (los 173 campeones de 16.21.1, escritos a mano).
 3. Perfil revisado por el usuario en la app.
 """
 
